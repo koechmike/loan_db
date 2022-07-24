@@ -36,7 +36,7 @@ $pcreate = $get_check['pcreate'];
                 <tr>
                   <th><input type="checkbox" id="select_all"/></th>
                   <th>ID</th>
-                  <th>Image</th>
+                  <!-- <th>Image</th> -->
                   <th>First Name</th>
 				  <th>Last Name</th>
                   <th>Email</th>
@@ -47,7 +47,7 @@ $pcreate = $get_check['pcreate'];
                 </thead>
                 <tbody>
 <?php
-$select = mysqli_query($link, "SELECT * FROM borrowers WHERE comment != ''") or die (mysqli_error($link));
+$select = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
 if(mysqli_num_rows($select)==0)
 {
 echo "<div class='alert alert-info'>No data found yet!.....Check back later!!</div>";
@@ -70,7 +70,7 @@ $pread= $get_check['pread'];
                 <tr>
 				<td><input id="optionsCheckbox" class="checkbox"  name="selector[]" type="checkbox" value="<?php echo $id; ?>"></td>
                 <td><?php echo $id; ?></td>
-				 <td><img class="img-circle" src="../<?php echo $row ['image'];?>" width="30" height="30"></td>
+				 <!-- <td><img class="img-circle" src="../<?php echo $row ['image'];?>" width="30" height="30"></td> -->
                 <td><?php echo $lname; ?></td>
 				<td><?php echo $fname; ?></td>
 				<td><?php echo $email; ?></td>
@@ -86,7 +86,7 @@ else{
 ?>
 				<td align="center" class="alert alert-success"><?php echo $status; ?></td> 
 <?php } ?>
-				<td align="center"><?php echo ($pupdate == '1') ? '<a href="updateborrowers.php?id='.$id.'&&mid='.base64_encode("403").'" class="btn btn-info btn-flat">Update</a>' : '<i class="fa fa-lock"></i>'; ?>
+				<td align="center"><?php echo ($pupdate == '1') ? '<a href="updateborrowers.php?id='.$id.'&&mid='.base64_encode("403").'" class="btn btn-success btn-flat">Edit</a>' : '<i class="fa fa-lock"></i>'; ?>
 <?php
 $se = mysqli_query($link, "SELECT * FROM battachment WHERE get_id = '$id'") or die (mysqli_error($link));
 while($gete = mysqli_fetch_array($se))
