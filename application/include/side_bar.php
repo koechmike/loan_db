@@ -99,7 +99,7 @@ $pread = $get_check['pread'];
 <?php } ?>		
 	
 
-<?php
+<!-- <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("404")))
 {
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Employee Wallet'") or die ("Error" . mysqli_error($link));
@@ -116,7 +116,7 @@ $pread = $get_check['pread'];
 	?>
 	<?php echo ($pread == 1) ? '<li><a href="mywallet.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("404").'"><i class="fa fa-book"></i> <span>My Wallet</span></a></li>' : ''; ?>
 <?php } ?>	
-	
+	 -->
 	
 <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("405")))
@@ -145,7 +145,7 @@ $pread = $get_check['pread'];
 <?php } ?>
 		
 	
-<?php
+<!-- <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("406")))
 {
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Internal Message'") or die ("Error" . mysqli_error($link));
@@ -172,7 +172,7 @@ $pread = $get_check['pread'];
         <?php echo ($pread == 1) ? '<li><a href="outboxmessage.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("406").'"><i class="fa fa-circle-o"></i>Outbox Message</a></li>' : ''; ?>
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
 <?php } ?>
-		
+		 -->
 
 <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("407")))
@@ -220,7 +220,7 @@ $pread = $get_check['pread'];
 <?php } ?>
 	
 		
-<?php
+<!-- <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("409")))
 {
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Employee Details'") or die ("Error" . mysqli_error($link));
@@ -244,10 +244,10 @@ $pread = $get_check['pread'];
  		<?php echo ($pcreate == 1) ? '<li class="active"><a href="newemployee.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("409").'"><i class="fa fa-circle-o"></i> New Employee</a></li>' : ''; ?>
         <?php echo ($pread == 1) ? '<li><a href="listemployee.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("409").'"><i class="fa fa-circle-o"></i>List Employee</a></li>' : ''; ?>
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
-<?php } ?>
+<?php } ?> -->
 
 
-<?php
+<!-- <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("413")))
 {
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Module Permission'") or die ("Error" . mysqli_error($link));
@@ -271,10 +271,10 @@ $pread = $get_check['pread'];
 		<?php echo ($pread == 1) ? '<li><a href="permission_list.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("413").'"><i class="fa fa-circle-o"></i>Module Permission List</a></li>' : ''; ?>
 		<?php echo ($pcreate == 1) ? '<li><a href="add_permission.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("413").'"><i class="fa fa-circle-o"></i>Add Permission</a></li>' : ''; ?>
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
-<?php } ?>
+<?php } ?> -->
 
 	
-<?php
+<!-- <?php
 if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("410")))
 {
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Savings Account'") or die ("Error" . mysqli_error($link));
@@ -302,7 +302,7 @@ $pread = $get_check['pread'];
 		<?php echo ($pcreate == 1) ? '<li><a href="withdraw.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("410").'"><i class="fa fa-circle-o"></i>Withdraw Money</a></li>' : ''; ?>
 		<?php echo ($pread == 1) ? '<li><a href="transaction.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("410").'"><i class="fa fa-circle-o"></i>All Transaction</a></li>' : ''; ?>
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
-<?php } ?>
+<?php } ?> -->
 
 	
 <?php

@@ -20,7 +20,7 @@
                                 $add2 = $_POST['ad2'];
                                 $city = $_POST['city'];
                                 $state = $_POST['state'];
-								$zip = $_POST['zip'];
+								$krapin = $_POST['krapin'];
                                 $country = $_POST['country'];
                                 $comment = $_POST['comment'];
                                 $user = $_POST['user'];
@@ -31,7 +31,7 @@
                                 if($image == "")
 								{
 									mysqli_query($link,"UPDATE user SET name='$fname',email='$email',phone='$number',addr1='$add1',addr2='$add2',
-													city='$city',state='$state',zip='$zip',country='$country',comment='$comment',username='$user',password='$decript',id='$idp' WHERE id ='$id'")or die(mysqli_error()); 
+													city='$city',county='$state',krapin='$krapin',country='$country',comment='$comment',username='$user',password='$decript',id='$idp' WHERE id ='$id'")or die(mysqli_error()); 
 									echo "<script>window.location='profile.php';</script>";
 								}
 								else{
@@ -72,7 +72,7 @@
 									$location = "img/".$_FILES['image']['name'];				
 					
 					mysqli_query($link,"UPDATE user SET name='$fname',email='$email',phone='$number',addr1='$add1',addr2='$add2',
-													city='$city',state='$state',zip='$zip',country='$country',comment='$comment',username='$user',password='$decript',id='$idp',
+													city='$city',state='$state',krapin='$krapin',country='$country',comment='$comment',username='$user',password='$decript',id='$idp',
 													image='$location' WHERE id ='$id'")or die(mysqli_error()); 
 									echo "<script>window.location='profile.php';</script>";
 									}
@@ -151,7 +151,7 @@
 			<div class="form-group">
                   <label for="" class="col-sm-2 control-label" style="color:#009900">City</label>
                   <div class="col-sm-10">
-                  <input name="city" type="text" class="form-control" value="<?php echo $row ['city'];?>" required>
+                  <input name="county" type="text" class="form-control" value="<?php echo $row ['county'];?>" required>
                   </div>
                   </div>
 				  
@@ -163,9 +163,9 @@
                   </div>
 				  
 				  <div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Zip Code</label>
+                  <label for="" class="col-sm-2 control-label" style="color:#009900">krapin</label>
                   <div class="col-sm-10">
-                  <input name="zip" type="text" class="form-control" value="<?php echo $row ['zip'];?>">
+                  <input name="krapin" type="text" class="form-control" value="<?php echo $row ['krapin'];?>">
                   </div>
                   </div>
 				  
