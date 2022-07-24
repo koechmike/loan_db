@@ -80,24 +80,132 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 }
 }
 }
-?>			  				
-			<div class="form-group">
-            <label for="" class="col-sm-2 control-label">Your Image</label>
-			<div class="col-sm-10">
-  		  			 <input type='file' name="image" onChange="readURL(this);">
-       				 <img id="blah"  src="../avtar/user2.png" alt="Image Here" height="100" width="100"/>
-			</div>
-			</div>
+?>			  		
+
+<div class="row">
+            <div class="col-md-4">
+<fieldset style="width:270px">	
+	<legend>Personal Information</legend> 
+	<!-- <div class="form-group">
+		<label for="" class="col-sm-2 control-label">Your Image</label>
+		<div class="col-sm-10">
+			<input type='file' name="image" onChange="readURL(this);">
+			<img id="blah"  src="../avtar/user2.png" alt="Image Here" height="100" width="100"/>
+		</div>
+	</div> -->
+    <div class="form-group" style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+		 	<label for="" class="col-sm-2 control-label" style="color:#009900">Account Number</label>
+        </div>
+        <div class="col-md-9">
+			<input name="account" type="text" class="form-control" value="<?php echo $account; ?>" placeholder="Account Number" readonly>
+					<?php
+						$account = '013'.rand(1000000,10000000);
+					?>
+        </div>
+	</div>
+    <div style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+		    <label for="" class="col-sm-2 control-label" style="color:#009900">First Name</label>
+        </div>
+	    <div class="col-md-9">
+            <input name="fname" type="text" class="form-control" placeholder="First Name" required>
+        </div>
+    </div>
+    <div style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+			<label for="" class="col-sm-2 control-label" style="color:#009900">Last Name</label>
+        </div>
+        <div class="col-md-9">
+			<input name="lname" type="text" class="form-control" placeholder="Last Name" required>
+        </div>
+    </div>
+</fieldset>
+</div>
+<div class="col-md-4">
+<fieldset style="width:270px">	
+	<legend>Personal Information</legend> 
+	<!-- <div class="form-group">
+		<label for="" class="col-sm-2 control-label">Your Image</label>
+		<div class="col-sm-10">
+			<input type='file' name="image" onChange="readURL(this);">
+			<img id="blah"  src="../avtar/user2.png" alt="Image Here" height="100" width="100"/>
+		</div>
+	</div> -->
+    <div class="form-group" style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+		 	<label for="" class="col-sm-2 control-label" style="color:#009900">Account Number</label>
+        </div>
+        <div class="col-md-9">
+			<input name="account" type="text" class="form-control" value="<?php echo $account; ?>" placeholder="Account Number" readonly>
+					<?php
+						$account = '013'.rand(1000000,10000000);
+					?>
+        </div>
+	</div>
+    <div style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+		    <label for="" class="col-sm-2 control-label" style="color:#009900">First Name</label>
+        </div>
+	    <div class="col-md-9">
+            <input name="fname" type="text" class="form-control" placeholder="First Name" required>
+        </div>
+    </div>
+    <div style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+			<label for="" class="col-sm-2 control-label" style="color:#009900">Last Name</label>
+        </div>
+        <div class="col-md-9">
+			<input name="lname" type="text" class="form-control" placeholder="Last Name" required>
+        </div>
+    </div>
+</fieldset>
+</div>
+<div class="col-md-4">
+<fieldset style="width:270px">	
+	<legend>Personal Information</legend> 
+	<!-- <div class="form-group">
+		<label for="" class="col-sm-2 control-label">Your Image</label>
+		<div class="col-sm-10">
+			<input type='file' name="image" onChange="readURL(this);">
+			<img id="blah"  src="../avtar/user2.png" alt="Image Here" height="100" width="100"/>
+		</div>
+	</div> -->
+    <div class="form-group" style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+		 	<label for="" class="col-sm-2 control-label" style="color:#009900">Account Number</label>
+        </div>
+        <div class="col-md-9">
+			<input name="account" type="text" class="form-control" value="<?php echo $account; ?>" placeholder="Account Number" readonly>
+					<?php
+						$account = '013'.rand(1000000,10000000);
+					?>
+        </div>
+	</div>
+    <div style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+		    <label for="" class="col-sm-2 control-label" style="color:#009900">First Name</label>
+        </div>
+	    <div class="col-md-9">
+            <input name="fname" type="text" class="form-control" placeholder="First Name" required>
+        </div>
+    </div>
+    <div style="margin-bottom: 1rem" class="row">
+        <div class="col-md-3">
+			<label for="" class="col-sm-2 control-label" style="color:#009900">Last Name</label>
+        </div>
+        <div class="col-md-9">
+			<input name="lname" type="text" class="form-control" placeholder="Last Name" required>
+        </div>
+    </div>
+</fieldset>
+</div>
+</div>
+
+
+
 			
-			<div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Account Number</label>
-                  <div class="col-sm-10">
-<?php
-$account = '013'.rand(1000000,10000000);
-?>
-                  <input name="account" type="text" class="form-control" value="<?php echo $account; ?>" placeholder="Account Number" readonly>
-                  </div>
-                  </div>
+
 				  
 			<div class="form-group">
                   <label for="" class="col-sm-2 control-label" style="color:#009900">First Name</label>
