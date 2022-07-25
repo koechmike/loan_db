@@ -4,7 +4,8 @@ $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESS
 $get_check = mysqli_fetch_array($check);
 $pcreate = $get_check['pcreate'];
 $pread = $get_check['pread'];
-if($pcreate == '1' || $pread == '1')
+// if($pcreate == '1' || $pread == '1')
+if(false)
 {
 ?>
         <div class="col-lg-3 col-xs-6">
@@ -126,7 +127,8 @@ $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESS
 $get_check = mysqli_fetch_array($check);
 $pcreate = $get_check['pcreate'];
 $pread = $get_check['pread'];
-if($pcreate == '1' || $pread == '1')
+// if($pcreate == '1' || $pread == '1')
+if(false)
 {
 ?>
 		<div class="col-lg-3 col-xs-6">
@@ -161,7 +163,8 @@ $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESS
 $get_check = mysqli_fetch_array($check);
 $pcreate = $get_check['pcreate'];
 $pread = $get_check['pread'];
-if($pcreate == '1')
+//if($pcreate == '1')
+if(false)
 {
 ?>
 		<div class="col-lg-3 col-xs-6">
@@ -196,7 +199,8 @@ $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESS
 $get_check = mysqli_fetch_array($check);
 $pcreate = $get_check['pcreate'];
 $pread = $get_check['pread'];
-if($pcreate == '1' || $pread == '1')
+//if($pcreate == '1' || $pread == '1')
+if(false)
 {
 ?>
 		<div class="col-lg-3 col-xs-6">
@@ -317,7 +321,8 @@ $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESS
 $get_check = mysqli_fetch_array($check);
 $pcreate = $get_check['pcreate'];
 $pread = $get_check['pread'];
-if($pcreate == '1' || $pread == '1')
+//if($pcreate == '1' || $pread == '1')
+if(false)
 {
 ?>		
 		<div class="col-lg-3 col-xs-6">
@@ -442,7 +447,8 @@ $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESS
 $get_check = mysqli_fetch_array($check);
 $pcreate = $get_check['pcreate'];
 $pread = $get_check['pread'];
-if($pcreate == '1' || $pread == '1')
+//if($pcreate == '1' || $pread == '1')
+if(false)
 {
 ?>
             <div class="box-body">
