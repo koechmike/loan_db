@@ -26,7 +26,7 @@ input[type=number] {
 				</div>'?>
              <div class="box-body">
 <?php
-$insert = mysqli_query($link, "SELECT max(id) as `max` FROM loan.borrowers;");
+$insert = mysqli_query($link, "SELECT max(id) as `max` FROM borrowers;");
 while($row = mysqli_fetch_assoc($insert))
 {
 	$newBorrowersId = $row['max'] + 1;
@@ -107,7 +107,7 @@ $check = true; //getimagesize($_FILES["image"]["tmp_name"]);
 // 	move_uploaded_file($sourcepath,$targetpath);
 	
 // 	$location = "img/".$_FILES['image']['name'];
-$query = "INSERT INTO `loan`.`borrowers` (`id`,`fname`,`lname`,`email`,`phone`,`addrs1`,`addrs2`,`comment`,`account`,`balance`,`status`,`idNumber`,`maritalStatus`,`powName`,`position`,`powAddress`,`powTown`,`powContact`,`powEmail`,`nokName`,`nokEmail`,`nokContact`,`nokRelationship`,`nokResidence`,`nokIdNumber`,`iName`,`iDob`,`iContact`,`iResidence`,`iIdNumber`) VALUES (null,'$fname','$lname','$email','$phone','$address1','$address2','','','0','$status','$idNumber','$maritalStatus','$powName','$position','$powAddress','$powTown',$powContact,'$powEmail','$nokName','$nokEmail',$nokContact,'$nokRelationship','$nokResidence','$nokIdNumber','$iName','$iDob',$iContact,'$iResidence','$iIdNumber');";
+$query = "INSERT INTO `borrowers` (`id`,`fname`,`lname`,`email`,`phone`,`addrs1`,`addrs2`,`comment`,`account`,`balance`,`status`,`idNumber`,`maritalStatus`,`powName`,`position`,`powAddress`,`powTown`,`powContact`,`powEmail`,`nokName`,`nokEmail`,`nokContact`,`nokRelationship`,`nokResidence`,`nokIdNumber`,`iName`,`iDob`,`iContact`,`iResidence`,`iIdNumber`) VALUES (null,'$fname','$lname','$email','$phone','$address1','$address2','','','0','$status','$idNumber','$maritalStatus','$powName','$position','$powAddress','$powTown',$powContact,'$powEmail','$nokName','$nokEmail',$nokContact,'$nokRelationship','$nokResidence','$nokIdNumber','$iName','$iDob',$iContact,'$iResidence','$iIdNumber');";
 //echo $query;
 $insert = mysqli_query($link, $query) or die (mysqli_error($link));
 if(!$insert)
