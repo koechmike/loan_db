@@ -120,33 +120,7 @@ while($row = mysqli_fetch_assoc($call)){
 		
 		<hr>
 		
-	  <div align="center">
-		  <table width="265" border="1">
-            <tr>
-              <td colspan="2"><div align="center"><strong>Admin Login Details </strong></div></td>
-            </tr>
-            <tr>
-              <td width="75">Username:</td>
-              <td width="174"><span class="style1"> admin</span></td>
-            </tr>
-            <tr>
-              <td>Password:</td>
-              <td><span class="style1">admin</span></td>
-            </tr>
-            <tr>
-              <td colspan="2"><div align="center"><strong>Staff Login Details </strong></div></td>
-            </tr>
-            <tr>
-              <td>Username:</td>
-              <td><span class="style1">at</span></td>
-            </tr>
-            <tr>
-              <td>Password:</td>
-              <td><span class="style1">at</span></td>
-            </tr>
-          </table>
-		  <hr>
-	  </div>
+
 <?php
 //include("emailfunc.php");						
 if(isset($_POST['submit']))
