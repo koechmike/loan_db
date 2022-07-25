@@ -16,4 +16,4 @@ jobs:
       with:
         ftp-server: $ secrets.INSIGHT_FTP_SERVER }}
         ftp-username: $ secrets.INSIGHT_FTP_USERNAME}}
-        ftp-password: $ secrets.INSIGHT_FTP_PASSWORD }}
+        ftp-password: $ secrets.INSIGHT_FTP_PASSWORD }} 
