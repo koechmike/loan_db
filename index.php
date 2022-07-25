@@ -142,7 +142,7 @@ else
 {
 //$sql = mysqli_query($link,"UPDATE user SET Signal='On' WHERE Email = '$email'") or die(mysqli_error($link));
 echo '<hr>';
-echo '<div class="alert alert-success">Login Successful</div>';
+echo '<div class="alert alert-success">Login Successful!</div>';
 $_SESSION['tid'] = $row['id'];
 echo "<script>window.location='loader.php?tid=".$_SESSION['tid']."';</script>";												
 }							
