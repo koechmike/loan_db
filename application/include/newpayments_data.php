@@ -13,6 +13,96 @@
 				</div>'?>
              <div class="box-body">
 				
+			 <div class="row">	
+	<div class="col-md-8">	
+		<fieldset style="width:100%">	
+			<legend>Repayment Details</legend> 
+			<div class="col-md-6">			
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Borrower ID</label>
+					</div>
+					<div class="col-md-6">
+						<input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" >
+					</div>
+				</div>	
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Loan No.</label>
+					</div>
+					<div class="col-md-6">
+						<input name="loanId" type="text" class="form-control" placeholder="Loan ID" >
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Receipt No.</label>
+					</div>
+					<div class="col-md-6">
+						<input  name="recieptNo" type="text" class="form-control" placeholder="Reciept No" >
+					</div>
+				</div>				
+			</div>
+			<div class="col-md-6">
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Payment Method</label>
+					</div>
+					<div class="col-sm-6">
+						<select name="loanType" class="form-control" required>
+							<option value="">Select an option&hellip;</option>
+							<option value="1">Mpesa</option>
+							<option value="2">Cheque</option>
+							<option value="3">Direct Deposit</option>
+						</select>                 
+					</div>
+				</div>				
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-8">
+						<label for="" class="control-label" style="color:#009900">Reference (cheque/mpesa code)</label>
+					</div>
+					<div class="col-md-4">
+						<input  name="reference" type="text" class="form-control" placeholder="Reference" required>
+					</div>
+				</div>
+			</div>
+		</fieldset>	
+	</div>
+	<div class="col-md-4">
+		<fieldset style="width:100%">
+			<div class="col-md-12">	
+				<legend>Record Details</legend> 
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-5">
+						<label for="" class="control-label" style="color:#009900">Repayment Date</label>
+					</div>
+					<div class="col-md-7">
+						<input name="repaymentDate" type="date" class="form-control" required>
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-5">
+						<label for="" class="control-label" style="color:#009900">Capture Date</label>
+					</div>
+					<div class="col-md-7">
+						<input name="captureDate" type="date" class="form-control" required>
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-4">
+						<label for="" class="control-label" style="color:#009900">Captured by</label>
+					</div>
+					<div class="col-md-8">
+						<input name="capturedBy" type="text" class="form-control" readonly required>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+
+
+<!-- 
 			<div class="form-group">
                   <label for="" class="col-sm-2 control-label" style="color:#009900">Account#</label>
                   <div class="col-sm-10">
@@ -107,7 +197,7 @@ while($row = mysqli_fetch_array($sele))
                   	<div class="col-sm-10">
 					<textarea name="remarks"  class="form-control" rows="4" cols="80"></textarea>
            			 </div>
-          </div>
+          </div> -->
 
 			 </div>
 			 

@@ -13,8 +13,109 @@
   				<strong>Note that&nbsp;</strong> &nbsp;&nbsp;Some Fields are Rquired.
 				</div>'?>
              <div class="box-body">
-				
 			
+			 <div class="row">	
+	<div class="col-md-8">	
+		<fieldset style="width:100%">	
+			<legend>Loan Details</legend> 
+			<div class="col-md-6">			
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Borrower ID</label>
+					</div>
+					<div class="col-md-6">
+						<input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly >
+					</div>
+				</div>	
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Loan No.</label>
+					</div>
+					<div class="col-md-6">
+						<input value="<?php echo $newLoanId; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Loan Type</label>
+					</div>
+					<div class="col-sm-6">
+						<select name="loanType" class="form-control" required>
+							<option value="">Select an option&hellip;</option>
+							<option value="1">Security</option>
+							<option value="2">Logbook Loan</option>
+							<option value="3">Salary Advance</option>
+						</select>                 
+					</div>
+				</div>				
+			</div>
+			<div class="col-md-6">
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Calculation Method</label>
+					</div>
+					<div class="col-sm-6">
+						<select name="calculationMethod"  class="form-control" required>
+							<option value="">Select an option&hellip;</option>
+							<option value="1">Reducing Balance</option>
+							<option value="2">Flat Rage</option>
+							<option value="3">Effecitive Rate</option>
+						</select>                 
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Loan Period (Months)</label>
+					</div>
+					<div class="col-md-6">
+						<input  name="peroid" type="number" class="form-control" placeholder="Loan Period" required>
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+					</div>
+					<div class="col-md-6">
+						<input  name="amount" type="number" class="form-control" placeholder="Loan Amount" required>
+					</div>
+				</div>
+			</div>
+		</fieldset>	
+	</div>
+	<div class="col-md-4">
+		<fieldset style="width:270px">
+			<div class="col-md-12">	
+				<legend>Gurantor</legend> 
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-4">
+						<label for="" class="control-label" style="color:#009900">Name</label>
+					</div>
+					<div class="col-md-8">
+						<input name="name" type="text" class="form-control" placeholder="Name" required>
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-4">
+						<label for="" class="control-label" style="color:#009900">Address</label>
+					</div>
+					<div class="col-md-8">
+						<input name="address" type="text" class="form-control" placeholder="Address" required>
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-4">
+						<label for="" class="control-label" style="color:#009900">Contact</label>
+					</div>
+					<div class="col-md-8">
+						<input name="contact" type="text" class="form-control" placeholder="Contact" required>
+					</div>
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+
+<!-- 			
 			 <div class="form-group">
                 <label for="" class="col-sm-2 control-label" style="color:#009900">Borrower</label>
 				 <div class="col-sm-10">
@@ -191,7 +292,7 @@ while($row = mysqli_fetch_array($sele))
                   	<div class="col-sm-10">
 					<textarea name="remark"  class="form-control" rows="4" cols="80"></textarea>
            			 </div>
-          	</div>
+          	</div> -->
 				  
 			 </div>
 			 

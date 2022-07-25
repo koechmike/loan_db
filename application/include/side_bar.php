@@ -81,7 +81,10 @@ $pread = $get_check['pread'];
 ?>	
 		<?php echo ($pcreate == 1) ? '<li class="treeview active"><a href="#"><i class="fa fa-dollar"></i> <span>Lending Process</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">' : ''; ?>
  		<?php echo ($pcreate == 1) ? '<li class="active"><a href="newloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><i class="fa fa-circle-o"></i>Loan Application</a></li>' : ''; ?>
-        <?php echo ($pread == 1) ? '<li><a href="listloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><i class="fa fa-circle-o"></i>List Changes</a></li>' : ''; ?>
+                 <?php echo ($pcreate == 1) ? '<li class="active"><a href="#"><i class="fa fa-circle-o"></i>Loan Approval</a></li>' : ''; ?>
+                 <?php echo ($pcreate == 1) ? '<li class="active"><a href="#"><i class="fa fa-circle-o"></i>Loan Disbursement</a></li>' : ''; ?>
+        <?php echo ($pread == 1) ? '<li><a href="listloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><i class="fa fa-circle-o"></i>Loan Changes</a></li>' : ''; ?>
+                 <?php echo ($pcreate == 1) ? '<li class="active"><a href="#"><i class="fa fa-circle-o"></i>Loan Calculator</a></li>' : ''; ?>
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
 <?php
 }
@@ -93,7 +96,10 @@ $pread = $get_check['pread'];
 ?>	
 		<?php echo ($pcreate == 1) ? '<li class="treeview"><a href="#"><i class="fa fa-dollar"></i> <span>Lending Process</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">' : ''; ?>
  		<?php echo ($pcreate == 1) ? '<li class="active"><a href="newloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><i class="fa fa-circle-o"></i>Loan Application</a></li>' : ''; ?>
+                 <?php echo ($pcreate == 1) ? '<li class="active"><a href="#"><i class="fa fa-circle-o"></i>Loan Approval</a></li>' : ''; ?>
+                 <?php echo ($pcreate == 1) ? '<li class="active"><a href="#"><i class="fa fa-circle-o"></i>Loan Disbursement</a></li>' : ''; ?>
         <?php echo ($pread == 1) ? '<li><a href="listloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><i class="fa fa-circle-o"></i>Loan Changes</a></li>' : ''; ?>
+                 <?php echo ($pcreate == 1) ? '<li class="active"><a href="#"><i class="fa fa-circle-o"></i>Loan Calculator</a></li>' : ''; ?>
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
 <?php } ?>
 		

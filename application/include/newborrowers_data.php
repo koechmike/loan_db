@@ -32,6 +32,8 @@ while($row = mysqli_fetch_assoc($insert))
 	$newBorrowersId = $row['max'] + 1;
 }
 
+$time = new DateTime('now');
+$newtime = $time->modify('-18 year')->format('Y-m-d');
 if(isset($_POST['save']))
 {
 $fname =  mysqli_real_escape_string($link, $_POST['fname']);
@@ -155,7 +157,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Date of Birth</label>
 					</div>
 					<div class="col-md-6">
-						<input type="date" name="dob" type="text" class="form-control" placeholder="Date of Birth">
+						<input type="date" max="<?php echo $newtime ?>" name="dob" type="text" class="form-control" placeholder="Date of Birth">
 					</div>
 				</div>	
 			</div>
@@ -443,7 +445,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Date of Birth</label>
 					</div>
 					<div class="col-md-6">
-						<input type="date" name="iDob" type="text" class="form-control" placeholder="Date of Birth">
+						<input type="date" max="<?php echo $newtime ?>"  name="iDob" type="text" class="form-control" placeholder="dd-mm-yyyy">
 					</div>
 				</div>
 		</fieldset>
@@ -506,3 +508,11 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 </div>	
 </div>
 </div>
+
+<script>
+	function subtractYears(date = new Date()) {
+  date.setFullYear(date.getFullYear() - 18);
+
+  return date;
+}
+</script>
