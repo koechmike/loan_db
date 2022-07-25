@@ -14,3 +14,5 @@ jobs:
         server: ${{ secrets.INSIGHT_FTP_SERVER }}
         username: ${{ secrets.INSIGHT_FTP_USERNAME}}
         password: ${{ secrets.INSIGHT_FTP_PASSWORD }}
+        exclude: |
+          config/connect.php
