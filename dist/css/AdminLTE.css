@@ -828,7 +828,7 @@ a:focus {
 }
 .control-sidebar-dark,
 .control-sidebar-dark + .control-sidebar-bg {
-  background: #222d32;
+  background: #227c0c;
 }
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs {
   border-bottom: #1c2529;
@@ -855,7 +855,7 @@ a:focus {
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:hover,
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:focus,
 .control-sidebar-dark .nav-tabs.control-sidebar-tabs > li.active > a:active {
-  background: #222d32;
+  background: #227c0c;
   color: #fff;
 }
 .control-sidebar-dark .control-sidebar-heading,
@@ -863,7 +863,7 @@ a:focus {
   color: #fff;
 }
 .control-sidebar-dark .control-sidebar-menu > li > a:hover {
-  background: #1e282c;
+  background: #227c0c;
 }
 .control-sidebar-dark .control-sidebar-menu > li > a .menu-info > p {
   color: #b8c7ce;
@@ -2827,7 +2827,7 @@ table.text-center th {
   bottom: 0;
   height: 250px;
   width: 100%;
-  background: #222d32;
+  background: #227c0c;
   color: #fff;
   overflow: auto;
 }
