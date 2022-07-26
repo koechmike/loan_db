@@ -1269,7 +1269,7 @@
 }
 .skin-yellow .sidebar-menu > li.header {
   color: #4b646f;
-  background: #398626;
+  background: ##227c0c;
 }
 .skin-yellow .sidebar-menu > li > a {
   border-left: 3px solid transparent;
@@ -1277,7 +1277,7 @@
 .skin-yellow .sidebar-menu > li:hover > a,
 .skin-yellow .sidebar-menu > li.active > a {
   color: #ffffff;
-  background: #227c0c;
+  background: #1e282c;
   border-left-color: #f39c12;
 }
 .skin-yellow .sidebar-menu > li > .treeview-menu {

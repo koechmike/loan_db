@@ -2,7 +2,7 @@
  * Skin: Yellow
  * ------------
  */
-.skin-yellow .main-header .navbar {
+ .skin-yellow .main-header .navbar {
   background-color: #f39c12;
 }
 .skin-yellow .main-header .navbar .nav > li > a {
@@ -59,7 +59,7 @@
 .skin-yellow .wrapper,
 .skin-yellow .main-sidebar,
 .skin-yellow .left-side {
-  background-color: #222d32;
+  background-color: #227c0c;
 }
 .skin-yellow .user-panel > .info,
 .skin-yellow .user-panel > .info > a {
@@ -67,7 +67,7 @@
 }
 .skin-yellow .sidebar-menu > li.header {
   color: #4b646f;
-  background: #1a2226;
+  background: ##227c0c;
 }
 .skin-yellow .sidebar-menu > li > a {
   border-left: 3px solid transparent;
