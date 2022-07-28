@@ -15,105 +15,126 @@
              <div class="box-body">
 			
 			 <div class="row">	
-	<div class="col-md-8">	
-		<fieldset style="width:100%">	
-			<legend>Loan Details</legend> 
-			<div class="col-md-6">			
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-6">
-						<label for="" class="control-label" style="color:#009900">Borrower ID</label>
-					</div>
-					<div class="col-md-6">
-						<input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly >
-					</div>
-				</div>	
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-6">
-						<label for="" class="control-label" style="color:#009900">Loan No.</label>
-					</div>
-					<div class="col-md-6">
-						<input value="<?php echo $newLoanId; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
-					</div>
+				<div class="col-md-8">	
+					<fieldset style="width:100%">	
+						<legend>Loan Details</legend> 
+						<div class="col-md-6">			
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Borrower ID</label>
+								</div>
+								<div class="col-md-6">									
+								<select name="borrowerId"  class="form-control" required>
+										<option value="">Select a borrower&hellip;</option>
+                                        <?php
+                                        	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $b_res['id'] ?>"><?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']   ?></option>
+                                        <?php } ?>
+                                    </select>   
+									<!-- <input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly > -->
+								</div>
+							</div>	
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan No.</label>
+								</div>
+								<div class="col-md-6">
+										<?php
+                                        	$b = mysqli_query($link, "SELECT max(loanId) as `loanId` FROM loans") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        	{
+												$newLoanId = $b_res['loanId'] + 1;
+											}         
+                                        ?>
+									<input value="<?php echo $newLoanId; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan Type</label>
+								</div>
+								<div class="col-sm-6">
+									<select name="loanType"  class="form-control" required>
+										<option value="">Select a loan type&hellip;</option>
+                                        <?php
+                                        	$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
+                                            while($lt_res = mysqli_fetch_array($lt))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName'] ?></option>
+                                        <?php } ?>
+                                    </select>              
+								</div>
+							</div>				
+						</div>
+						<div class="col-md-6">
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Calculation Method</label>
+								</div>
+								<div class="col-sm-6">
+									<select name="calculationMethod"  class="form-control" required>
+										<option value="">Select a calculation method&hellip;</option>
+										<option value=1>Reducing Balance</option>
+										<option value=2>Flat Rage</option>
+										<option value=3>Effecitive Rate</option>
+									</select>                 
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan Period (Months)</label>
+								</div>
+								<div class="col-md-6">
+									<input  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+								</div>
+								<div class="col-md-6">
+									<input  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
+								</div>
+							</div>
+						</div>
+					</fieldset>	
 				</div>
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-6">
-						<label for="" class="control-label" style="color:#009900">Loan Type</label>
-					</div>
-					<div class="col-sm-6">
-						<select name="loanType" class="form-control" required>
-							<option value="">Select an option&hellip;</option>
-							<option value="1">Security</option>
-							<option value="2">Logbook Loan</option>
-							<option value="3">Salary Advance</option>
-						</select>                 
-					</div>
-				</div>				
+				<div class="col-md-4">
+					<fieldset style="width:270px">
+						<div class="col-md-12">	
+							<legend>Gurantor</legend> 
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-4">
+									<label for="" class="control-label" style="color:#009900">Name</label>
+								</div>
+								<div class="col-md-8">
+									<input name="gName" type="text" class="form-control" placeholder="Name" >
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-4">
+									<label for="" class="control-label" style="color:#009900">Address</label>
+								</div>
+								<div class="col-md-8">
+									<input name="gAddress" type="text" class="form-control" placeholder="Address" >
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-4">
+									<label for="" class="control-label" style="color:#009900">Contact</label>
+								</div>
+								<div class="col-md-8">
+									<input name="gContact" type="text" class="form-control" placeholder="Contact" >
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
 			</div>
-			<div class="col-md-6">
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-6">
-						<label for="" class="control-label" style="color:#009900">Calculation Method</label>
-					</div>
-					<div class="col-sm-6">
-						<select name="calculationMethod"  class="form-control" required>
-							<option value="">Select an option&hellip;</option>
-							<option value="1">Reducing Balance</option>
-							<option value="2">Flat Rage</option>
-							<option value="3">Effecitive Rate</option>
-						</select>                 
-					</div>
-				</div>
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-6">
-						<label for="" class="control-label" style="color:#009900">Loan Period (Months)</label>
-					</div>
-					<div class="col-md-6">
-						<input  name="peroid" type="number" class="form-control" placeholder="Loan Period" required>
-					</div>
-				</div>
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-6">
-						<label for="" class="control-label" style="color:#009900">Loan Amount</label>
-					</div>
-					<div class="col-md-6">
-						<input  name="amount" type="number" class="form-control" placeholder="Loan Amount" required>
-					</div>
-				</div>
-			</div>
-		</fieldset>	
-	</div>
-	<div class="col-md-4">
-		<fieldset style="width:270px">
-			<div class="col-md-12">	
-				<legend>Gurantor</legend> 
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-4">
-						<label for="" class="control-label" style="color:#009900">Name</label>
-					</div>
-					<div class="col-md-8">
-						<input name="name" type="text" class="form-control" placeholder="Name" required>
-					</div>
-				</div>
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-4">
-						<label for="" class="control-label" style="color:#009900">Address</label>
-					</div>
-					<div class="col-md-8">
-						<input name="address" type="text" class="form-control" placeholder="Address" required>
-					</div>
-				</div>
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-4">
-						<label for="" class="control-label" style="color:#009900">Contact</label>
-					</div>
-					<div class="col-md-8">
-						<input name="contact" type="text" class="form-control" placeholder="Contact" required>
-					</div>
-				</div>
-			</div>
-		</fieldset>
-	</div>
-</div>
 
 <!-- 			
 			 <div class="form-group">

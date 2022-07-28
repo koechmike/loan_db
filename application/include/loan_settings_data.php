@@ -12,17 +12,17 @@
              				<div class="nav-tabs-custom">
              					<ul class="nav nav-tabs">
 									<li class="active"><a href="#tab_1" data-toggle="tab">Loan Types</a></li>
-									<li><a href="#tab_2" data-toggle="tab">Payment Methods</a></li>
+									<li class="<?php if($_POST['pmactive'] == true){ echo "pmactive";}; ?>"><a href="#tab_2" data-toggle="tab">Payment Methods</a></li>
               					</ul>
-             					<div class="tab-content">
+             					<div class="tab-content ">
                                     <div class="tab-pane active" id="tab_1">
                                         <form method="post">
                                             <table>
                                                 <th></th>
                                                 <th align="center" width="400">Code</th>
                                                 <th align="center" width="300">Name</th>
-                                                <th align="center" width="300">Repay Method</th>
-                                                <th align="center" width="300">Repay Period</th>
+                                                <th align="center" width="300">Repayment Method</th>
+                                                <th align="center" width="300">Repayment Period</th>
                                                 <th align="center" width="300">Interest Rate</th>
                                                 <th align="center" width="300">Require Guarantor</th>
                                                 <tbody> 
@@ -35,12 +35,39 @@
                                                     ?>			
                                                     <tr>
                                                         <td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idme; ?>" checked></td>
-                                                        <td width="800"><input readonly name="loanCode[]" type="number" class="form-control" placeholder="Loan Code" value="<?php echo $have['loanCode']; ?>"></td>
-                                                        <td width="800"><input name="loanName[]" type="text" class="form-control" placeholder="Loan Name" value="<?php echo $have['loanName']; ?>"></td>
-                                                        <td width="300"><input name="repayMethod[]" type="text" class="form-control" placeholder="Repay Method" value="<?php echo $have['repayMethod']; ?>"></td>
-                                                        <td width="300"><input name="repayPeriod[]" type="number" class="form-control" placeholder="Repay Period" value="<?php echo $have['repayPeriod']; ?>"></td>
-                                                        <td width="300"><input name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $have['interestRate']; ?>"></td>
-                                                        <td width="300"><input name="requireGuarantor[]" type="text" class="form-control" placeholder="Require Guarantor" value="<?php echo $have['requireGuarantor']; ?>"></td>
+                                                        <td width="300"><input readonly name="loanCode[]" type="number" class="form-control" placeholder="Loan Code" value="<?php echo $have['loanCode']; ?>"></td>
+                                                        <td width="800"><input required name="loanName[]" type="text" class="form-control" placeholder="Loan Name" value="<?php echo $have['loanName']; ?>"></td>
+                                                        <td width="300">
+                                                            <?php
+                                                                $methodId = $have['repayMethod'];
+                                                                $getPmQuery = "SELECT * FROM payment_method where methodId = $methodId ";//+$methodId;
+                                                                //echo $getPmQuery;
+                                                                $pm_current = mysqli_query($link, $getPmQuery) or die (mysqli_error($link));
+                                                                $methodName_res = mysqli_fetch_array($pm_current);
+                                                            ?>
+                                                            <select name="repayMethod[]"  class="form-control" value="<?php echo $methodName_res['methodName']; ?>" required>
+                                                                <?php
+                                                                    $pm = mysqli_query($link, "SELECT * FROM payment_method") or die (mysqli_error($link));
+                                                                    while($ph_res = mysqli_fetch_array($pm))
+                                                                    {         
+                                                                ?>
+                                                                <option <?php if($methodName_res['methodName'] == $ph_res['methodName']) echo 'selected="selected"'; ?> value="<?php echo $ph_res['methodId'] ?>"><?php echo $ph_res['methodName'] ?></option>
+                                                                <?php } ?>
+                                                            </select>       
+                                                            <!-- <input required name="repayMethod[]" type="text" class="form-control" placeholder="Repay Method" value="<?php echo $have['repayMethod']; ?>"> -->
+                                                        </td>
+                                                        <td width="300"><input required name="repayPeriod[]" type="number" class="form-control" placeholder="Repay Period" value="<?php echo $have['repayPeriod']; ?>"></td>
+                                                        <td width="300"><input required name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $have['interestRate']; ?>"></td>
+                                                        <td width="300">
+                                                            <select name="requireGuarantor[]"  class="form-control"  required>
+                                                              
+                                                                <option <?php if($have['requireGuarantor'] == 1) echo 'selected="selected"'; ?> value="1">YES</option>
+                                                                <option <?php if($have['requireGuarantor'] == 0) echo 'selected="selected"'; ?> value="0">NO</option>
+                                                                
+                                                            </select>       
+                                                            <!-- <input required name="repayMethod[]" type="text" class="form-control" placeholder="Repay Method" value="<?php echo $have['repayMethod']; ?>"> -->
+                                                        </td>
+                                                        <!-- <td width="300"><input required name="requireGuarantor[]" type="text" class="form-control" placeholder="Require Guarantor" value="<?php echo $have['requireGuarantor']; ?>"></td> -->
                                                     </tr>
                                                     <?php } ?>
                                                 </tbody>
@@ -73,13 +100,9 @@
                                             <?php
                                             if(isset($_POST['add_fees_rows']))
                                             {
-                                            $loanName = $_GET['loanName'];
-                                            $repayMethod = $_GET['repayMethod'];
-                                            $repayPeriod = $_GET['repayPeriod'];
-                                            $interestRate = $_GET['interestRate'];
-                                            $requireGuarantor = $_GET['requireGuarantor'];
-                                            // $tid = $_SESSION['tid'];
-                                            $insert = mysqli_query($link, "INSERT INTO loan_types(loanCode,loanName,repayMethod,repayPeriod,interestRate,requireGuarantor) VALUES(null,'$loanName','$repayMethod',$repayPeriod,$interestRate,$requireGuarantor)") or die (mysqli_error($link));
+                                            $query = "INSERT INTO loan_types(loanCode,loanName,repayMethod,repayPeriod,interestRate,requireGuarantor) VALUES(null,'',1,null,null,1)";
+                                            //echo $query;
+                                            $insert = mysqli_query($link, $query) or die (mysqli_error($link));
                                             if(!$insert)
                                             {
                                             echo "<script>alert('Unable to add row!!!'); </script>";
@@ -98,40 +121,44 @@
                                             <?php
                                             if(isset($_POST['add_fees']))
                                             {
-                                            $idm = $_GET['id'];
-                                            $id = $_POST['selector'];
-                                            if($id == ''){
-                                            echo "<script>alert('Row Not Selected!!!'); </script>";	
-                                            echo "<script>window.location='loan_settings.php?id=".$idm."&&mid=".base64_encode("403")."'; </script>";
-                                            }
-                                            else{
-                                            $i = 0;
-                                            foreach($_POST['selector'] as $s)
-                                            {
-                                            $fee = mysqli_real_escape_string($link, $_POST['occupation'][$i]);
-                                            $amount = mysqli_real_escape_string($link, $_POST['mincome'][$i]);
-                                            $update = mysqli_query($link, "UPDATE loan_types SET loanName = '$loanName', repayMethod = '$repayMethod', repayPeriod = '$repayPeriod', interestRate = '$interestRate', requireGuarantor = '$requireGuarantor'  WHERE loanCode = '$loanCode'") or die (mysqli_error($link));
-                                            $i++;
-                                            if(!$update)
-                                            {
-                                            echo "<script>alert('Record not inserted.....Please try again later!'); </script>";
-                                            }
-                                            else{
-                                            echo "<script>alert('Loan Type Added Successfully!!'); </script>";
-                                            echo "<script>window.location='loan_settings.php?id=".$idm."&&mid=".base64_encode("403")."'; </script>";
-                                            }
-                                            }
+                                                $idm = $_GET['id'];
+                                                $id = $_POST['selector'];
+                                                if($id == ''){
+                                                echo "<script>alert('Row Not Selected!!!'); </script>";	
+                                                echo "<script>window.location='loan_settings.php?id=".$idm."&&mid=".base64_encode("403")."'; </script>";
+                                            }else{
+                                                $i = 0;
+                                                foreach($_POST['selector'] as $s)
+                                                {
+                                                    $loanCode = mysqli_real_escape_string($link, $_POST['loanCode'][$i]);
+                                                    $loanName = mysqli_real_escape_string($link, $_POST['loanName'][$i]);
+                                                    $repayMethod = mysqli_real_escape_string($link, $_POST['repayMethod'][$i]);
+                                                    $repayPeriod = mysqli_real_escape_string($link, $_POST['repayPeriod'][$i]);
+                                                    $interestRate = mysqli_real_escape_string($link, $_POST['interestRate'][$i]);
+                                                    $requireGuarantor = mysqli_real_escape_string($link, $_POST['requireGuarantor'][$i]);
+                                                    $updateQuery = "UPDATE loan_types SET loanName = '$loanName', repayMethod = '$repayMethod', repayPeriod = '$repayPeriod', interestRate = '$interestRate', requireGuarantor = '$requireGuarantor'  WHERE loanCode = '$loanCode'";
+                                                    echo $updateQuery;
+                                                    $update = mysqli_query($link, $updateQuery) or die (mysqli_error($link));
+                                                    $i++;
+                                                    if(!$update)
+                                                    {
+                                                        echo "<script>alert('Record not inserted.....Please try again later!'); </script>";
+                                                    }else{
+                                                        echo "<script>alert('Loan Type Added Successfully!!'); </script>";
+                                                        echo "<script>window.location='loan_settings.php?id=".$idm."&&mid=".base64_encode("403")."'; </script>";
+                                                    }
+                                                }
                                             }
                                             }
                                             ?>
                                         </form>
                                     </div>
                                     <!-- /.tab-pane -->
-                                    <div class="tab-pane" id="tab_2">
+                                    <div class="tab-pane <?php if($_POST['pmactive'] == true){ echo "pmactive";}; ?>" id="tab_2">
                                         <form method="post">
                                             <table>
                                                 <th></th>
-                                                <th align="center" width="400">ID</th>
+                                                <!-- <th align="center" width="400">ID</th> -->
                                                 <th align="center" width="300">Payment Method</th>
                                                 <tbody> 
                                                     <?php
@@ -140,23 +167,25 @@
                                                     while($have = mysqli_fetch_array($search))
                                                     {                                                    
                                                     $idme= $have['methodId'];
+                                                    $pmactive = true; 
                                                     ?>			
                                                     <tr>
                                                         <td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idme; ?>" checked></td>
-                                                        <td width="800"><input readonly name="methodId[]" type="number" class="form-control" placeholder="ID" value="<?php echo $have['methodId']; ?>"></td>
-                                                        <td width="300"><input name="methodName[]" type="text" class="form-control" placeholder="Payment Method" value="<?php echo $have['methodName']; ?>"></td>
+                                                        <td style="display:none; width="800"><input name="methodId[]" type="number" class="form-control" placeholder="ID" value="<?php echo $have['methodId']; ?>"></td>
+                                                        <td width="300"><input required name="methodName[]" type="text" class="form-control" placeholder="Payment Method" value="<?php echo $have['methodName']; ?>"></td>
+                                                        <input type="hidden" value="<?php echo $pmactive ?>" name="pmactive" />
                                                     </tr>
                                                     <?php } ?>
                                                 </tbody>
                                             </table>
                                             <div align="left">
                                                 <div class="box-footer">
-                                                    <button type="submit" class="btn btn-success btn-flat" name="add_fees_rows"><i class="fa fa-plus">&nbsp;Add Row</i></button>
-                                                    <button name="delrow" type="submit" class="btn btn-danger btn-flat"><i class="fa fa-trash">&nbsp;Delete Row</i></button>
+                                                    <button type="submit" class="btn btn-success btn-flat" name="add_payment_method_rows"><i class="fa fa-plus">&nbsp;Add Row</i></button>
+                                                    <button name="delrow_paymentMethod" type="submit" class="btn btn-danger btn-flat"><i class="fa fa-trash">&nbsp;Delete Row</i></button>
                                                 </div>
                                             </div>
                                             <?php
-                                            if(isset($_POST['delrow'])){
+                                            if(isset($_POST['delrow_paymentMethod'])){
                                             $idm = $_GET['id'];
                                                 $id=$_POST['selector'];
                                                 $N = count($id);
@@ -175,9 +204,9 @@
                                             ?>
 
                                             <?php
-                                            if(isset($_POST['add_fees_rows']))
+                                            if(isset($_POST['add_payment_method_rows']))
                                             {
-                                            $loanName = $_GET['methodName'];
+                                            $methodName = $_GET['methodName'];
                                             // $tid = $_SESSION['tid'];
                                             $insert = mysqli_query($link, "INSERT INTO payment_method(methodId,methodName) VALUES(null,'$methodName')") or die (mysqli_error($link));
                                             if(!$insert)
@@ -192,11 +221,11 @@
                                             ?>
                                             <div align="right">
                                                 <div class="box-footer">
-                                                    <button type="submit" class="btn btn-info btn-flat" name="add_fees"><i class="fa fa-save">&nbsp;Update Payment Method</i></button>
+                                                    <button type="submit" class="btn btn-info btn-flat" name="add_payment_method"><i class="fa fa-save">&nbsp;Update Payment Method</i></button>
                                                 </div>
                                             </div>
                                             <?php
-                                            if(isset($_POST['add_fees']))
+                                            if(isset($_POST['add_payment_method']))
                                             {
                                             $idm = $_GET['id'];
                                             $id = $_POST['selector'];
@@ -208,9 +237,11 @@
                                             $i = 0;
                                             foreach($_POST['selector'] as $s)
                                             {
-                                            $fee = mysqli_real_escape_string($link, $_POST['occupation'][$i]);
-                                            $amount = mysqli_real_escape_string($link, $_POST['mincome'][$i]);
-                                            $update = mysqli_query($link, "UPDATE payment_method SET methodName = '$methodName' WHERE methodId = '$methodId'") or die (mysqli_error($link));
+                                            $methodId = mysqli_real_escape_string($link, $_POST['methodId'][$i]);
+                                            $methodName = mysqli_real_escape_string($link, $_POST['methodName'][$i]);
+                                            $updatePaymentMethdoQuery = "UPDATE payment_method SET methodName = '$methodName' WHERE methodId = '$methodId'";
+                                            echo $updatePaymentMethdoQuery;
+                                            $update = mysqli_query($link, $updatePaymentMethdoQuery) or die (mysqli_error($link));
                                             $i++;
                                             if(!$update)
                                             {

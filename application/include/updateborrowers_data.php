@@ -11,8 +11,8 @@
 			 			<div class="col-md-14">
              				<div class="nav-tabs-custom">
              					<ul class="nav nav-tabs">
-									<li><a href="#tab_1" data-toggle="tab">Personal Information</a></li>
-									<li class="active"><a href="#tab_2" data-toggle="tab">Financial Information</a></li>
+									<li class="active"><a href="#tab_1" data-toggle="tab">Personal Information</a></li>
+									<li ><a href="#tab_2" data-toggle="tab">Financial Information</a></li>
 									<li><a href="#tab_3" data-toggle="tab">Attachment</a></li>
               					</ul>
              					<div class="tab-content">
