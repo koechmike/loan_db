@@ -32,16 +32,16 @@ $num = mysqli_num_rows($select);
                 <thead>
                 <tr>
                   <th><input type="checkbox" id="select_all"/></th>
-                  <th>Kind of Loan</th>
-				  <th>Account</th>
-                  <th>Description</th>
-                  <th>Amount</th>
-                  <th>Balance</th>
-                  <th>Customer</th>
-				  <th>Agent</th>
-                  <th>Approve By</th>
-                  <th>date Release</th>
-                  <th>Payment Date</th>
+                  <th width="50">Loan ID</th>
+				  <th width="100">Borrower</th>
+                  <th>Loan Type</th>
+                  <th>Repayment Period</th>
+                  <th>Repayment Method</th>
+                  <th>Loan Amount</th>
+                  <th>Interest</th>
+                  <!-- <th>Approve By</th> -->
+                  <!-- <th>date Release</th> -->
+                  <!-- <th>Payment Date</th> -->
                   <th>Approval Status</th>
 				  <th>Update Status</th>
                   <th>Action</th>
@@ -49,7 +49,7 @@ $num = mysqli_num_rows($select);
                 </thead>
                 <tbody> 
 <?php
-$select = mysqli_query($link, "SELECT * FROM loan_info") or die (mysqli_error($link));
+$select = mysqli_query($link, "select l.loanId, l.loanPeriod, l.loanAmount, l.status, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId") or die (mysqli_error($link));
 if(mysqli_num_rows($select)==0)
 {
 echo "<div class='alert alert-info'>No data found yet!.....Check back later!!</div>";
@@ -58,33 +58,35 @@ else{
 while($row = mysqli_fetch_array($select))
 {
 $id = $row['id'];
-$borrower = $row['borrower'];
-$status = $row['status'];
+$loanId = $row['loanId'];
+$loanPeriod = $row['loanPeriod'];
+$loanAmount = $row['loanAmount'];
 $upstatus = $row['upstatus'];
-$selectin = mysqli_query($link, "SELECT fname, lname FROM borrowers WHERE id = '$borrower'") or die (mysqli_error($link));
-$geth = mysqli_fetch_array($selectin);
-$name = $geth['fname'];
+$status = $row['status'];
+$loanName = $row['loanName'];
+$interest = $row['interest'];
+$methodName = $row['methodName'];
+$lname = $row['lname'];
+$fname = $row['fname'];
+$upstatus = 1;//$row['upstatus'];
+
+// $borrower = $row['id'],' - ',$row['lname'],', ',$row['fname'];
+echo $lname	;
 ?> 
-<?php
-if($upstatus == "Pending")
-{
-?>  
                 <tr>
 				<td><input id="optionsCheckbox" class="checkbox" name="selector[]" type="checkbox" value="<?php echo $row['id']; ?>"></td>
-                <td><?php echo "Flexible"; ?></td>
-				<td><?php echo $row['baccount']; ?></td>
-				<td><?php echo $row['desc']; ?></td>
-                <td><?php echo $row['amount']; ?></td>
-				<td><?php echo $row['amount_topay']; ?></td>
-				<td><?php echo $geth['fname']; ?></td>
-				<td><?php echo $row['agent']; ?></td>
-			    <td><?php echo $row['teller']; ?></td>
-				<td><?php echo $row['date_release']; ?></td>
-				<td><?php echo $row['pay_date']; ?></td>
+                <!-- <td><?php echo "Flexible"; ?></td> -->
+				<td ><?php echo $loanId; ?></td>
+				<td><?php echo $row['id'],' - ',$row['lname'],', ',$row['fname']; ?></td>
+                <td><?php echo $loanName; ?></td>
+				<td><?php echo $loanPeriod; ?></td>
+				<td><?php echo $methodName; ?></td>
+				<td><?php echo $loanAmount; ?></td>
+			    <td><?php echo $interest; ?></td>
                 <td>
-				 <span class="label label-<?php if($status =='Approved')echo 'success'; elseif($status =='Disapproved')echo 'danger'; else echo 'warning';?>"><?php echo $status; ?></span>
+				 <span class="label label-<?php if($status == 1)echo 'success'; elseif($status == 2)echo 'danger'; else echo 'warning';?>"><?php echo $status == 1 ? "Approved" : "Pending" ; ?></span>
 				</td>
-			<td align="center" class="alert alert-danger"><?php echo $upstatus; ?><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td>
+			<td align="center" class="alert alert-danger"><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td>
 			<td>
 			<?php echo ($pupdate == '1') ? '<a href="#myModal '.$id.'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-edit"></i></button></a>' : ''; ?>
 			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button></a>' : ''; ?>
@@ -98,38 +100,7 @@ while($gete = mysqli_fetch_array($se))
 						    
 			    </tr>
 <?php
-}
-else{
-?>
-				<tr>
-				<td><input id="optionsCheckbox" class="checkbox" name="selector[]" type="checkbox" value="<?php echo $row['id']; ?>"></td>
-                <td><?php echo "Flexible"; ?></td>
-				<td><?php echo $row['baccount']; ?></td>
-				<td><?php echo $row['desc']; ?></td>
-                <td><?php echo $row['amount']; ?></td>
-				<td><?php echo $row['amount_topay']; ?></td>
-				<td><?php echo $geth['fname']; ?></td>
-				<td><?php echo $row['agent']; ?></td>
-			    <td><?php echo $row['teller']; ?></td>
-				<td><?php echo $row['date_release']; ?></td>
-				<td><?php echo $row['pay_date']; ?></td>
-                <td>
-				<span class="label label-<?php if($status =='Approved')echo 'success'; elseif($status =='Disapproved')echo 'danger'; else echo 'warning';?>"><?php echo $status; ?></span>
-				</td>
-				<td align="center" class="alert alert-success"><?php echo $upstatus; ?></td>
-				<td>
-				<?php echo ($pupdate == '1') ? '<a href="#myModal '.$id.'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-edit"></i></button></a>' : ''; ?>
-			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button></a>' : ''; ?>
-<?php
-$se = mysqli_query($link, "SELECT * FROM attachment WHERE get_id = '$borrower'") or die (mysqli_error($link));
-while($gete = mysqli_fetch_array($se))
-{
-?>
-				<a href="<?php echo $gete['attached_file']; ?>"><button type="button" class="btn btn-flat btn-success"><i class="fa fa-download"></i></button></a>
-<?php } ?>
-				</td>	    
-			    </tr>
-<?php } } } ?>
+} } ?>
              </tbody>
                 </table>  
 <?php

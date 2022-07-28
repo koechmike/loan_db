@@ -1,11 +1,7 @@
 <div class="row">	
 		
 	 <section class="content">
-     
-	<?php echo '<div class="alert alert-warning fade in" >
-			  <a href = "#" class = "close" data-dismiss= "alert"> &times;</a>
-  				<strong>Please Note that&nbsp;</strong> &nbsp;&nbsp;You Must Tick All Added Checkbox Before Clicking on update button below
-				</div>'?>
+
 	        <div class="box box-success">
             <div class="box-body">
               <div class="table-responsive">
@@ -14,20 +10,22 @@
 			 <div class="col-md-14">
              <div class="nav-tabs-custom">
              <ul class="nav nav-tabs">
-              <li><a href="#tab_1" data-toggle="tab">Loan Information</a></li>
-              <li class="active"><a href="#tab_2" data-toggle="tab">Additional Fees</a></li>
-              <li><a href="#tab_3" data-toggle="tab">Attachment</a></li>
-              <li><a href="#tab_4" data-toggle="tab">Collateral</a></li>
-              <li><a href="#tab_5" data-toggle="tab">Payment Schedule</a></li>
+              <li><a href="#tab_1 active" data-toggle="tab">Loan Information</a></li>
+              <!-- <li class="active"><a href="#tab_2" data-toggle="tab">Additional Fees</a></li> -->
+              <!-- <li><a href="#tab_3" data-toggle="tab">Attachment</a></li> -->
+              <!-- <li><a href="#tab_4" data-toggle="tab">Collateral</a></li> -->
+              <!-- <li><a href="#tab_5" data-toggle="tab">Payment Schedule</a></li> -->
               </ul>
              <div class="tab-content">
-             <div class="tab-pane" id="tab_1">
+             <div class="tab-pane active" id="tab_1">
 <?php
 $id = $_GET['id'];
-$select = mysqli_query($link, "SELECT * FROM loan_info WHERE id = '$id'") or die (mysqli_error($link));
+$loanQuery = "SELECT * FROM loans WHERE loanId = '$id'";
+// echo $loanQuery;
+$select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
 while($row = mysqli_fetch_array($select))
 {
-$borrower = $row['borrower'];   
+// $borrower = $row['borrower'];   
 ?>           
 			 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_loan_info.php">
 			  <?php echo '<div class="alert alert-info fade in" >
@@ -36,165 +34,131 @@ $borrower = $row['borrower'];
 				</div>'?>
              <div class="box-body">
 				
-			
-			 <div class="form-group">
-                <label for="" class="col-sm-2 control-label" style="color:#009900">Borrower</label>
-				 <div class="col-sm-10">
-				<?php
-				$get = mysqli_query($link, "SELECT * FROM borrowers WHERE id = '$borrower'") or die (mysqli_error($link));
-				while($rows = mysqli_fetch_array($get))
-				{
-				?>
-					<input name="borrower" type="text" class="form-control" value=<?php echo $rows['fname'].'&nbsp;'.$rows['lname']; ?> readonly>
-				<?php } ?>
-              </div>
-			  </div>
-			  
-			<div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Account</label>
-                  <div class="col-sm-10">
-                  <input name="account" type="text" class="form-control" value="<?php echo $row['baccount']; ?>" readonly>
-                  </div>
-                  </div>
-				 
-		<div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Amount</label>
-                  <div class="col-sm-10">
-                  <input name="amount" type="text" class="form-control" value="<?php echo $row['amount']; ?>" readonly>
-                  </div>
-                  </div>
-		
-		 <div class="form-group">
-                  	<label for="" class="col-sm-2 control-label" style="color:#009900">Description</label>
-                  	<div class="col-sm-10">
-					<textarea name="desc"  class="form-control" rows="4" cols="80" readonly><?php echo $row['desc']; ?></textarea>
-           			 </div>
-					 </div>
-		
-		 <div class="form-group">
-                <label for="" class="col-sm-2 control-label" style="color:#009900">Date Release</label>
-			 <div class="col-sm-10">
-              <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input name="date_release" type="text" class="form-control pull-right" value="<?php echo $row['date_release']; ?>" readonly>
-                </div>
-              </div>
-			  </div>
-			  
-			<div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Agent</label>
-                  <div class="col-sm-10">
-                  <input name="agent" type="text" class="form-control" value="<?php echo $row['agent']; ?>" readonly>
-                  </div>
-                  </div>
-				  
-				 
-				  
-			<div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Status</label>
-                  <div class="col-sm-10">
-                  <input name="status" type="text" class="form-control" value="<?php echo $row['status']; ?>"readonly="readonly">
-                  </div>
-                  </div>
-				  					
-			<div class="form-group">
-                  	<label for="" class="col-sm-2 control-label" style="color:#009900">Remarks</label>
-                  	<div class="col-sm-10">
-					<textarea name="remarks"  class="form-control" rows="4" cols="80" readonly="readonly"><?php echo $row['remarks']; ?></textarea>
-           			 </div>
-          	</div>
-
-
-
-<hr>	
-<div class="alert-danger">&nbsp;GUARANTOR INFORMATION</div>
-<hr>
-				  
-			<div class="form-group">
-				<label for="" class="col-sm-2 control-label" style="color:#009900">Gurantor's Passport</label>
-				<div class="col-sm-10">
-  		  		
-       			 <img id="blah"  src="../<?php echo $row ['g_image'] ;?>" alt="Image Here" height="100" width="100"/>
+					 <div class="row">	
+				<div class="col-md-8">	
+					<fieldset style="width:100%">	
+						<legend>Loan Details</legend> 
+						<div class="col-md-6">			
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Borrower ID</label>
+								</div>
+								<div class="col-md-6">			
+                  <?php
+                  $bid = $row['borrowerId'];
+                  $bidQuery = "SELECT * FROM borrowers where id = ".$bid;
+                  // echo $bidQuery;
+                  $b = mysqli_query($link, $bidQuery) or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        {     ?>    
+									<input placeholder="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="number" class="form-control" readonly >
+                  <input type="hidden" value="<?php echo $row['borrowerId'] ?>" name="borrorwerId" type="number" class="form-control" readonly >
+                  <?php }?>
+								</div>
+							</div>	
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan No.</label>
+								</div>
+								<div class="col-md-6">
+									<input value="<?php echo $row['loanId'] ; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan Type</label>
+								</div>
+								<div class="col-sm-6">
+									<select name="loanType"  class="form-control" required>
+										<option value="">Select a loan type&hellip;</option>
+                                        <?php
+                                        	$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
+                                            while($lt_res = mysqli_fetch_array($lt))
+                                        {         
+                                        ?>
+                                        <option <?php if($row['loanType'] == $lt_res['loanCode']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName']," - ",$lt_res['repayPeriod']," months"  ?></option>
+                                        <?php } ?>
+                                    </select>              
+								</div>
+							</div>	
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
+								</div>
+								<div class="col-md-6">
+									<input value="<?php echo $row['interest'] ; ?>"  name="interest" type="number" class="form-control" placeholder="Interest" required>
+								</div>
+							</div>			
+						</div>
+						<div class="col-md-6">
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
+								</div>
+								<div class="col-sm-6">
+								<select name="repaymentMethod"  class="form-control" required>
+										<option value="">Select a repayment method&hellip;</option>
+                                        <?php
+                                        	$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
+                                            while($lt_res = mysqli_fetch_array($lt))
+                                        {         
+                                        ?>
+                                        <option <?php if($row['calculationMethod'] == $lt_res['methodId']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
+                                        <?php } ?>
+                                    </select>             
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-7">
+									<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
+								</div>
+								<div class="col-md-5">
+									<input value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+								</div>
+								<div class="col-md-6">
+									<input value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
+								</div>
+							</div>
+						</div>
+					</fieldset>	
+				</div>
+				<div class="col-md-4">
+					<fieldset style="width:270px">
+						<div class="col-md-12">	
+							<legend>Gurantor</legend> 
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-4">
+									<label for="" class="control-label" style="color:#009900">Name</label>
+								</div>
+								<div class="col-md-8">
+									<input value="<?php echo $row['gName'] ; ?>" name="gName" type="text" class="form-control" placeholder="Name" >
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-4">
+									<label for="" class="control-label" style="color:#009900">Address</label>
+								</div>
+								<div class="col-md-8">
+									<input value="<?php echo $row['gAddress'] ; ?>" name="gAddress" type="text" class="form-control" placeholder="Address" >
+								</div>
+							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-4">
+									<label for="" class="control-label" style="color:#009900">Contact</label>
+								</div>
+								<div class="col-md-8">
+									<input value="<?php echo $row['gContact'] ; ?>" name="gContact" type="text" class="form-control" placeholder="Contact" >
+								</div>
+							</div>
+						</div>
+					</fieldset>
+				</div>
 			</div>
-			</div>
-			
-			<div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Relationship</label>
-                  <div class="col-sm-10">
-                  <input name="grela" type="text" class="form-control" value="<?php echo $row['rela']; ?>" readonly="readonly">
-                  </div>
-                  </div>
-			
-			 <div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Guarantor's Name</label>
-                  <div class="col-sm-10">
-                  <input name="agent" type="text" class="form-control" value="<?php echo $row['g_name']; ?>" readonly>
-                  </div>
-                  </div>
-				  
-				  <div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Guarantor's Phone Number</label>
-                  <div class="col-sm-10">
-                  <input name="agent" type="text" class="form-control" value="<?php echo $row['g_phone']; ?>" readonly>
-                  </div>
-                  </div>
-				  
-				 
-				 <div class="form-group">
-                  	<label for="" class="col-sm-2 control-label" style="color:#009900">Guarantor's Address</label>
-                  	<div class="col-sm-10">
-					<textarea name="gaddress"  class="form-control" rows="4" cols="80" readonly="readonly"><?php echo $row['g_address']; ?></textarea>
-           			 </div>
-          	</div> 
-			
-
-			
-<hr>	
-<div class="alert-danger">&nbsp;PAYMENT INFORMATION</div>
-<hr>	
-					
-					 <div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Current Balance</label>
-                  <div class="col-sm-10">
-                  <input name="user" type="text" class="form-control" value="0.00" readonly>
-                  </div>
-                  </div>
-				  
-				   <div class="form-group">
-                <label for="" class="col-sm-2 control-label" style="color:#009900">Payment Date</label>
-			 <div class="col-sm-10">
-              <div class="input-group date">
-                  <div class="input-group-addon">
-                    <i class="fa fa-calendar"></i>
-                  </div>
-                  <input name="pay_date" type="text" class="form-control pull-right" value="<?php echo $row['pay_date']; ?>" readonly>
-                </div>
-              </div>
-			  </div>
-				  
-				  <div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Amount to Pay</label>
-                  <div class="col-sm-10">
-                  <input name="amount_topay" type="number" class="form-control" value="<?php echo $row['amount_topay']; ?>" readonly>
-                  </div>
-                  </div>
-				  
-				  <div class="form-group">
-                  <label for="" class="col-sm-2 control-label" style="color:#009900">Teller By</label>
-                  <div class="col-sm-10">
-                  <input name="teller" type="text" class="form-control" value="<?php echo $row['teller']; ?>" readonly>
-                  </div>
-                  </div>
-				
-				
-				<div class="form-group">
-                  	<label for="" class="col-sm-2 control-label" style="color:#009900">Remarks</label>
-                  	<div class="col-sm-10">
-					<textarea name="remark"  class="form-control" rows="4" cols="80" readonly="readonly"><?php echo $row['remarks']; ?></textarea>
-           			 </div>
-          	</div>
 				  
 			 </div>
 			 
@@ -202,7 +166,7 @@ $borrower = $row['borrower'];
 <?php } ?>
               </div>
               <!-- /.tab-pane -->
-              <div class="tab-pane active" id="tab_2">
+              <div class="tab-pane " id="tab_2">
 			  <form method="post">
 			 			 <table>
 <div align="center"><h4>Additional Fees</h4></div>

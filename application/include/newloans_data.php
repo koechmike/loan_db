@@ -64,31 +64,43 @@
                                             while($lt_res = mysqli_fetch_array($lt))
                                         {         
                                         ?>
-                                        <option value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName'] ?></option>
+                                        <option value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName']," - ",$lt_res['repayPeriod']," months"  ?></option>
                                         <?php } ?>
                                     </select>              
 								</div>
-							</div>				
+							</div>	
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
+								</div>
+								<div class="col-md-6">
+									<input  name="interest" type="number" class="form-control" placeholder="Interest" required>
+								</div>
+							</div>			
 						</div>
 						<div class="col-md-6">
 							<div style="margin-bottom: 1rem" class="row">
 								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Calculation Method</label>
+									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
 								</div>
 								<div class="col-sm-6">
-									<select name="calculationMethod"  class="form-control" required>
-										<option value="">Select a calculation method&hellip;</option>
-										<option value=1>Reducing Balance</option>
-										<option value=2>Flat Rage</option>
-										<option value=3>Effecitive Rate</option>
-									</select>                 
+								<select name="repaymentMethod"  class="form-control" required>
+										<option value="">Select a repayment method&hellip;</option>
+                                        <?php
+                                        	$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
+                                            while($lt_res = mysqli_fetch_array($lt))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
+                                        <?php } ?>
+                                    </select>             
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Loan Period (Months)</label>
+								<div class="col-md-7">
+									<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
 								</div>
-								<div class="col-md-6">
+								<div class="col-md-5">
 									<input  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
 								</div>
 							</div>

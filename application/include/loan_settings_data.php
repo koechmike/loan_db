@@ -23,7 +23,7 @@
                                                 <th align="center" width="300">Name</th>
                                                 <th align="center" width="300">Repayment Method</th>
                                                 <th align="center" width="300">Repayment Period</th>
-                                                <th align="center" width="300">Interest Rate</th>
+                                                <!-- <th align="center" width="300">Interest Rate</th> -->
                                                 <th align="center" width="300">Require Guarantor</th>
                                                 <tbody> 
                                                     <?php
@@ -57,7 +57,7 @@
                                                             <!-- <input required name="repayMethod[]" type="text" class="form-control" placeholder="Repay Method" value="<?php echo $have['repayMethod']; ?>"> -->
                                                         </td>
                                                         <td width="300"><input required name="repayPeriod[]" type="number" class="form-control" placeholder="Repay Period" value="<?php echo $have['repayPeriod']; ?>"></td>
-                                                        <td width="300"><input required name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $have['interestRate']; ?>"></td>
+                                                        <!-- <td width="300"><input required name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $have['interestRate']; ?>"></td> -->
                                                         <td width="300">
                                                             <select name="requireGuarantor[]"  class="form-control"  required>
                                                               
@@ -134,7 +134,7 @@
                                                     $loanName = mysqli_real_escape_string($link, $_POST['loanName'][$i]);
                                                     $repayMethod = mysqli_real_escape_string($link, $_POST['repayMethod'][$i]);
                                                     $repayPeriod = mysqli_real_escape_string($link, $_POST['repayPeriod'][$i]);
-                                                    $interestRate = mysqli_real_escape_string($link, $_POST['interestRate'][$i]);
+                                                    $interestRate = 0;//mysqli_real_escape_string($link, $_POST['interestRate'][$i]);
                                                     $requireGuarantor = mysqli_real_escape_string($link, $_POST['requireGuarantor'][$i]);
                                                     $updateQuery = "UPDATE loan_types SET loanName = '$loanName', repayMethod = '$repayMethod', repayPeriod = '$repayPeriod', interestRate = '$interestRate', requireGuarantor = '$requireGuarantor'  WHERE loanCode = '$loanCode'";
                                                     echo $updateQuery;

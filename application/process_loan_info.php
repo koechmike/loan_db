@@ -39,17 +39,18 @@
 if(isset($_POST['save_loan']))
 {
 	$borrowerId =  mysqli_real_escape_string($link, $_POST['borrowerId']);
-	$calcuationMethod = mysqli_real_escape_string($link, $_POST['calcuationMethod']);
+	$calcuationMethod = mysqli_real_escape_string($link, $_POST['repaymentMethod']);
 	$loanPeriod = mysqli_real_escape_string($link, $_POST['loanPeriod']);
 	$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
 	$loanType = mysqli_real_escape_string($link, $_POST['loanType']);
 	$gName = mysqli_real_escape_string($link, $_POST['gName']);
 	$gContact = mysqli_real_escape_string($link, $_POST['gContact']);
 	$gAddress = mysqli_real_escape_string($link, $_POST['gAddress']);
+	$interest = mysqli_real_escape_string($link, $_POST['interest']);
 
 	$status = 0;
 
-	$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod','$calcuationMethod','$loanAmount','$gName','$gAddress','$gContact','$status')";
+	$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod','$calcuationMethod','$loanAmount','$gName','$gAddress','$gContact','$status',$interest)";
 	// echo $query;
 	$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 	if(!$insert)
