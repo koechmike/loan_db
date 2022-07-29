@@ -1,6 +1,8 @@
 <?php include("include/header.php"); ?>
 <div class="wrapper">
 
+<?php $pageid = $_GET['pageid']; ?>
+
 <?php include("include/top_bar.php"); ?>
   <!-- Left side column. contains the logo and sidebar -->
 <?php include("include/side_bar.php"); ?>
@@ -20,7 +22,7 @@
       </ol>
     </section>
     <section class="content">
-		<?php include("include/listloans_data.php"); ?>
+		<?php include("include/listloans_data.php?pageid=$pageid"); ?>
 	</section>
 </div>	
 

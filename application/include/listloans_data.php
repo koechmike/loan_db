@@ -7,6 +7,8 @@
 <form method="post">
 			 <a href="dashboard.php?id=<?php echo $_SESSION['tid']; ?>&&mid=<?php echo base64_encode("401"); ?>"><button type="button" class="btn btn-flat btn-warning"><i class="fa fa-mail-reply-all"></i>&nbsp;Back</button> </a> 
 <?php
+$pageid = $_GET['pageid'];
+echo $pageid;
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Loan Details'") or die ("Error" . mysqli_error($link));
 $get_check = mysqli_fetch_array($check);
 $pdelete = $get_check['pdelete'];
@@ -42,7 +44,7 @@ $num = mysqli_num_rows($select);
                   <!-- <th>Approve By</th> -->
                   <!-- <th>date Release</th> -->
                   <!-- <th>Payment Date</th> -->
-                  <th>Approval Status</th>
+                  <th>Status</th>
 				  <!-- <th>Update Status</th> -->
                   <th>Action</th>
                  </tr>
@@ -71,7 +73,6 @@ $fname = $row['fname'];
 $upstatus = 1;//$row['upstatus'];
 
 // $borrower = $row['id'],' - ',$row['lname'],', ',$row['fname'];
-echo $lname	;
 ?> 
                 <tr>
 				<td><input id="optionsCheckbox" class="checkbox" name="selector[]" type="checkbox" value="<?php echo $row['id']; ?>"></td>
@@ -84,12 +85,12 @@ echo $lname	;
 				<td><?php echo $loanAmount; ?></td>
 			    <td><?php echo $interest; ?></td>
                 <td>
-				 <span class="label label-<?php if($status == 1)echo 'success'; elseif($status == 2)echo 'danger'; else echo 'warning';?>"><?php echo $status == 1 ? "Approved" : "Pending" ; ?></span>
+				 <span class="label label-<?php if($status == 1)echo 'success'; elseif($status == 2)echo 'danger'; else echo 'warning';?>"><?php echo $status == 1 ? "Approved" : "Pending Appraisal" ; ?></span>
 				</td>
 			<!-- <td align="center" class="alert alert-danger"><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td> -->
 			<td>
 			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-edit"></i></button></a>' : ''; ?>
-			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button></a>' : ''; ?>
+			<!-- <?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button></a>' : ''; ?> -->
 <?php
 $se = mysqli_query($link, "SELECT * FROM attachment WHERE get_id = '$borrower'") or die (mysqli_error($link));
 while($gete = mysqli_fetch_array($se))
