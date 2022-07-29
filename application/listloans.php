@@ -22,7 +22,7 @@
       </ol>
     </section>
     <section class="content">
-		<?php include("include/listloans_data.php?pageid=$pageid"); ?>
+		<?php include("include/listloans_data.php"); ?>
 	</section>
 </div>	
 
