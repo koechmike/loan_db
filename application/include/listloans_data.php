@@ -43,7 +43,7 @@ $num = mysqli_num_rows($select);
                   <!-- <th>date Release</th> -->
                   <!-- <th>Payment Date</th> -->
                   <th>Approval Status</th>
-				  <th>Update Status</th>
+				  <!-- <th>Update Status</th> -->
                   <th>Action</th>
                  </tr>
                 </thead>
@@ -86,9 +86,9 @@ echo $lname	;
                 <td>
 				 <span class="label label-<?php if($status == 1)echo 'success'; elseif($status == 2)echo 'danger'; else echo 'warning';?>"><?php echo $status == 1 ? "Approved" : "Pending" ; ?></span>
 				</td>
-			<td align="center" class="alert alert-danger"><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td>
+			<!-- <td align="center" class="alert alert-danger"><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td> -->
 			<td>
-			<?php echo ($pupdate == '1') ? '<a href="#myModal '.$id.'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-edit"></i></button></a>' : ''; ?>
+			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-edit"></i></button></a>' : ''; ?>
 			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button></a>' : ''; ?>
 <?php
 $se = mysqli_query($link, "SELECT * FROM attachment WHERE get_id = '$borrower'") or die (mysqli_error($link));
