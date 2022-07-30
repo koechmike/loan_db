@@ -16,8 +16,8 @@
 
 
 -- Dumping database structure for loan
--- DROP DATABASE IF EXISTS `loan`;
-CREATE DATABASE IF NOT EXISTS `loan` 
+DROP DATABASE IF EXISTS `loan`;
+CREATE DATABASE IF NOT EXISTS `loan` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `loan`;
 
 -- Dumping structure for table loan.aboutus
@@ -29,7 +29,6 @@ CREATE TABLE IF NOT EXISTS `aboutus` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.aboutus: ~0 rows (approximately)
-DELETE FROM `aboutus`;
 
 -- Dumping structure for table loan.additional_fees
 DROP TABLE IF EXISTS `additional_fees`;
@@ -43,7 +42,6 @@ CREATE TABLE IF NOT EXISTS `additional_fees` (
 ) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.additional_fees: ~6 rows (approximately)
-DELETE FROM `additional_fees`;
 INSERT INTO `additional_fees` (`id`, `get_id`, `tid`, `fee`, `Amount`) VALUES
 	(20, '1', 'Loan=1907598678', 'dddd', '7888'),
 	(21, '2', 'Loan=21319580', 'Late Payment', '4000'),
@@ -64,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `attachment` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.attachment: ~3 rows (approximately)
-DELETE FROM `attachment`;
 INSERT INTO `attachment` (`id`, `get_id`, `tid`, `attached_file`, `date_time`) VALUES
 	(1, '1', 'Loan=1907598678', 'document/4887_File_cryptos documentation.docx', '2017-05-01 12:11:34'),
 	(2, '2', 'Loan=21319580', 'document/2782_File_Email.docx', '2017-05-10 16:56:55'),
@@ -82,7 +79,6 @@ CREATE TABLE IF NOT EXISTS `backup` (
 ) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.backup: ~4 rows (approximately)
-DELETE FROM `backup`;
 INSERT INTO `backup` (`id`, `tracking_id`, `amount`, `address`, `date_time`) VALUES
 	(10, 'Cryptos?rid=782752', '0.1', '134N7BmQZHSj2WU7kUaN8fFada32GpBXbg', '2017-04-03 14:37:40'),
 	(11, 'Cryptos?rid=782752', '0.1', '134N7BmQZHSj2WU7kUaN8fFada32GpBXbg', '2017-04-03 15:14:12'),
@@ -97,8 +93,7 @@ CREATE TABLE IF NOT EXISTS `banner` (
   PRIMARY KEY (`banaid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.banner: ~0 rows (approximately)
-DELETE FROM `banner`;
+-- Dumping data for table loan.banner: ~1 rows (approximately)
 INSERT INTO `banner` (`banaid`, `bannar`) VALUES
 	(3, 'bannar/sld2.jpg');
 
@@ -114,7 +109,6 @@ CREATE TABLE IF NOT EXISTS `battachment` (
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.battachment: ~5 rows (approximately)
-DELETE FROM `battachment`;
 INSERT INTO `battachment` (`id`, `get_id`, `tid`, `attached_file`, `date_time`) VALUES
 	(1, '1', 'Loan=1907598678', 'bdocument/5605_File_Below is the screenshot of the welcome mail sent to me when I registered with namecheap.docx', '2017-05-01 17:30:28'),
 	(2, '1', 'Loan=1907598678', 'bdocument/2630_File_Below is the screenshot of the welcome mail sent to me when I registered with namecheap.docx', '2017-05-01 17:32:52'),
@@ -160,8 +154,7 @@ CREATE TABLE IF NOT EXISTS `borrowers` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.borrowers: ~14 rows (approximately)
-DELETE FROM `borrowers`;
+-- Dumping data for table loan.borrowers: ~15 rows (approximately)
 INSERT INTO `borrowers` (`id`, `fname`, `lname`, `email`, `phone`, `addrs1`, `addrs2`, `comment`, `account`, `balance`, `image`, `date_time`, `status`, `idNumber`, `maritalStatus`, `powName`, `position`, `powAddress`, `powTown`, `powContact`, `powEmail`, `nokName`, `nokEmail`, `nokContact`, `nokRelationship`, `nokResidence`, `nokIdNumber`, `iName`, `iDob`, `iContact`, `iResidence`, `iIdNumber`) VALUES
 	(17, 'Ayanna', 'Brielle', 'sizomokyx@mailinator.com', 'Hedda', 'Fritz', 'Deanna', '', '', '0', NULL, '2022-07-25 21:07:52', 'Pending', '658', '2', 'Nadine', 'Hadassah', 'Neve', 'Ira', 590, 'kyfenyqax@mailinator.com', 'Flavia', 'turojo@mailinator.com', 742, '2', 'Cherokee', '129', 'Xander', '1981-07-30', 420, 'Chadwick', '131'),
 	(18, 'Kameko', 'Joan', 'xodamefohi@mailinator.com', 'Dai', 'Cassady', 'Leandra', '', '', '0', NULL, '2022-07-25 21:17:09', 'Pending', '349', '1', 'Octavius', 'Kuame', 'Sylvia', 'Derek', 389, 'sovebol@mailinator.com', 'Willa', 'rowizilyh@mailinator.com', 230, '4', 'Marah', '296', 'Joy', '2021-06-30', 139, 'Lila', '367'),
@@ -185,10 +178,9 @@ CREATE TABLE IF NOT EXISTS `calculation_method` (
   `methodId` int NOT NULL,
   `methodName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`methodId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table loan.calculation_method: ~3 rows (approximately)
-DELETE FROM `calculation_method`;
 INSERT INTO `calculation_method` (`methodId`, `methodName`) VALUES
 	(1, 'Reducing Balance'),
 	(2, 'Straight Line'),
@@ -213,7 +205,6 @@ CREATE TABLE IF NOT EXISTS `collateral` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.collateral: ~3 rows (approximately)
-DELETE FROM `collateral`;
 INSERT INTO `collateral` (`id`, `idm`, `tid`, `name`, `type_of_collateral`, `model`, `make`, `serial_number`, `estimated_price`, `proof_of_ownership`, `cimage`, `observation`) VALUES
 	(1, '1', 'Loan=1907598678', 'bhhh', 'jhhhjk', 'hhh', 'hkkhkk', '87877878', '78787', '', 'cimage/9fdfcacaa4d943e0328bd32e35a40035ebdc7a9b.png', 'hkjkl'),
 	(2, '2', 'Loan=21319580', 'Mr Segun O', 'New', 'LOAN2011', 'NEWLOAN', 'LOANS20166', '40000', '', 'cimage/OPTIMUM LOGO FINAL .png', 'This is just testing'),
@@ -230,7 +221,6 @@ CREATE TABLE IF NOT EXISTS `countries` (
 ) ENGINE=MyISAM AUTO_INCREMENT=250 DEFAULT CHARSET=utf8mb3;
 
 -- Dumping data for table loan.countries: 249 rows
-DELETE FROM `countries`;
 /*!40000 ALTER TABLE `countries` DISABLE KEYS */;
 INSERT INTO `countries` (`id`, `name`, `alpha_2`, `alpha_3`) VALUES
 	(1, 'Afghanistan', 'fl', 'afg'),
@@ -497,8 +487,7 @@ CREATE TABLE IF NOT EXISTS `emp_permission` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.emp_permission: ~22 rows (approximately)
-DELETE FROM `emp_permission`;
+-- Dumping data for table loan.emp_permission: ~24 rows (approximately)
 INSERT INTO `emp_permission` (`id`, `tid`, `module_name`, `pcreate`, `pread`, `pupdate`, `pdelete`) VALUES
 	(34, 'Cryptos?rid=782752', 'Email Panel', '0', '0', '0', '0'),
 	(35, 'Cryptos?rid=782752', 'Borrower Details', '1', '0', '0', '0'),
@@ -534,7 +523,6 @@ CREATE TABLE IF NOT EXISTS `emp_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.emp_role: ~0 rows (approximately)
-DELETE FROM `emp_role`;
 
 -- Dumping structure for table loan.etemplates
 DROP TABLE IF EXISTS `etemplates`;
@@ -549,7 +537,6 @@ CREATE TABLE IF NOT EXISTS `etemplates` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.etemplates: ~0 rows (approximately)
-DELETE FROM `etemplates`;
 
 -- Dumping structure for table loan.faqs
 DROP TABLE IF EXISTS `faqs`;
@@ -560,8 +547,7 @@ CREATE TABLE IF NOT EXISTS `faqs` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.faqs: ~0 rows (approximately)
-DELETE FROM `faqs`;
+-- Dumping data for table loan.faqs: ~1 rows (approximately)
 INSERT INTO `faqs` (`id`, `topic`, `content`) VALUES
 	(1, 'Please type the subject here', '<p>Please Update Faqs Here</p>\r\n');
 
@@ -577,7 +563,6 @@ CREATE TABLE IF NOT EXISTS `fin_info` (
 ) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.fin_info: ~6 rows (approximately)
-DELETE FROM `fin_info`;
 INSERT INTO `fin_info` (`id`, `get_id`, `tid`, `occupation`, `mincome`) VALUES
 	(3, '1', 'Loan=1907598678', '', ''),
 	(5, '2', 'Loan=1907598678', 'Teacher', '40000'),
@@ -607,8 +592,7 @@ CREATE TABLE IF NOT EXISTS `footer` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.footer: ~0 rows (approximately)
-DELETE FROM `footer`;
+-- Dumping data for table loan.footer: ~1 rows (approximately)
 INSERT INTO `footer` (`id`, `email`, `pho`, `face`, `webs`, `conh`, `twi`, `gplus`, `ins`, `yous`, `about`, `apply`, `mission`, `objective`, `map`) VALUES
 	(2, 'info@bequesters.com', '+233808883675466', 'www.facebook.com/info@bequesters', 'www.bequesters.com', 'Lasvegas USA', 'www.twitter.com/info@bequesters', 'www.googleplus.com/oinfo@bequesters', 'www.in.com/info@bequesters', 'www.youtube.com/info@bequesters', 'About the system here. Thanks, We are just testing the software and we discover that the software is errors free. Thanks once again.', 'Who may apply here. Thabnks', 'Mission here. Thanks', 'System OBJECTIVE HERE. Thanks', '');
 
@@ -620,8 +604,7 @@ CREATE TABLE IF NOT EXISTS `hiw` (
   PRIMARY KEY (`hid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.hiw: ~0 rows (approximately)
-DELETE FROM `hiw`;
+-- Dumping data for table loan.hiw: ~1 rows (approximately)
 INSERT INTO `hiw` (`hid`, `hiw`) VALUES
 	(1, '<p>We Provide Loans For Individual, Coperate and Many</p>\r\n');
 
@@ -646,10 +629,9 @@ CREATE TABLE IF NOT EXISTS `loans` (
   CONSTRAINT `loans_borrowerId` FOREIGN KEY (`borrowerId`) REFERENCES `borrowers` (`id`),
   CONSTRAINT `loans_calculationMethod` FOREIGN KEY (`calculationMethod`) REFERENCES `calculation_method` (`methodId`),
   CONSTRAINT `loans_loanType` FOREIGN KEY (`loanType`) REFERENCES `loan_types` (`loanCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table loan.loans: ~1 rows (approximately)
-DELETE FROM `loans`;
 INSERT INTO `loans` (`loanId`, `borrowerId`, `loanType`, `loanPeriod`, `calculationMethod`, `loanAmount`, `gName`, `gAddress`, `gContact`, `status`, `interest`) VALUES
 	(5, 21, 4, 1, 1, 1, '', '', '', 0, 1);
 
@@ -678,8 +660,7 @@ CREATE TABLE IF NOT EXISTS `loan_info` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.loan_info: ~0 rows (approximately)
-DELETE FROM `loan_info`;
+-- Dumping data for table loan.loan_info: ~1 rows (approximately)
 INSERT INTO `loan_info` (`id`, `borrower`, `baccount`, `desc`, `amount`, `date_release`, `agent`, `g_name`, `g_phone`, `g_address`, `rela`, `g_image`, `status`, `remarks`, `pay_date`, `amount_topay`, `teller`, `remark`, `upstatus`) VALUES
 	(7, '5', '--Select Customer--', 'new loan', '500000', '06/21/2017', 'Admin', 'Mr Segun', '09034543234', '4, ade', 'GFriend', 'img/', 'Approved', 'good', '10/31/2017', '1000000', 'Admin', 'new loan', 'Pending');
 
@@ -696,10 +677,9 @@ CREATE TABLE IF NOT EXISTS `loan_type` (
   `calculationMethod` int DEFAULT NULL,
   `guarantor` int DEFAULT NULL,
   PRIMARY KEY (`typeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table loan.loan_type: ~0 rows (approximately)
-DELETE FROM `loan_type`;
 
 -- Dumping structure for table loan.loan_types
 DROP TABLE IF EXISTS `loan_types`;
@@ -711,10 +691,9 @@ CREATE TABLE IF NOT EXISTS `loan_types` (
   `interestRate` int DEFAULT NULL,
   `requireGuarantor` int DEFAULT NULL,
   PRIMARY KEY (`loanCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 ;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- Dumping data for table loan.loan_types: ~2 rows (approximately)
-DELETE FROM `loan_types`;
 INSERT INTO `loan_types` (`loanCode`, `loanName`, `repayMethod`, `repayPeriod`, `interestRate`, `requireGuarantor`) VALUES
 	(4, 'Test', '1', 1, 1, 1),
 	(6, 'Security Loan', '1', 1, 1, 0);
@@ -733,7 +712,6 @@ CREATE TABLE IF NOT EXISTS `message` (
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.message: ~3 rows (approximately)
-DELETE FROM `message`;
 INSERT INTO `message` (`id`, `sender_id`, `sender_name`, `msg_to`, `subject`, `message`, `date_time`) VALUES
 	(4, 'Cryptos?rid=782752', 'au JJJ', 'Loan=21319580', 'Hello', '<p>Good to see you</p>\r\n', '2017-05-01 18:46:57'),
 	(5, 'Loan=21319580', 'Admin', 'Cryptos?rid=782752', 'RE: Hello', '<p>Thanks<br />\r\n-------------------------</p>\r\n\r\n<p>&nbsp;</p>\r\n\r\n<p>Good to see you</p>\r\n\r\n<p>&nbsp;</p>\r\n', '2017-05-01 18:48:27'),
@@ -753,7 +731,6 @@ CREATE TABLE IF NOT EXISTS `mywallet` (
 ) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.mywallet: ~12 rows (approximately)
-DELETE FROM `mywallet`;
 INSERT INTO `mywallet` (`id`, `tid`, `t_to`, `Amount`, `Desc`, `wtype`, `tdate`) VALUES
 	(39, 'Loan=1907598678', 'NIL', '500', 'hkbvhk', 'credit', '2018-01-03 23:03:23'),
 	(55, 'Cryptos?rid=453536', 'NIL', '5000', 'transfer to aa HHJ', 'transfer', '2018-01-03 23:03:19'),
@@ -783,8 +760,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.payments: ~0 rows (approximately)
-DELETE FROM `payments`;
+-- Dumping data for table loan.payments: ~1 rows (approximately)
 INSERT INTO `payments` (`id`, `tid`, `account`, `account_no`, `customer`, `loan`, `pay_date`, `amount_to_pay`, `remarks`) VALUES
 	(5, 'Loan=21319580', '199382731', '5', '5', '1000000', '05/30/2017', '3000000', 'Payment for Doris Micheal');
 
@@ -794,10 +770,9 @@ CREATE TABLE IF NOT EXISTS `payment_method` (
   `methodId` int NOT NULL AUTO_INCREMENT,
   `methodName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`methodId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4  COMMENT='	';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
 
--- Dumping data for table loan.payment_method: ~1 rows (approximately)
-DELETE FROM `payment_method`;
+-- Dumping data for table loan.payment_method: ~2 rows (approximately)
 INSERT INTO `payment_method` (`methodId`, `methodName`) VALUES
 	(1, 'Mpesa'),
 	(5, 'Cash');
@@ -816,8 +791,7 @@ CREATE TABLE IF NOT EXISTS `payment_schedule` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.payment_schedule: ~0 rows (approximately)
-DELETE FROM `payment_schedule`;
+-- Dumping data for table loan.payment_schedule: ~1 rows (approximately)
 INSERT INTO `payment_schedule` (`id`, `idm`, `tid`, `term`, `day`, `schedule`, `interest`, `penalty`) VALUES
 	(10, '11', 'Loan=21319580', 'kjnk', 'Week', 'Daily', '2', '5');
 
@@ -834,8 +808,7 @@ CREATE TABLE IF NOT EXISTS `pay_schedule` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.pay_schedule: ~0 rows (approximately)
-DELETE FROM `pay_schedule`;
+-- Dumping data for table loan.pay_schedule: ~1 rows (approximately)
 INSERT INTO `pay_schedule` (`id`, `get_id`, `tid`, `schedule`, `balance`, `interest`, `payment`) VALUES
 	(11, '6', 'Loan=21319580', '12/30/2017', '200', '2', '50');
 
@@ -851,8 +824,7 @@ CREATE TABLE IF NOT EXISTS `sms` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.sms: ~0 rows (approximately)
-DELETE FROM `sms`;
+-- Dumping data for table loan.sms: ~1 rows (approximately)
 INSERT INTO `sms` (`id`, `sms_gateway`, `username`, `password`, `api`, `status`) VALUES
 	(1, 'SMSTEAMS', 'optimum', 'optimum', 'http://smsteams.com/components/com_spc/smsapi.php?', 'NotActivated');
 
@@ -878,8 +850,7 @@ CREATE TABLE IF NOT EXISTS `systemset` (
   PRIMARY KEY (`sysid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
--- Dumping data for table loan.systemset: ~0 rows (approximately)
-DELETE FROM `systemset`;
+-- Dumping data for table loan.systemset: ~1 rows (approximately)
 INSERT INTO `systemset` (`sysid`, `title`, `name`, `footer`, `abb`, `fax`, `currency`, `website`, `mobile`, `image`, `address`, `email`, `map`, `stamp`, `timezone`, `sms_charges`) VALUES
 	(1, 'Insight Lending Management System', 'Insight Credit', 'All rights reserved. 2022 (c)', 'ILMS', '23459', '$', 'https://www.lending.insightl.com', '+254788932', '../img/ass.png', '								', 'lending.insight@gmail.com', 'Map Code Here				', 'stamp.jpg', '-12', '25');
 
@@ -900,7 +871,6 @@ CREATE TABLE IF NOT EXISTS `transaction` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.transaction: ~19 rows (approximately)
-DELETE FROM `transaction`;
 INSERT INTO `transaction` (`id`, `txid`, `t_type`, `acctno`, `fn`, `ln`, `email`, `phone`, `amount`, `date_time`) VALUES
 	(1, 'TXID-35663574', 'Deposit', '0034445657', 'Ayodeji', 'Akinade', 'business2016@gmail.com', '08033527716', '2000', '2017-12-23 14:57:20'),
 	(2, 'TXID-48939392', 'Deposit', '20000', 'Doris', 'Micheal', 'segtism@gmail.com', '+1564783934', '1525', '2017-12-23 14:57:26'),
@@ -932,7 +902,6 @@ CREATE TABLE IF NOT EXISTS `twallet` (
 ) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.twallet: ~2 rows (approximately)
-DELETE FROM `twallet`;
 INSERT INTO `twallet` (`id`, `tid`, `Total`) VALUES
 	(10, 'Loan=21319580', '1025'),
 	(12, 'Cryptos?rid=782752', '550');
@@ -966,7 +935,6 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB AUTO_INCREMENT=483 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table loan.user: ~2 rows (approximately)
-DELETE FROM `user`;
 INSERT INTO `user` (`userid`, `name`, `email`, `phone`, `addr1`, `addr2`, `city`, `state`, `zip`, `country`, `comment`, `username`, `password`, `id`, `image`, `role`) VALUES
 	(467, 'au JJJ', 'at@g.com', '+2334857757769', 'Ghana                    ', 'Ghana										', 'Acra', 'Acra', '23450', 'US', '  Good Â  Â  Â Â Â  Â Â Â  Â Â Â  Â Â Â  Â  Â  Â Â Â  Â Â Â  Â Â Â  Â Â Â  Â  Â ', 'at', 'YXQ=', 'Cryptos?rid=782752', 'img/ac_logo.png', ''),
 	(482, 'Admin', 'admin@admin.com', '08101750845', 'address1', 'address2', 'city', 'state', 'zip', 'US', 'comment', 'admin', 'YWRtaW4=', 'Loan=21319580', 'img/bitcoin_3.png', 'admin');
