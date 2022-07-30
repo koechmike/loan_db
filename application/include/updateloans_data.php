@@ -20,6 +20,7 @@
              <div class="tab-pane active" id="tab_1">
 <?php
 $id = $_GET['id'];
+$pageid = $_GET['pageid'];
 $loanQuery = "SELECT * FROM loans WHERE loanId = '$id'";
 // echo $loanQuery;
 $select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
@@ -27,142 +28,144 @@ while($row = mysqli_fetch_array($select))
 {
 // $borrower = $row['borrower'];   
 ?>           
-			 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_loan_info.php">
+			<form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_loan_info.php">
 			  <?php echo '<div class="alert alert-info fade in" >
 			  <a href = "#" class = "close" data-dismiss= "alert"> &times;</a>
   				<strong>Note that&nbsp;</strong> &nbsp;&nbsp;Some Fields are Rquired.
 				</div>'?>
-             <div class="box-body">
-				
-					 <div class="row">	
-				<div class="col-md-8">	
-					<fieldset style="width:100%">	
-						<legend>Loan Details</legend> 
-						<div class="col-md-6">			
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Borrower ID</label>
-								</div>
+				<div class="box-body">					
+					<div class="row">	
+						<div class="col-md-8">	
+							<fieldset style="width:100%">	
+								<legend>Loan Details</legend> 
 								<div class="col-md-6">			
-                  <?php
-                  $bid = $row['borrowerId'];
-                  $bidQuery = "SELECT * FROM borrowers where id = ".$bid;
-                  // echo $bidQuery;
-                  $b = mysqli_query($link, $bidQuery) or die (mysqli_error($link));
-                                            while($b_res = mysqli_fetch_array($b))
-                                        {     ?>    
-									<input placeholder="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="number" class="form-control" readonly >
-                  <input type="hidden" value="<?php echo $row['borrowerId'] ?>" name="borrorwerId" type="number" class="form-control" readonly >
-                  <?php }?>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Borrower ID</label>
+										</div>
+										<div class="col-md-6">			
+											<?php
+											$bid = $row['borrowerId'];
+											$bidQuery = "SELECT * FROM borrowers where id = ".$bid;
+											// echo $bidQuery;
+											$b = mysqli_query($link, $bidQuery) or die (mysqli_error($link));
+																		while($b_res = mysqli_fetch_array($b))
+																	{     ?>    
+											<input placeholder="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="number" class="form-control" readonly >
+											<input type="hidden" value="<?php echo $bid ?>" name="borrowerId" type="number" class="form-control" readonly >
+											<?php }?>
+										</div>
+									</div>	
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Loan No.</label>
+										</div>
+										<div class="col-md-6">
+											<input value="<?php echo $row['loanId'] ; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
+										</div>
+									</div>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Loan Type</label>
+										</div>
+										<div class="col-sm-6">
+											<select name="loanType"  class="form-control" required>
+												<option value="">Select a loan type&hellip;</option>
+												<?php
+													$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
+													while($lt_res = mysqli_fetch_array($lt))
+												{         
+												?>
+												<option <?php if($row['loanType'] == $lt_res['loanCode']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName']," - ",$lt_res['repayPeriod']," months"  ?></option>
+												<?php } ?>
+											</select>              
+										</div>
+									</div>	
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Interest Rate</label>
+										</div>
+										<div class="col-md-6">
+											<input value="<?php echo $row['interest'] ; ?>"  name="interest" type="number" class="form-control" placeholder="Interest" required>
+										</div>
+									</div>			
 								</div>
-							</div>	
-							<div style="margin-bottom: 1rem" class="row">
 								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Loan No.</label>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Repayment Method</label>
+										</div>
+										<div class="col-sm-6">
+										<select name="repaymentMethod"  class="form-control" required>
+												<option value="">Select a repayment method&hellip;</option>
+												<?php
+													$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
+													while($lt_res = mysqli_fetch_array($lt))
+												{         
+												?>
+												<option <?php if($row['calculationMethod'] == $lt_res['methodId']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
+												<?php } ?>
+											</select>             
+										</div>
+									</div>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-7">
+											<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
+										</div>
+										<div class="col-md-5">
+											<input value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+										</div>
+									</div>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+										</div>
+										<div class="col-md-6">
+											<input value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
+										</div>
+									</div>
 								</div>
-								<div class="col-md-6">
-									<input value="<?php echo $row['loanId'] ; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
-								</div>
-							</div>
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Loan Type</label>
-								</div>
-								<div class="col-sm-6">
-									<select name="loanType"  class="form-control" required>
-										<option value="">Select a loan type&hellip;</option>
-                                        <?php
-                                        	$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
-                                            while($lt_res = mysqli_fetch_array($lt))
-                                        {         
-                                        ?>
-                                        <option <?php if($row['loanType'] == $lt_res['loanCode']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName']," - ",$lt_res['repayPeriod']," months"  ?></option>
-                                        <?php } ?>
-                                    </select>              
-								</div>
-							</div>	
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
-								</div>
-								<div class="col-md-6">
-									<input value="<?php echo $row['interest'] ; ?>"  name="interest" type="number" class="form-control" placeholder="Interest" required>
-								</div>
-							</div>			
+							</fieldset>	
 						</div>
-						<div class="col-md-6">
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
+						<div class="col-md-4">
+							<fieldset style="width:270px">
+								<div class="col-md-12">	
+									<legend>Gurantor</legend> 
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-4">
+											<label for="" class="control-label" style="color:#009900">Name</label>
+										</div>
+										<div class="col-md-8">
+											<input value="<?php echo $row['gName'] ; ?>" name="gName" type="text" class="form-control" placeholder="Name" >
+										</div>
+									</div>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-4">
+											<label for="" class="control-label" style="color:#009900">Address</label>
+										</div>
+										<div class="col-md-8">
+											<input value="<?php echo $row['gAddress'] ; ?>" name="gAddress" type="text" class="form-control" placeholder="Address" >
+										</div>
+									</div>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-4">
+											<label for="" class="control-label" style="color:#009900">Contact</label>
+										</div>
+										<div class="col-md-8">
+											<input value="<?php echo $row['gContact'] ; ?>" name="gContact" type="text" class="form-control" placeholder="Contact" >
+										</div>
+									</div>
 								</div>
-								<div class="col-sm-6">
-								<select name="repaymentMethod"  class="form-control" required>
-										<option value="">Select a repayment method&hellip;</option>
-                                        <?php
-                                        	$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
-                                            while($lt_res = mysqli_fetch_array($lt))
-                                        {         
-                                        ?>
-                                        <option <?php if($row['calculationMethod'] == $lt_res['methodId']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
-                                        <?php } ?>
-                                    </select>             
-								</div>
-							</div>
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-7">
-									<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
-								</div>
-								<div class="col-md-5">
-									<input value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
-								</div>
-							</div>
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Loan Amount</label>
-								</div>
-								<div class="col-md-6">
-									<input value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
-								</div>
-							</div>
-						</div>
-					</fieldset>	
-				</div>
-				<div class="col-md-4">
-					<fieldset style="width:270px">
-						<div class="col-md-12">	
-							<legend>Gurantor</legend> 
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-4">
-									<label for="" class="control-label" style="color:#009900">Name</label>
-								</div>
-								<div class="col-md-8">
-									<input value="<?php echo $row['gName'] ; ?>" name="gName" type="text" class="form-control" placeholder="Name" >
-								</div>
-							</div>
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-4">
-									<label for="" class="control-label" style="color:#009900">Address</label>
-								</div>
-								<div class="col-md-8">
-									<input value="<?php echo $row['gAddress'] ; ?>" name="gAddress" type="text" class="form-control" placeholder="Address" >
-								</div>
-							</div>
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-4">
-									<label for="" class="control-label" style="color:#009900">Contact</label>
-								</div>
-								<div class="col-md-8">
-									<input value="<?php echo $row['gContact'] ; ?>" name="gContact" type="text" class="form-control" placeholder="Contact" >
-								</div>
-							</div>
-						</div>
-					</fieldset>
-				</div>
-			</div>
-				  
-			 </div>
-			 
-			  </form>
+							</fieldset>
+						</div>						
+						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
+					</div>		
+					<div class="box-footer">
+						<button type="button" class="btn btn-success btn-flat" onclick="history.back()"><i class="fa fa-arrow-circle-left"></i></button>
+						<button name="update_loan" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
+					</div>	  
+			 	</div>			 
+			</form>
 <?php } ?>
               </div>
               <!-- /.tab-pane -->

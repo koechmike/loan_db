@@ -45,8 +45,7 @@
  			<li class="active"><a href="newemail.php?id=<?php echo $_SESSION['tid']; ?>"><i class="fa fa-circle-o"></i> New Email</a></li>
             <li><a href="listemail.php?id=<?php echo $_SESSION['tid']; ?>"><i class="fa fa-circle-o"></i>List Email</a></li>
           </ul>
-        </li>  
-		
+        </li>  	
 		
 		<li class="treeview">
           <a href="#">

@@ -1,14 +1,55 @@
+
 <div class="row">       
 		    <section class="content">  
 	        <div class="box box-success">
             <div class="box-body">
               <div class="table-responsive">
              <div class="box-body">
+
+				<!-- Transfer Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+					<div class="modal-header">        
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to transfer the record?</h3>
+					</div>
+					<!-- <div class="modal-body">
+					</div> -->
+					<form method="post" action="process_loan_info.php">
+						<input value="" name="id"  type="hidden" type="number" > 
+						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
+						<div class="modal-footer">
+							<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+							<button name="transfer" type="submit" class="btn btn-success">Yes</button>
+						</div>
+					</form>
+					</div>
+				</div>
+				</div>
+
+				<!--Disburse Modal -->
+				<div class="modal fade" id="disburse" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+					<div class="modal-header">        
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						</button>
+						<h3 class="modal-title" id="exampleModalLabel">Disbursement</h3>
+					</div>
+						<?php include "modal/disburse.php"; ?>
+					</div>
+				</div>
+				</div>
+
 <form method="post">
 			 <a href="dashboard.php?id=<?php echo $_SESSION['tid']; ?>&&mid=<?php echo base64_encode("401"); ?>"><button type="button" class="btn btn-flat btn-warning"><i class="fa fa-mail-reply-all"></i>&nbsp;Back</button> </a> 
 <?php
 $pageid = $_GET['pageid'];
-echo $pageid;
+// echo $pageid;
 $check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Loan Details'") or die ("Error" . mysqli_error($link));
 $get_check = mysqli_fetch_array($check);
 $pdelete = $get_check['pdelete'];
@@ -44,18 +85,36 @@ $num = mysqli_num_rows($select);
                   <!-- <th>Approve By</th> -->
                   <!-- <th>date Release</th> -->
                   <!-- <th>Payment Date</th> -->
+				  <?php if($pageid == 4){
+					echo "
                   <th>Status</th>
+				  ";}?>
 				  <!-- <th>Update Status</th> -->
                   <th>Action</th>
                  </tr>
                 </thead>
                 <tbody> 
 <?php
-$select = mysqli_query($link, "select l.loanId, l.loanPeriod, l.loanAmount, l.status, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId") or die (mysqli_error($link));
+switch($pageid){
+	case 1:
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
+		break;
+	case 2:
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
+		break;
+	case 3:
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2;";				
+		break;
+	case 4: 
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
+		break;
+
+}
+$select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
 if(mysqli_num_rows($select)==0)
 {
 echo "<div class='alert alert-info'>No data found yet!.....Check back later!!</div>";
-}
+} 
 else{
 while($row = mysqli_fetch_array($select))
 {
@@ -64,7 +123,7 @@ $loanId = $row['loanId'];
 $loanPeriod = $row['loanPeriod'];
 $loanAmount = $row['loanAmount'];
 $upstatus = $row['upstatus'];
-$status = $row['status'];
+$status = $row['statusName'];
 $loanName = $row['loanName'];
 $interest = $row['interest'];
 $methodName = $row['methodName'];
@@ -84,13 +143,41 @@ $upstatus = 1;//$row['upstatus'];
 				<td><?php echo $methodName; ?></td>
 				<td><?php echo $loanAmount; ?></td>
 			    <td><?php echo $interest; ?></td>
+				<?php 
+				if($pageid == 4){
+					switch($status){
+						case "Pending Appraisal":
+						case "Pending Approval":							
+						case "Peding Disbursement":
+							$color = 'warning';
+							break;
+						case "Disbursed":
+							$color = 'success';
+							break;
+						case "Overdue":
+							$color = 'danger';
+							break;
+						default:
+							$color = 'success';
+							break;
+					}
+				echo "
                 <td>
-				 <span class="label label-<?php if($status == 1)echo 'success'; elseif($status == 2)echo 'danger'; else echo 'warning';?>"><?php echo $status == 1 ? "Approved" : "Pending Appraisal" ; ?></span>
+				 <span class=\"label label-".$color."\">".$status."</span>
 				</td>
+				";}?>
 			<!-- <td align="center" class="alert alert-danger"><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td> -->
 			<td>
-			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-edit"></i></button></a>' : ''; ?>
-			<!-- <?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$id.'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i></button></a>' : ''; ?> -->
+			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'&&pageid='.$pageid.'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-eye"></i></button></a>' : ''; ?>
+
+			<?php $icon = ($pageid == 3) ? "money" : "check" ?>
+			<?php if ($pageid != 3) { 
+			 	echo ($pupdate == '1') ? '<a ><button data-id='.$loanId.' data-toggle="modal" data-target="'.$modalName.'" type="button" class="btn btn-flat btn-success"><i class="fa fa-'.$icon.'"></i></button></a>' : ''; 
+			}else{
+				echo ($pupdate == '1') ? '<a href="disburse.php?id='.$loanId.'&&mid='.base64_encode("405").'&&pageid='.$pageid.'"><button type="button" class="btn btn-flat btn-success"><i class="fa fa-'.$icon.'"></i></button></a>' : '';
+			}
+			 ?>
+
 <?php
 $se = mysqli_query($link, "SELECT * FROM attachment WHERE get_id = '$borrower'") or die (mysqli_error($link));
 while($gete = mysqli_fetch_array($se))

@@ -22,26 +22,10 @@
       </ol>
     </section>
     <section class="content">
-		<?php include("include/listloans_data.php"); ?>
+		<?php include("include/disburse_data.php"); ?>
 	</section>
 </div>	
 
 <?php include("modal/listloans_modal.php"); ?>
 
 <?php include("include/footer.php"); ?>
-
-
-<script>
-	$('#exampleModal').on('show.bs.modal', function(e) {
-		var id = $(e.relatedTarget).data('id');
-		console.log(id);
-		$(e.currentTarget).find('input[name="id"]').val(id);
-	});
-
-  
-	// $('#disburse').on('show.bs.modal', function(e) {
-	// 	var id = $(e.relatedTarget).data('id');
-	// 	console.log(id);
-  //   document.getElementById("loanAmount").max = "10";
-	// });
-</script>
