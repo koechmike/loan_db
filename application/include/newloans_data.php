@@ -24,7 +24,7 @@
 									<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 								</div>
 								<div class="col-md-6">									
-								<select name="borrowerId"  class="form-control" required>
+									<select name="borrowerId"  class="form-control" required>
 										<option value="">Select a borrower&hellip;</option>
                                         <?php
                                         	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));

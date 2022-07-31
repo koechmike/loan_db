@@ -1,25 +1,39 @@
 
 <?php 
-
-include("../../config/connect.php");
+	
+    include("../../config/connect.php");
 include "../config/session.php";
 
+	if(isset($_POST['borrowerId'])) {
+        $query = "SELECT * FROM loans WHERE borrowerId = " . $_POST['borrowerId'];
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
+        $loans =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $loans[] = $row;
+        }
+		echo json_encode($loans);
+	}
+    elseif(isset($_POST['countyId'])) {
+        $query = "SELECT * FROM subcounty WHERE countyId = " . $_POST['countyId'];
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
+        $subcountyId =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $subcountyId[] = $row;
+        }
+		echo json_encode($subcountyId);
+	}
+    elseif(isset($_POST['subcountyId'])) {
+        $query = "SELECT * FROM ward WHERE subcountyId = " . $_POST['subcountyId'];
+        echo $query;
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
 
-$pageid = mysqli_real_escape_string($link, $_POST['pageid']);
-$loanId = mysqli_real_escape_string($link, $_POST['id']);
-
-$query = "UPDATE loans set status = '1' where loanId = $loanId";
-//echo $query;
-$insert = mysqli_query($link, $query) or die (mysqli_error($link));
-if(!$insert)
-{
-    echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
-    echo '<br>';
-    echo'<span class="itext" style="color: #FF0000">Unable to update loan Information. Please try again later.</span>';
-}else{
-    echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';
-    echo '<br>';
-    echo'<span class="itext" style="color: black">Transfering loan for approval...</span>';
-}
-
-?>
+        $wardId =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $wardId[] = $row;
+        }
+		echo json_encode($wardId);
+    }
+ ?>
