@@ -27,7 +27,7 @@
             </div>
              <div class="box-body">
 
-			 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_payment.php">
+			 <form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_loan_info.php">
 			  <?php echo '<div class="alert alert-info fade in" >
 			  <a href = "#" class = "close" data-dismiss= "alert"> &times;</a>
   				<strong>Note that&nbsp;</strong> &nbsp;&nbsp;Some Fields are Rquired.
@@ -93,9 +93,17 @@
 						<label for="" class="control-label" style="color:#009900">Reference (cheque/mpesa code)</label>
 					</div>
 					<div class="col-md-4">
-						<input  name="reference" type="text" class="form-control" placeholder="Reference" required>
+						<input  name="transactionReference" type="text" class="form-control" placeholder="Reference" required>
 					</div>
 				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-6">
+						<label for="" class="control-label" style="color:#009900">Amount Repaid</label>
+					</div>
+					<div class="col-md-6">
+						<input  name="repaymentAmount" type="number" min="1" class="form-control" placeholder="Amount in KES" >
+					</div>
+				</div>	
 			</div>
 		</fieldset>	
 	</div>
@@ -235,7 +243,7 @@ while($row = mysqli_fetch_array($sele))
 			  <div align="right">
               <div class="box-footer">
                 				<button type="reset" class="btn btn-primary btn-flat"><i class="fa fa-times">&nbsp;Reset</i></button>
-                				<button name="save" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Make Payment</i></button>
+                				<button name="new_payment" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Make Payment</i></button>
 
               </div>
 			  </div>

@@ -26,7 +26,7 @@ include "../config/session.php";
 	}
     elseif(isset($_POST['subcountyId'])) {
         $query = "SELECT * FROM ward WHERE subcountyId = " . $_POST['subcountyId'];
-        echo $query;
+        //echo $query;
         $b = mysqli_query($link, $query) or die (mysqli_error($link));
 
         $wardId =array();

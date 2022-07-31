@@ -13,7 +13,7 @@
 					subcountyId = JSON.parse(subcountyId);
 					$('#subcountyId').empty();
 					subcountyId.forEach(function(subcountyId){
-						$('#subcountyId').append('<option value="1">' + subcountyId.subcounty + '</option>')
+						$('#subcountyId').append('<option value="'+subcountyId.subcountyId+'">' + subcountyId.subcounty + '</option>')
 					})
 				})
 			})
@@ -23,7 +23,6 @@
 		$(document).ready(function()
         {
 			$("#subcountyId").change(function(){
-				// console.log("test");
 				var subcountyId = $("#subcountyId").val();
 				$.ajax({
 					url: 'include/data.php',
@@ -34,7 +33,7 @@
 					wardId = JSON.parse(wardId);
 					$('#wardId').empty();
 					wardId.forEach(function(wardId){
-						$('#wardId').append('<option>' + wardId.ward + '</option>')
+						$('#wardId').append('<option value="'+wardId.wardId+'">' + wardId.ward + '</option>')
 					})
 				})
 			})
@@ -267,18 +266,10 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
 				<div class="col-md-5">
-						<label for="" class="control-label" style="color:#009900">Sub-county.</label>
+						<label for="" class="control-label" style="color:#009900">Sub-county</label>
 					</div>
 					<div class="col-md-7">
 						<select name="subcountyId" id="subcountyId" class="form-control" required>
-							<!-- <option value="">Select a subcounty&hellip;</option>
-                                <?php
-                                    $b = mysqli_query($link, "SELECT * FROM subcounty") or die (mysqli_error($link));
-                                    while($b_res = mysqli_fetch_array($b))
-                                    {         
-                                    ?>
-                            <option value="<?php echo $b_res['subcountyId'] ?>"><?php echo $b_res['subcounty']   ?></option>
-                                <?php } ?> -->
 						</select> 
 					</div>
 				</div>

@@ -159,6 +159,7 @@ if (isset($_SESSION['tid'])) {
 		$paymentMethod = mysqli_real_escape_string($link, $_POST['paymentMethod']);
 		$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
 		$amountDisbursed = mysqli_real_escape_string($link, $_POST['amountDisbursed']);
+		$captureDate = mysqli_real_escape_string($link, $_POST['captureDate']);
 		$tid = $_SESSION['userid'];
 		$now = date_create('now')->format('Y-m-d H:i:s');
 
@@ -167,7 +168,7 @@ if (isset($_SESSION['tid'])) {
 		$status = ($amountDisbursed == $loanAmount) ? 4 : 3;
 		
 		$loanQuery = "UPDATE loans set status = $status, amountDisbursed = $amountDisbursed where loanId = $loanId";
-		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Disbursed', '$disbursedAmount', '1', '$now', '$transactionReference')";
+		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Disbursed', '$disbursedAmount', '1', '$now', '$transactionReference','$captureDate')";
 		
 		// echo $loanQuery;
 		// echo $transactionQuery;
@@ -183,6 +184,48 @@ if (isset($_SESSION['tid'])) {
 			echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';
 			echo '<br>';
 			echo'<span class="itext" style="color: black">Disbursing funds...</span>';
+		}
+	}elseif(isset($_POST['new_payment'])){
+
+		// $pageid = mysqli_real_escape_string($link, $_POST['pageid']);
+		$loanId = mysqli_real_escape_string($link, $_POST['loanId']);
+		$repaymentAmount = mysqli_real_escape_string($link, $_POST['repaymentAmount']);
+		$transactionReference = mysqli_real_escape_string($link, $_POST['transactionReference']);
+		$paymentMethod = mysqli_real_escape_string($link, $_POST['paymentMethod']);
+		$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
+		$amountDisbursed = mysqli_real_escape_string($link, $_POST['amountDisbursed']);
+		$captureDate = mysqli_real_escape_string($link, $_POST['captureDate']);
+		$tid = $_SESSION['userid'];
+		$now = date_create('now')->format('Y-m-d H:i:s');
+		
+
+		$b = mysqli_query($link, "SELECT * FROM loans where loanId=".$loanId) or die (mysqli_error($link));
+		while($b_res = mysqli_fetch_array($b)){
+			$interest = $b_res['interest'];
+		}
+
+		$amountPaid = $amountPaid + $repaymentAmount;
+
+		$status = ($amountPaid == ($loanAmount + $interest)) ? 6 : 5;
+		
+		$loanQuery = "UPDATE loans set status = $status, amountPaid = $amountPaid where loanId = $loanId";
+		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Repayment', '$amountPaid	', '1', '$now', '$transactionReference','$captureDate')";
+		
+		// echo $loanQuery;
+		// echo $transactionQuery;
+		$loanUpdate = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
+		$transactionInsert = mysqli_query($link, $transactionQuery) or die (mysqli_error($link));
+
+		if(!$loanUpdate && !transactionInsert)
+		{
+			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
+			echo '<br>';
+			echo'<span class="itext" style="color: #FF0000">Unable to update loan Information. Please try again later.</span>';
+		}else{
+			//echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';			
+			echo '<meta http-equiv="refresh" content="2;url=newpayments.php?tid='.$_SESSION['tid'].'">';
+			echo '<br>';
+			echo'<span class="itext" style="color: black">Processig repayment...</span>';
 		}
 	}
 }

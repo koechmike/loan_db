@@ -92,6 +92,14 @@
 															<input value=""  name="transactionReference" type="text" class="form-control" placeholder="Reference" required>
 														</div>
 													</div>
+													<div style="margin-bottom: 1rem" class="row">
+														<div class="col-md-5">
+															<label for="" class="control-label" style="color:#009900">Capture Date</label>
+														</div>
+														<div class="col-md-7">
+															<input name="captureDate" type="date" class="form-control" required>
+														</div>	
+													</div>
 												</div>
 											</fieldset>	
 										</div>					
