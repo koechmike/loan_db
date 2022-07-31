@@ -81,7 +81,15 @@ $num = mysqli_num_rows($select);
                   <th>Repayment Period</th>
                   <th>Repayment Method</th>
                   <th>Loan Amount</th>
+				  <?php if($pageid == 3){
+					echo "
+                  <th>Amount Disbursed</th>
+				  ";}?>
+                  <th>Interest Rate</th>
+				  <?php if($pageid == 4){
+					echo "
                   <th>Interest</th>
+				  ";}?>
                   <!-- <th>Approve By</th> -->
                   <!-- <th>date Release</th> -->
                   <!-- <th>Payment Date</th> -->
@@ -97,16 +105,16 @@ $num = mysqli_num_rows($select);
 <?php
 switch($pageid){
 	case 1:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
 		break;
 	case 2:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
 		break;
 	case 3:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2;";				
+		$loanQuery = "select l.amountDisbursed, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2 or l.status = 3;";				
 		break;
 	case 4: 
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
 		break;
 
 }
@@ -125,6 +133,8 @@ $loanAmount = $row['loanAmount'];
 $upstatus = $row['upstatus'];
 $status = $row['statusName'];
 $loanName = $row['loanName'];
+$amountDisbursed = $row['amountDisbursed'];
+$interestRate = $row['interestRate'];
 $interest = $row['interest'];
 $methodName = $row['methodName'];
 $lname = $row['lname'];
@@ -142,20 +152,33 @@ $upstatus = 1;//$row['upstatus'];
 				<td><?php echo $loanPeriod; ?></td>
 				<td><?php echo $methodName; ?></td>
 				<td><?php echo $loanAmount; ?></td>
-			    <td><?php echo $interest; ?></td>
+				<?php if($pageid == 3){
+					echo "
+					<td> ".$amountDisbursed." </td>
+				  ";}?>
+			    <td><?php echo $interestRate; ?></td>
+				<?php if($pageid == 4){
+					echo "
+					<td> ".$interest." </td>
+				  ";}?>
 				<?php 
 				if($pageid == 4){
 					switch($status){
 						case "Pending Appraisal":
-						case "Pending Approval":							
-						case "Peding Disbursement":
+						case "Pending Approval":	
 							$color = 'warning';
 							break;
-						case "Disbursed":
+						case "Partially Paid":
+						case "Fully Paid":
 							$color = 'success';
 							break;
 						case "Overdue":
 							$color = 'danger';
+							break;
+						case "Partially Disbursed":						
+						case "Pending Disbursement":						
+						case "Fully Disbursed":
+							$color = 'info';
 							break;
 						default:
 							$color = 'success';
@@ -171,8 +194,9 @@ $upstatus = 1;//$row['upstatus'];
 			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'&&pageid='.$pageid.'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-eye"></i></button></a>' : ''; ?>
 
 			<?php $icon = ($pageid == 3) ? "money" : "check" ?>
-			<?php if ($pageid != 3) { 
-			 	echo ($pupdate == '1') ? '<a ><button data-id='.$loanId.' data-toggle="modal" data-target="'.$modalName.'" type="button" class="btn btn-flat btn-success"><i class="fa fa-'.$icon.'"></i></button></a>' : ''; 
+			<?php if ($pageid == 4) { 			 	
+			}elseif($pageid != 3){
+				echo ($pupdate == '1') ? '<a ><button data-id='.$loanId.' data-toggle="modal" data-target="#exampleModal" type="button" class="btn btn-flat btn-success"><i class="fa fa-'.$icon.'"></i></button></a>' : ''; 
 			}else{
 				echo ($pupdate == '1') ? '<a href="disburse.php?id='.$loanId.'&&mid='.base64_encode("405").'&&pageid='.$pageid.'"><button type="button" class="btn btn-flat btn-success"><i class="fa fa-'.$icon.'"></i></button></a>' : '';
 			}

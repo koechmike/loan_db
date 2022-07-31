@@ -74,7 +74,7 @@
 									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
 								</div>
 								<div class="col-md-6">
-									<input  name="interest" type="number" class="form-control" placeholder="Interest" required>
+									<input  name="interestRate" type="number" min="1" class="form-control" placeholder="Interest" required>
 								</div>
 							</div>			
 						</div>
@@ -328,6 +328,7 @@ while($row = mysqli_fetch_array($sele))
           	</div> -->
 				  
 			 </div>
+			 
 			 
 			  <div align="right">
               <div class="box-footer">

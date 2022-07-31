@@ -48,12 +48,37 @@ if (isset($_SESSION['tid'])) {
 		$gName = mysqli_real_escape_string($link, $_POST['gName']);
 		$gContact = mysqli_real_escape_string($link, $_POST['gContact']);
 		$gAddress = mysqli_real_escape_string($link, $_POST['gAddress']);
-		$interest = mysqli_real_escape_string($link, $_POST['interest']);
+		$interestRate = mysqli_real_escape_string($link, $_POST['interestRate']);
+		$interest = 0;
+		$monthlyPayments = 0;
+		
+		switch($calcuationMethod){
+			case 1:
+				$monthlyPayments = 0;
+
+				$apr = $interestRate;
+				$term = $loanPeriod/12;
+				$loan = $loanAmount;
+
+				$interest = getInterest();
+				//echo $interest;
+				break;
+			case 2:
+				$interest = $loanAmount * ($loanPeriod/12) * ($interestRate/100);
+				$monthlyPayments = ($interest + $loanAmount) / $loanPeriod;
+				break;
+			case 3:
+				$interest = $loanAmount * ($interestRate/100);
+				$monthlyPayments = ($interest + $loanAmount) / $loanPeriod;
+			default:
+				break;
+		}
+
 
 		$status = 0;
 
-		$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod','$calcuationMethod','$loanAmount','$gName','$gAddress','$gContact','$status',$interest)";
-		// echo $query;
+		$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod','$calcuationMethod','$loanAmount','$gName','$gAddress','$gContact','$status',$interest, 0, 0,$interestRate,$monthlyPayments)";
+		//echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)
 		{
@@ -61,9 +86,9 @@ if (isset($_SESSION['tid'])) {
 			echo '<br>';
 			echo'<span class="itext" style="color: #FF0000">Unable to Save Loan Information. Please try again later!</span>';
 		}else{
-			echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'">';
+			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
 			echo '<br>';
-			echo'<span class="itext" style="color: #FF0000">Loan application saved, awaiting appraisail.</span>';
+			echo'<span class="itext" style="color: green">Loan application saved, awaiting appraisal.</span>';
 		}
 	}elseif(isset($_POST['update_loan'])){
 		$pageid = mysqli_real_escape_string($link, $_POST['pageid']);
@@ -76,10 +101,11 @@ if (isset($_SESSION['tid'])) {
 		$gName = mysqli_real_escape_string($link, $_POST['gName']);
 		$gContact = mysqli_real_escape_string($link, $_POST['gContact']);
 		$gAddress = mysqli_real_escape_string($link, $_POST['gAddress']);
-		$interest = mysqli_real_escape_string($link, $_POST['interest']);
+		$interestRate = mysqli_real_escape_string($link, $_POST['interestRate']);
+
 
 		$status = 0;
-		$query = "UPDATE loans set borrowerId = '$borrowerId', loanType = '$loanType', loanPeriod = '$loanPeriod', calculationMethod = '$calcuationMethod', loanAmount = '$loanAmount', gName = '$gName', gAddress = '$gAddress', gContact = '$gContact', status = '$status', interest = $interest where loanId = $loanId";
+		$query = "UPDATE loans set borrowerId = '$borrowerId', loanType = '$loanType', loanPeriod = '$loanPeriod', calculationMethod = '$calcuationMethod', loanAmount = '$loanAmount', gName = '$gName', gAddress = '$gAddress', gContact = '$gContact', status = '$status', interestRate = $interestRate where loanId = $loanId";
 		//echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)
@@ -138,7 +164,7 @@ if (isset($_SESSION['tid'])) {
 
 		$amountDisbursed = $amountDisbursed + $disbursedAmount;
 
-		$status = ($amountDisbursed == $loanAmount) ? 4 : 2;
+		$status = ($amountDisbursed == $loanAmount) ? 4 : 3;
 		
 		$loanQuery = "UPDATE loans set status = $status, amountDisbursed = $amountDisbursed where loanId = $loanId";
 		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Disbursed', '$disbursedAmount', '1', '$now', '$transactionReference')";
@@ -160,6 +186,58 @@ if (isset($_SESSION['tid'])) {
 		}
 	}
 }
+
+
+
+function calPMT()
+{
+  global $apr;
+  global $term;
+  global $loan;
+
+  // echo $apr;
+  $term1 = $term * 12;
+  $apr1 = $apr / 1200;
+  $amount = $apr1 * -$loan * pow((1 + $apr1), $term1) / (1 - pow((1 + $apr1), $term1));
+  return $amount;
+}
+
+// function loanEMI()
+// {
+//    echo calPMT();
+// }
+
+function getInterest(){
+  global $apr;
+  global $term;
+  global $monthlyPayments;
+
+  $emt = calPMT();
+  $monthlyPayments = round($emt);
+  // echo $emt;
+
+  $interest = 0;
+  $principle = 0;
+  $ip = 0;
+  
+  for($i=($apr*$term);$i>0;$i--){
+    
+    global $loan;
+    global $interest;
+    global $principle;
+    global $ip;
+    //echo "test:".$i; 
+    $interest = $loan * (($apr/12)/100);
+    $principle = $emt - $interest;
+    $loan = $loan - $principle;
+
+    $ip += $interest;
+  }
+
+  return round($ip);
+}
+
+
 ?>
 </div>
 </body>

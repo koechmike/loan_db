@@ -51,7 +51,7 @@ while($row = mysqli_fetch_array($select))
 											$b = mysqli_query($link, $bidQuery) or die (mysqli_error($link));
 																		while($b_res = mysqli_fetch_array($b))
 																	{     ?>    
-											<input placeholder="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="number" class="form-control" readonly >
+											<input value="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="text" class="form-control" readonly >
 											<input type="hidden" value="<?php echo $bid ?>" name="borrowerId" type="number" class="form-control" readonly >
 											<?php }?>
 										</div>
@@ -69,16 +69,23 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Loan Type</label>
 										</div>
 										<div class="col-sm-6">
-											<select name="loanType"  class="form-control" required>
-												<option value="">Select a loan type&hellip;</option>
-												<?php
-													$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
-													while($lt_res = mysqli_fetch_array($lt))
-												{         
-												?>
-												<option <?php if($row['loanType'] == $lt_res['loanCode']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName']," - ",$lt_res['repayPeriod']," months"  ?></option>
-												<?php } ?>
-											</select>              
+											<?php if($row['status'] < 2){ ?>
+												<select name="loanType"  class="form-control" required>
+													<option value="">Select a loan type&hellip;</option>
+													<?php
+														$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
+														while($lt_res = mysqli_fetch_array($lt))
+													{         
+													?>
+													<option <?php if($row['loanType'] == $lt_res['loanCode']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['loanCode'] ?>"><?php echo $lt_res['loanName']," - ",$lt_res['repayPeriod']," months"  ?></option>
+													<?php } ?>
+												</select>
+											<?php }else{ 
+												$lt = mysqli_query($link, "SELECT * FROM loan_types where loanCode =".$row['loanType']) or die (mysqli_error($link));
+												while($lt_res = mysqli_fetch_array($lt)){   ?>
+													<input value="<?php echo $lt_res['loanName'] ; ?>" name="loanType1" type="text" class="form-control" placeholder="Loan ID" readonly >
+													<input value="<?php echo $lt_res['loanCode'] ; ?>" name="loanType" type="hidden" class="form-control" placeholder="Loan ID" readonly >
+											<?php } } ?>              
 										</div>
 									</div>	
 									<div style="margin-bottom: 1rem" class="row">
@@ -86,7 +93,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Interest Rate</label>
 										</div>
 										<div class="col-md-6">
-											<input value="<?php echo $row['interest'] ; ?>"  name="interest" type="number" class="form-control" placeholder="Interest" required>
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['interestRate'] ; ?>"  name="interestRate" type="number" class="form-control" placeholder="Interest" required>
 										</div>
 									</div>			
 								</div>
@@ -96,16 +103,24 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Repayment Method</label>
 										</div>
 										<div class="col-sm-6">
-										<select name="repaymentMethod"  class="form-control" required>
-												<option value="">Select a repayment method&hellip;</option>
-												<?php
-													$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
-													while($lt_res = mysqli_fetch_array($lt))
-												{         
-												?>
-												<option <?php if($row['calculationMethod'] == $lt_res['methodId']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
-												<?php } ?>
-											</select>             
+											<?php if($row['status'] < 2){ ?>
+												<select name="repaymentMethod"  class="form-control" required>
+													<option value="">Select a repayment method&hellip;</option>
+													<?php
+														$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
+														while($lt_res = mysqli_fetch_array($lt))
+													{         
+													?>
+													<option <?php if($row['calculationMethod'] == $lt_res['methodId']) echo 'selected="selected"'; ?>  value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
+													<?php } ?>
+												</select>   
+											<?php }else{ 
+												$lt = mysqli_query($link, "SELECT * FROM calculation_method where methodId =".$row['calculationMethod']) or die (mysqli_error($link));
+												while($lt_res = mysqli_fetch_array($lt)){   ?>
+													<input value="<?php echo $lt_res['methodName'] ; ?>" name="repaymentMethod1" type="text" class="form-control"  readonly >
+													<input value="<?php echo $lt_res['methodId'] ; ?>" name="repaymentMethod" type="hidden" class="form-control" readonly >
+											<?php } } ?>   
+											          
 										</div>
 									</div>
 									<div style="margin-bottom: 1rem" class="row">
@@ -113,7 +128,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
 										</div>
 										<div class="col-md-5">
-											<input value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
 										</div>
 									</div>
 									<div style="margin-bottom: 1rem" class="row">
@@ -121,7 +136,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Loan Amount</label>
 										</div>
 										<div class="col-md-6">
-											<input value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
 										</div>
 									</div>
 								</div>
@@ -136,7 +151,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Name</label>
 										</div>
 										<div class="col-md-8">
-											<input value="<?php echo $row['gName'] ; ?>" name="gName" type="text" class="form-control" placeholder="Name" >
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['gName'] ; ?>" name="gName" type="text" class="form-control" placeholder="Name" >
 										</div>
 									</div>
 									<div style="margin-bottom: 1rem" class="row">
@@ -144,7 +159,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Address</label>
 										</div>
 										<div class="col-md-8">
-											<input value="<?php echo $row['gAddress'] ; ?>" name="gAddress" type="text" class="form-control" placeholder="Address" >
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['gAddress'] ; ?>" name="gAddress" type="text" class="form-control" placeholder="Address" >
 										</div>
 									</div>
 									<div style="margin-bottom: 1rem" class="row">
@@ -152,7 +167,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Contact</label>
 										</div>
 										<div class="col-md-8">
-											<input value="<?php echo $row['gContact'] ; ?>" name="gContact" type="text" class="form-control" placeholder="Contact" >
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['gContact'] ; ?>" name="gContact" type="text" class="form-control" placeholder="Contact" >
 										</div>
 									</div>
 								</div>
@@ -162,7 +177,9 @@ while($row = mysqli_fetch_array($select))
 					</div>		
 					<div class="box-footer">
 						<button type="button" class="btn btn-success btn-flat" onclick="history.back()"><i class="fa fa-arrow-circle-left"></i></button>
+						<?php if($row['status'] < 2){ ?>
 						<button name="update_loan" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
+						<?php } ?>
 					</div>	  
 			 	</div>			 
 			</form>
@@ -610,7 +627,7 @@ $idmet= $haveit['id'];
 			<td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idmet; ?>" checked></td>
        <td width="400"><input name="schedulek[]" type="text" class="form-control pull-right" id="datepicker" placeholder="Schedule" value="<?php echo $haveit['schedule']; ?>"></td>
            <td width="300"><input name="balance[]" type="number" class="form-control" placeholder="Balance" value="<?php echo $haveit['balance']; ?>"></td>
-			<td width="200"><input name="interest[]" type="number" class="form-control" placeholder="Interest" value="<?php echo $haveit['interest']; ?>"></td>
+			<td width="200"><input name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $haveit['interestRate']; ?>"></td>
 			<td width="100"><input name="payment[]" type="number" class="form-control" placeholder="Payment" value="<?php echo $haveit['payment']; ?>"></td>
 			</tr>
 <?php } ?>
@@ -647,7 +664,7 @@ if(isset($_POST['add_sch_rows']))
 {
 $id = $_GET['id'];
 $tid = $_SESSION['tid'];
-$insert = mysqli_query($link, "INSERT INTO pay_schedule(id,get_id,tid,schedule,balance,interest,payment) VALUES('','$id','$tid','','','','')") or die (mysqli_error($link));
+$insert = mysqli_query($link, "INSERT INTO pay_schedule(id,get_id,tid,schedule,balance,interestRate,payment) VALUES('','$id','$tid','','','','')") or die (mysqli_error($link));
 if(!$insert)
 {
 echo "<script>alert('Unable to Add Row.....Please try again later!'); </script>";
@@ -685,15 +702,15 @@ $tid = $_SESSION['tid'];
 $term = mysqli_real_escape_string($link, $_POST['term'][$i]);
 $day = mysqli_real_escape_string($link, $_POST['d1'][$i]);
 $schedule_of_paymt = mysqli_real_escape_string($link, $_POST['schedule'][$i]);
-$interest = mysqli_real_escape_string($link, $_POST['interest'][$i]);
+$interestRate = mysqli_real_escape_string($link, $_POST['interestRate'][$i]);
 $penalty = mysqli_real_escape_string($link, $_POST['penalty'][$i]);
 $schedule = mysqli_real_escape_string($link, $_POST['schedulek'][$i]);
 $balance = mysqli_real_escape_string($link, $_POST['balance'][$i]);
-$interest = mysqli_real_escape_string($link, $_POST['interest'][$i]);
+$interestRate = mysqli_real_escape_string($link, $_POST['interestRate'][$i]);
 $payment = mysqli_real_escape_string($link, $_POST['payment'][$i]);
 
-$update = mysqli_query($link, "UPDATE pay_schedule SET schedule = '$schedule', balance = '$balance', interest = '$interest', payment = '$payment' WHERE id = '$s'") or die (mysqli_error($link));
-$insert = mysqli_query($link, "INSERT INTO payment_schedule VALUES('','$s','$tid','$term','$day','$schedule_of_paymt','$interest','$penalty')") or die (mysqli_error($link));
+$update = mysqli_query($link, "UPDATE pay_schedule SET schedule = '$schedule', balance = '$balance', interestRate = '$interestRate', payment = '$payment' WHERE id = '$s'") or die (mysqli_error($link));
+$insert = mysqli_query($link, "INSERT INTO payment_schedule VALUES('','$s','$tid','$term','$day','$schedule_of_paymt','$interestRate','$penalty')") or die (mysqli_error($link));
 $insert = mysqli_query($link, "UPDATE loan_info SET upstatus = 'Completed' WHERE id = '$idm'") or die (mysqli_error($link));
 if(!($update && $insert))
 {
