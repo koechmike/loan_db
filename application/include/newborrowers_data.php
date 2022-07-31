@@ -1,3 +1,45 @@
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#countyId").change(function(){
+				// console.log("test");
+				var countyId = $("#countyId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'countyId=' + countyId
+				}).done(function(subcountyId){
+					console.log(subcountyId);
+					subcountyId = JSON.parse(subcountyId);
+					$('#subcountyId').empty();
+					subcountyId.forEach(function(subcountyId){
+						$('#subcountyId').append('<option value="1">' + subcountyId.subcounty + '</option>')
+					})
+				})
+			})
+		})
+</script>
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#subcountyId").change(function(){
+				// console.log("test");
+				var subcountyId = $("#subcountyId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'subcountyId=' + subcountyId
+				}).done(function(wardId){
+					console.log(wardId);
+					wardId = JSON.parse(wardId);
+					$('#wardId').empty();
+					wardId.forEach(function(wardId){
+						$('#wardId').append('<option>' + wardId.ward + '</option>')
+					})
+				})
+			})
+		})
+</script>
 <style>
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -211,25 +253,33 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 							<label for="" class="control-label" style="color:#009900">County</label>
 					</div>
 					<div class="col-sm-8">
-						<select name="County"  class="form-control" required>
-							<option value="">Select a country&hellip;</option>
-							<option value="AF">Baringo</option>
-							<option value="AL">Bomet</option>
-							<option value="DZ">Bungoma</option>
-							<option value="AD">Busia</option>
-							<option value="AO">Elgeyo Marakwet</option>
-							<option value="AI">Embu</option>
-							<option value="AQ">Garissa</option>
-							<option value="AG">Homa Bay</option>
-						</select>                 
+					<select name="countyId" id="countyId" class="form-control" required>
+										<option value="">Select a county&hellip;</option>
+                                        <?php
+                                        	$b = mysqli_query($link, "SELECT * FROM counties") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $b_res['id'] ?>"><?php echo $b_res['county_name']   ?></option>
+                                        <?php } ?>
+                                    </select>                
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-4">
-						<label for="" class="control-label" style="color:#009900">SubCounty</label>
+				<div class="col-md-5">
+						<label for="" class="control-label" style="color:#009900">Sub-county.</label>
 					</div>
-					<div class="col-sm-8">
-						<input name="Sub County" type="text" class="form-control" placeholder="Sub County" required>
+					<div class="col-md-7">
+						<select name="subcountyId" id="subcountyId" class="form-control" required>
+							<!-- <option value="">Select a subcounty&hellip;</option>
+                                <?php
+                                    $b = mysqli_query($link, "SELECT * FROM subcounty") or die (mysqli_error($link));
+                                    while($b_res = mysqli_fetch_array($b))
+                                    {         
+                                    ?>
+                            <option value="<?php echo $b_res['subcountyId'] ?>"><?php echo $b_res['subcounty']   ?></option>
+                                <?php } ?> -->
+						</select> 
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
@@ -237,7 +287,9 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Ward</label>
 					</div>
 					<div class="col-sm-8">
-						<input name="Ward" type="text" class="form-control" placeholder="Ward"required width="10px">
+						<select name="wardId" id="wardId" class="form-control" required>
+						
+						</select>
 					</div>
 				</div>
 			</div>

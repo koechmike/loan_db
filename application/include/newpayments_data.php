@@ -1,3 +1,24 @@
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#borrowerId").change(function(){
+				// console.log("test");
+				var borrowerId = $("#borrowerId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'borrowerId=' + borrowerId
+				}).done(function(loans){
+					console.log(loans);
+					loans = JSON.parse(loans);
+					$('#loans').empty();
+					loans.forEach(function(loans){
+						$('#loans').append('<option>' + loans.loanId + '</option>')
+					})
+				})
+			})
+		})
+</script>
 <div class="box">
 	      <div class="box-body">
 			<div class="panel panel-success">
@@ -23,7 +44,16 @@
 						<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 					</div>
 					<div class="col-md-6">
-						<input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" >
+					<select name="borrowerId" id="borrowerId" class="form-control" required>
+										<option value="">Select a borrower&hellip;</option>
+                                        <?php
+                                        	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $b_res['id'] ?>"><?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']   ?></option>
+                                        <?php } ?>
+                                    </select> 
 					</div>
 				</div>	
 				<div style="margin-bottom: 1rem" class="row">
@@ -31,7 +61,8 @@
 						<label for="" class="control-label" style="color:#009900">Loan No.</label>
 					</div>
 					<div class="col-md-6">
-						<input name="loanId" type="text" class="form-control" placeholder="Loan ID" >
+						<select name="loanId" id=loans class="form-control" required>				
+						</select> 
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
