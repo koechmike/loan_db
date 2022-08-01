@@ -102,10 +102,11 @@ if (isset($_SESSION['tid'])) {
 		$gContact = mysqli_real_escape_string($link, $_POST['gContact']);
 		$gAddress = mysqli_real_escape_string($link, $_POST['gAddress']);
 		$interestRate = mysqli_real_escape_string($link, $_POST['interestRate']);
+		$amountApproved = mysqli_real_escape_string($link, $_POST['amountApproved']);
 
 
 		$status = 0;
-		$query = "UPDATE loans set borrowerId = '$borrowerId', loanType = '$loanType', loanPeriod = '$loanPeriod', calculationMethod = '$calcuationMethod', loanAmount = '$loanAmount', gName = '$gName', gAddress = '$gAddress', gContact = '$gContact', status = '$status', interestRate = $interestRate where loanId = $loanId";
+		$query = "UPDATE loans set amountApproved = $amountApproved, borrowerId = '$borrowerId', loanType = '$loanType', loanPeriod = '$loanPeriod', calculationMethod = '$calcuationMethod', loanAmount = '$loanAmount', gName = '$gName', gAddress = '$gAddress', gContact = '$gContact', status = '$status', interestRate = $interestRate where loanId = $loanId";
 		//echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)

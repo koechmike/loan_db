@@ -52,7 +52,7 @@ while($row = mysqli_fetch_array($select))
 																		while($b_res = mysqli_fetch_array($b))
 																	{     ?>    
 											<input value="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="text" class="form-control" readonly >
-											<input type="hidden" value="<?php echo $bid ?>" name="borrowerId" type="number" class="form-control" readonly >
+											<input type="hidden" value="<?php echo $bid ?>" name="borrowerId" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" readonly >
 											<?php }?>
 										</div>
 									</div>	
@@ -93,7 +93,7 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Interest Rate</label>
 										</div>
 										<div class="col-md-6">
-											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['interestRate'] ; ?>"  name="interestRate" type="number" class="form-control" placeholder="Interest" required>
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['interestRate'] ; ?>"  name="interestRate" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Interest" required>
 										</div>
 									</div>			
 								</div>
@@ -128,15 +128,23 @@ while($row = mysqli_fetch_array($select))
 											<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
 										</div>
 										<div class="col-md-5">
-											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanPeriod'] ; ?>"  name="loanPeriod" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Loan Period" required>
 										</div>
 									</div>
 									<div style="margin-bottom: 1rem" class="row">
 										<div class="col-md-6">
-											<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+											<label for="" class="control-label" style="color:#009900">Amount Applied</label>
 										</div>
 										<div class="col-md-6">
-											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanAmount'] ; ?>"  name="loanAmount" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Loan Amount" required readonly>
+										</div>
+									</div>
+									<div style="margin-bottom: 1rem" class="row">
+										<div class="col-md-6">
+											<label for="" class="control-label" style="color:#009900">Amount Approved</label>
+										</div>
+										<div class="col-md-6">
+											<input <?php echo $row['status'] > 1 ? "readonly" : null ?> value="<?php echo $row['loanAmount'] ; ?>"  name="amountApproved" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Loan Approved" required>
 										</div>
 									</div>
 								</div>
@@ -173,7 +181,7 @@ while($row = mysqli_fetch_array($select))
 								</div>
 							</fieldset>
 						</div>						
-						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
+						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="text" title="Numbers only" pattern="^[0-9]*$"   >
 					</div>		
 					<div class="box-footer">
 						<button type="button" class="btn btn-success btn-flat" onclick="history.back()"><i class="fa fa-arrow-circle-left"></i></button>
@@ -201,7 +209,7 @@ $idme= $have['id'];
 				<tr>
 				<td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idme; ?>" checked></td>
 				<td width="800"><input name="fee[]" type="text" class="form-control" placeholder="Fee" value="<?php echo $have['fee']; ?>"></td>
-				<td width="300"><input name="amount[]" type="number" class="form-control" placeholder="Amount" value="<?php echo $have['Amount']; ?>"></td>
+				<td width="300"><input name="amount[]" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Amount" value="<?php echo $have['Amount']; ?>"></td>
 				</tr>
 <?php } ?>
 				</tbody>
@@ -626,9 +634,9 @@ $idmet= $haveit['id'];
 				<tr>
 			<td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idmet; ?>" checked></td>
        <td width="400"><input name="schedulek[]" type="text" class="form-control pull-right" id="datepicker" placeholder="Schedule" value="<?php echo $haveit['schedule']; ?>"></td>
-           <td width="300"><input name="balance[]" type="number" class="form-control" placeholder="Balance" value="<?php echo $haveit['balance']; ?>"></td>
-			<td width="200"><input name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $haveit['interestRate']; ?>"></td>
-			<td width="100"><input name="payment[]" type="number" class="form-control" placeholder="Payment" value="<?php echo $haveit['payment']; ?>"></td>
+           <td width="300"><input name="balance[]" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Balance" value="<?php echo $haveit['balance']; ?>"></td>
+			<td width="200"><input name="interestRate[]" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Interest Rate" value="<?php echo $haveit['interestRate']; ?>"></td>
+			<td width="100"><input name="payment[]" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Payment" value="<?php echo $haveit['payment']; ?>"></td>
 			</tr>
 <?php } ?>
 				</tbody>
