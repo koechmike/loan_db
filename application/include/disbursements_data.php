@@ -123,10 +123,16 @@ $upstatus = 1;//$row['upstatus'];
                 <!-- <td><?php echo "Flexible"; ?></td> -->
 				<td ><?php echo $loanId; ?></td>
 				<td><?php echo $row['id'],' - ',$row['lname'],', ',$row['fname']; ?></td>
-                <td><?php echo $loanName; ?></td>
-				<td><?php echo $loanPeriod; ?></td>
-				<td><?php echo $methodName; ?></td>
-				<td><?php echo $loanAmount; ?></td>
+                <td></td>
+				<td></td>
+				<td></td>
+				<td></td>           
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
 
 
 <?php
