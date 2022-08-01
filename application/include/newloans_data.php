@@ -12,7 +12,7 @@
 					console.log(loanCode);
 					loanType = loanType.toString();
 					// $('#subcountyId').empty();
-					subcountyId.forEach(function(loanType){
+					loanType.forEach(function(loanType){
 						document.getElementById("interestRate").value = loanType.interestRate;
 						document.getElementById("repayMethod").value = loanType.repayMethod;
 						document.getElementById("loanPeriod").value = loanType.repayPeriod;
