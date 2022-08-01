@@ -46,13 +46,17 @@
                                                                 $methodName_res = mysqli_fetch_array($pm_current);
                                                             ?>
                                                             <select name="repayMethod[]"  class="form-control" value="<?php echo $methodName_res['methodName']; ?>" required>
-                                                                <?php
+                                                                <option value="">Select a method&hellip;</option>
+                                                                <option value="1">Straight Line</option>
+                                                                <option value="2">Reducing Balance</option>
+                                                                <option value="3">Armotized</option>
+                                                                <!-- <?php
                                                                     $pm = mysqli_query($link, "SELECT * FROM payment_method") or die (mysqli_error($link));
                                                                     while($ph_res = mysqli_fetch_array($pm))
                                                                     {         
                                                                 ?>
                                                                 <option <?php if($methodName_res['methodName'] == $ph_res['methodName']) echo 'selected="selected"'; ?> value="<?php echo $ph_res['methodId'] ?>"><?php echo $ph_res['methodName'] ?></option>
-                                                                <?php } ?>
+                                                                <?php } ?> -->
                                                             </select>       
                                                             <!-- <input required name="repayMethod[]" type="text" class="form-control" placeholder="Repay Method" value="<?php echo $have['repayMethod']; ?>"> -->
                                                         </td>
