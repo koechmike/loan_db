@@ -1,3 +1,26 @@
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#loanType").change(function(){
+				// console.log("test");
+				var loanTypeId = $("#loanType").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'loanCode=' + loanCode
+				}).done(function(loanCode){
+					console.log(loanCode);
+					loanType = JSON.parse(loanType);
+					// $('#subcountyId').empty();
+					// subcountyId.forEach(function(subcountyId){
+					document.getElementById("interestRate").value = loanType.interestRate;
+					document.getElementById("repayMethod").value = loanType.repayMethod;
+					document.getElementById("loanPeriod").value = loanType.repayPeriod;
+					// })
+				})
+			})
+		})
+</script>  
 <div class="box">
         
 	       <div class="box-body">
@@ -57,7 +80,7 @@
 									<label for="" class="control-label" style="color:#009900">Loan Type</label>
 								</div>
 								<div class="col-sm-6">
-									<select name="loanType"  class="form-control" required>
+									<select name="loanType" id="loanType"  class="form-control" required>
 										<option value="">Select a loan type&hellip;</option>
                                         <?php
                                         	$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
@@ -74,7 +97,7 @@
 									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
 								</div>
 								<div class="col-md-6">
-									<input  name="interestRate" type="number" min="1" class="form-control" placeholder="Interest" required>
+									<input  name="interestRate" id="interestRate" type="number" min="1" class="form-control" placeholder="Interest" required>
 								</div>
 							</div>			
 						</div>
@@ -84,16 +107,7 @@
 									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
 								</div>
 								<div class="col-sm-6">
-								<select name="repaymentMethod"  class="form-control" required>
-										<option value="">Select a repayment method&hellip;</option>
-                                        <?php
-                                        	$lt = mysqli_query($link, "SELECT * FROM calculation_method") or die (mysqli_error($link));
-                                            while($lt_res = mysqli_fetch_array($lt))
-                                        {         
-                                        ?>
-                                        <option value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
-                                        <?php } ?>
-                                    </select>             
+									<input  name="repayMethod"  id="repayMethod" type="text" class="form-control" placeholder="Loan Period" required>            
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">
@@ -101,7 +115,7 @@
 									<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
 								</div>
 								<div class="col-md-5">
-									<input  name="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+									<input  name="loanPeriod" id="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">

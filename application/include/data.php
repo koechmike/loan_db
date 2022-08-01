@@ -36,4 +36,16 @@ include "../config/session.php";
         }
 		echo json_encode($wardId);
     }
+    elseif(isset($_POST['loanCode'])) {
+        $query = "SELECT * FROM loan_types WHERE loanCode = " . $_POST['loanCode'];
+        //echo $query;
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
+
+        $loanType =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $loanType[] = $row;
+        }
+		echo json_encode($loanType);
+    }
  ?>
