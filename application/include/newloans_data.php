@@ -14,7 +14,7 @@
 					// $('#subcountyId').empty();
 					loanType.forEach(function(loanType){
 						document.getElementById("interestRate").value = loanType.interestRate;
-						document.getElementById("repayMethod").value = loanType.repayMethod;
+						document.getElementById("repayMethod").value = loanType.methodName;
 						document.getElementById("loanPeriod").value = loanType.repayPeriod;
 					})
 				})
@@ -107,7 +107,11 @@
 									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
 								</div>
 								<div class="col-sm-6">
+<<<<<<< HEAD
+									<input  name="repayMethod"  id="repayMethod" type="text" class="form-control" placeholder="Loan Period" required readonly>            
+=======
 									<input  name="repayMethod"  id="repayMethod" type="text" class="form-control" placeholder="Loan Period" required>            
+>>>>>>> eea9d9fa36cfe79d10d3af4e5ad8977bdd14222f
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">

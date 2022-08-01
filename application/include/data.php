@@ -37,7 +37,7 @@ include "../config/session.php";
 		echo json_encode($wardId);
     }
     elseif(isset($_POST['loanCode'])) {
-        $query = "SELECT * FROM loan_types WHERE loanCode = " . $_POST['loanCode'];
+        $query = "SELECT lt.interestRate, lt.repayPeriod, lt.requireGuarantor, c.methodName FROM loan_types as lt inner join calculation_method as c on c.methodId = lt.repayMethod WHERE loanCode =" . $_POST['loanCode'];
         //echo $query;
         $b = mysqli_query($link, $query) or die (mysqli_error($link));
 
