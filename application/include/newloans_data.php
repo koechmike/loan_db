@@ -97,7 +97,7 @@
 									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
 								</div>
 								<div class="col-md-6">
-									<input  name="interestRate" id="interestRate" type="number" min="1" class="form-control" placeholder="Interest" required>
+									<input  type="text" title="Numbers only" pattern="^[0-9]*$"  name="interestRate" id="interestRate" class="form-control" placeholder="Interest" required>
 								</div>
 							</div>			
 						</div>
@@ -107,7 +107,7 @@
 									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
 								</div>
 								<div class="col-sm-6">
-									<input  name="repayMethod"  id="repayMethod" type="text" class="form-control" placeholder="Loan Period" required readonly>      
+									<input  name="repayMethod"  id="repayMethod" type="text" class="form-control" placeholder="Repayment Method" required readonly>      
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">
@@ -115,7 +115,7 @@
 									<label for="" class="control-label" style="color:#009900">Repayment Period (Months)</label>
 								</div>
 								<div class="col-md-5">
-									<input  name="loanPeriod" id="loanPeriod" type="number" class="form-control" placeholder="Loan Period" required>
+									<input type="text" title="Numbers only" pattern="^[0-9]*$"  name="loanPeriod" id="loanPeriod" class="form-control" placeholder="Loan Period" required>
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">
@@ -123,7 +123,7 @@
 									<label for="" class="control-label" style="color:#009900">Loan Amount</label>
 								</div>
 								<div class="col-md-6">
-									<input  name="loanAmount" type="number" class="form-control" placeholder="Loan Amount" required>
+									<input  name="loanAmount" type="text" title="Numbers only" pattern="^[0-9]*$"  class="form-control" placeholder="Loan Amount" required>
 								</div>
 							</div>
 						</div>

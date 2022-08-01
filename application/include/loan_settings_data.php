@@ -60,7 +60,7 @@
                                                             </select>       
                                                             <!-- <input required name="repayMethod[]" type="text" class="form-control" placeholder="Repay Method" value="<?php echo $have['repayMethod']; ?>"> -->
                                                         </td>
-                                                        <td width="300"><input required name="repayPeriod[]" title="Numbers only" type="text" pattern="^[0-9]*$" class="form-control" placeholder="Repay Period" value="<?php echo $have['repayPeriod']; ?>"></td>
+                                                        <td width="300"><input required name="repayPeriod[]" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Repay Period" value="<?php echo $have['repayPeriod']; ?>"></td>
                                                         
                                                         <!-- <td width="300"><input required name="interestRate[]" type="number" class="form-control" placeholder="Interest Rate" value="<?php echo $have['interestRate']; ?>"></td> -->
                                                         <td width="300">

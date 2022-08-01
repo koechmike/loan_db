@@ -41,7 +41,7 @@ if (isset($_SESSION['tid'])) {
 	{
 		
 		$borrowerId =  mysqli_real_escape_string($link, $_POST['borrowerId']);
-		$calcuationMethod = mysqli_real_escape_string($link, $_POST['repaymentMethod']);
+		// $calcuationMethod = mysqli_real_escape_string($link, $_POST['repaymentMethod']);
 		$loanPeriod = mysqli_real_escape_string($link, $_POST['loanPeriod']);
 		$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
 		$loanType = mysqli_real_escape_string($link, $_POST['loanType']);
@@ -52,32 +52,32 @@ if (isset($_SESSION['tid'])) {
 		$interest = 0;
 		$monthlyPayments = 0;
 		
-		switch($calcuationMethod){
-			case 1:
-				$monthlyPayments = 0;
+		// switch($calcuationMethod){
+		// 	case 1:
+		// 		$monthlyPayments = 0;
 
-				$apr = $interestRate;
-				$term = $loanPeriod/12;
-				$loan = $loanAmount;
+		// 		$apr = $interestRate;
+		// 		$term = $loanPeriod/12;
+		// 		$loan = $loanAmount;
 
-				$interest = getInterest();
-				//echo $interest;
-				break;
-			case 2:
-				$interest = $loanAmount * ($loanPeriod/12) * ($interestRate/100);
-				$monthlyPayments = ($interest + $loanAmount) / $loanPeriod;
-				break;
-			case 3:
-				$interest = $loanAmount * ($interestRate/100);
-				$monthlyPayments = ($interest + $loanAmount) / $loanPeriod;
-			default:
-				break;
-		}
+		// 		$interest = getInterest();
+		// 		//echo $interest;
+		// 		break;
+		// 	case 2:
+		// 		$interest = $loanAmount * ($loanPeriod/12) * ($interestRate/100);
+		// 		$monthlyPayments = ($interest + $loanAmount) / $loanPeriod;
+		// 		break;
+		// 	case 3:
+		// 		$interest = $loanAmount * ($interestRate/100);
+		// 		$monthlyPayments = ($interest + $loanAmount) / $loanPeriod;
+		// 	default:
+		// 		break;
+		// }
 
 
 		$status = 0;
 
-		$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod','$calcuationMethod','$loanAmount','$gName','$gAddress','$gContact','$status',$interest, 0, 0,$interestRate,$monthlyPayments)";
+		$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod',1,'$loanAmount','$gName','$gAddress','$gContact','$status',0, 0, 0,$interestRate,0)";
 		//echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)
