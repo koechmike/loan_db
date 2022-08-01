@@ -3,7 +3,7 @@
         {
 			$("#loanType").change(function(){
 				// console.log("test");
-				var loanTypeId = $("#loanType").val();
+				var loanCode = $("#loanType").val();
 				$.ajax({
 					url: 'include/data.php',
 					method: 'post',
