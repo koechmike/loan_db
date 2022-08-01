@@ -12,11 +12,11 @@
 					console.log(loanCode);
 					loanType = JSON.parse(loanType);
 					// $('#subcountyId').empty();
-					// subcountyId.forEach(function(subcountyId){
-					document.getElementById("interestRate").value = loanType.interestRate;
-					document.getElementById("repayMethod").value = loanType.repayMethod;
-					document.getElementById("loanPeriod").value = loanType.repayPeriod;
-					// })
+					subcountyId.forEach(function(loanType){
+						document.getElementById("interestRate").value = loanType.interestRate;
+						document.getElementById("repayMethod").value = loanType.repayMethod;
+						document.getElementById("loanPeriod").value = loanType.repayPeriod;
+					})
 				})
 			})
 		})
