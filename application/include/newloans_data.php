@@ -10,7 +10,7 @@
 					data: 'loanCode=' + loanCode
 				}).done(function(loanCode){
 					console.log(loanCode);
-					//loanType = JSON.parse(loanType);
+					loanType = JSON.parse(loanCode);
 					// $('#subcountyId').empty();
 					loanType.forEach(function(loanType){
 						document.getElementById("interestRate").value = loanType.interestRate;
