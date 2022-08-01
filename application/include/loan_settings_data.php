@@ -159,7 +159,7 @@
                                             <table>
                                                 <th></th>
                                                 <!-- <th align="center" width="400">ID</th> -->
-                                                <th align="center" width="300">Payment Method</th>
+                                                <th align="center" width="300">Payment Modes</th>
                                                 <tbody> 
                                                     <?php
                                                     $id = $_GET['id'];
