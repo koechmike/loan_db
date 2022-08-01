@@ -82,9 +82,9 @@
 					<div class="col-sm-6">
 						<select name="loanType" class="form-control" required>
 							<option value="">Select an option&hellip;</option>
-							<option value="1">Mpesa</option>
+							<option value="1">Paybill</option>
 							<option value="2">Cheque</option>
-							<option value="3">Direct Deposit</option>
+							<option value="3">Cash</option>
 						</select>                 
 					</div>
 				</div>				
