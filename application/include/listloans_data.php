@@ -57,6 +57,7 @@ $pcreate = $get_check['pcreate'];
 $pupdate = $get_check['pupdate'];
 ?>
 	<?php echo ($pdelete == '1') ? '<button type="submit" class="btn btn-flat btn-danger" name="delete"><i class="fa fa-times"></i>&nbsp;Multiple Delete</button>' : ''; ?>
+	
 	<?php echo ($pcreate == '1') ? '<a href="newloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-success"><i class="fa fa-plus"></i>&nbsp;Add Loans</button></a>' : ''; ?>
 <?php
 $get = mktime(0,0,0,date("m"),date("d"),date("Y"));
@@ -86,10 +87,6 @@ $num = mysqli_num_rows($select);
                   <th>Amount Disbursed</th>
 				  ";}?>
                   <th>Interest Rate</th>
-				  <?php if($pageid == 4){
-					echo "
-                  <th>Interest</th>
-				  ";}?>
                   <!-- <th>Approve By</th> -->
                   <!-- <th>date Release</th> -->
                   <!-- <th>Payment Date</th> -->
@@ -105,16 +102,16 @@ $num = mysqli_num_rows($select);
 <?php
 switch($pageid){
 	case 1:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
 		break;
 	case 2:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
 		break;
 	case 3:
-		$loanQuery = "select l.amountDisbursed, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interest, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2 or l.status = 3;";				
+		$loanQuery = "select l.amountDisbursed, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName,  l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2 or l.status = 3;";				
 		break;
 	case 4: 
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
+		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
 		break;
 }
 $select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
@@ -156,10 +153,6 @@ $upstatus = 1;//$row['upstatus'];
 					<td> ".$amountDisbursed." </td>
 				  ";}?>
 			    <td><?php echo $interestRate; ?></td>
-				<?php if($pageid == 4){
-					echo "
-					<td> ".$interest." </td>
-				  ";}?>
 				<?php 
 				if($pageid == 4){
 					switch($status){

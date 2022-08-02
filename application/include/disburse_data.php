@@ -1,19 +1,82 @@
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#borrowerId").change(function(){
+				// console.log(countyId);
+				var borrowerId = $("#borrowerId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'borrowerId=' + borrowerId
+				}).done(function(loans){
+					console.log(loans);
+					loanDataParsed = JSON.parse(loans);
+					$('#loanId').empty();			
+					$('#loanId').append('<option>Select a loan&hellip;</option>')
+					loanDataParsed.forEach(function(loanDataParsed){
+						$('#loanId').append('<option value="'+loanDataParsed.loanId+'">' + loanDataParsed.loanId + '</option>')
+					})
+				})
+			})
+		})
+		
+		$(document).ready(function()
+        {
+			$("#loanId").change(function(){
+				// console.log(countyId);
+				var loanId = $("#loanId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'loanId=' + loanId
+				}).done(function(loanData){
+					console.log(loanData);
+					loanDataParsed = JSON.parse(loanData);
+					// $('#loanId').empty();
+					loanDataParsed.forEach(function(loanDataParsed){
+						document.getElementById("disbursedAmount").value = loanDataParsed.amountApproved - loanDataParsed.amountDisbursed;
+						document.getElementById("amountDisbursed").value = loanDataParsed.amountDisbursed;
+						document.getElementById("amountApproved").value = loanDataParsed.amountApproved;
+					})
+				})
+			})
+		})
+
+		$(document).ready(function()
+        {
+			$("#collector").change(function(){
+				// console.log(countyId);
+				var collector = $("#collector").val();
+				var borrowerId = $("#borrowerId").val();
+				if(collector == 1){
+					$.ajax({
+						url: 'include/data.php',
+						method: 'post',
+						data: '_borrowerId=' + borrowerId
+					}).done(function(borrowerData){
+						console.log(borrowerData);
+						borrowerDataParsed = JSON.parse(borrowerData);
+						// $('#loanId').empty();
+						borrowerDataParsed.forEach(function(borrowerDataParsed){
+							document.getElementById("cid").value = borrowerDataParsed.idNumber;
+							document.getElementById("cname").value = borrowerDataParsed.fname + " " + borrowerDataParsed.lname;
+						})
+					})
+				}else{					
+					document.getElementById("cid").value = null;
+					document.getElementById("cname").value = null;						
+				}
+			})
+		})
+		
+</script>
 <div class="row">	
 	<section class="content">
         <div class="box box-success">
         	<div class="box-body">
             	<div class="table-responsive">
              		<div class="box-body">
-						<div class="col-md-14">
-							<?php
-							$id = $_GET['id'];
-							$pageid = $_GET['pageid'];
-							$loanQuery = "SELECT * FROM loans WHERE loanId = '$id'";
-							$select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
-							while($row = mysqli_fetch_array($select))
-							{
-							// $borrower = $row['borrower'];   
-							?>           
+						<div class="col-md-14">        
 							<form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_loan_info.php">
 							<?php echo '<div class="alert alert-info fade in" >
 							<a href = "#" class = "close" data-dismiss= "alert"> &times;</a>
@@ -29,24 +92,34 @@
 														<div class="col-md-6">
 															<label for="" class="control-label" style="color:#009900">Borrower</label>
 														</div>
-														<div class="col-sm-6">
-															<?php
-															$bid = $row['borrowerId'];
-															$bidQuery = "SELECT * FROM borrowers where id = ".$bid;
-															// echo $bidQuery;
-															$b = mysqli_query($link, $bidQuery) or die (mysqli_error($link));
-																						while($b_res = mysqli_fetch_array($b))
-																					{     ?>    
-															<input value="<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>" name="borrorwerId1" type="text" class="form-control" readonly >
-															<?php }?>        
+														<div class="col-sm-6">									
+															<select name="borrowerId" id="borrowerId" class="form-control" required>
+																<option value="">Select a borrower&hellip;</option>
+																<?php
+																	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
+																	while($b_res = mysqli_fetch_array($b))
+																{         
+																?>
+																<option value="<?php echo $b_res['id'] ?>"><?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?></option>
+																<?php } ?>
+															</select>   
 														</div>
 													</div>	
 													<div style="margin-bottom: 1rem" class="row">
 														<div class="col-md-6">
-															<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+															<label for="" class="control-label" style="color:#009900">Loan No.</label>
+														</div>
+														<div class="col-md-6">																
+															<select name="loanId" id="loanId" class="form-control" required>		
+															</select>
+														</div>
+													</div>	
+													<div style="margin-bottom: 1rem" class="row">
+														<div class="col-md-6">
+															<label for="" class="control-label" style="color:#009900">Loan Approved</label>
 														</div>
 														<div class="col-md-6">	
-															<input value="<?php echo $row['loanAmount'] ?>" name="loanAmount" type="text" class="form-control" placeholder="0" readonly >
+															<input value="" name="amountApproved" id="amountApproved" type="text" class="form-control" placeholder="0" readonly >
 														</div>
 													</div>	
 													<div style="margin-bottom: 1rem" class="row">
@@ -54,7 +127,7 @@
 															<label for="" class="control-label" style="color:#009900">Amount Disbursed</label>
 														</div>
 														<div class="col-md-6">
-															<input value="<?php echo $row['amountDisbursed'] ?>" name="amountDisbursed" type="text" class="form-control" placeholder="0" readonly >
+															<input name="amountDisbursed" id="amountDisbursed" type="text" class="form-control" placeholder="0" readonly >
 														</div>
 													</div>
 												</div>
@@ -64,7 +137,7 @@
 															<label for="" class="control-label" style="color:#009900">Amount to Disburse</label>
 														</div>
 														<div class="col-md-5">
-															<input value=""  name="disbursedAmount" type="number" class="form-control" placeholder="Amount in KES" required>
+															<input name="disbursedAmount" id="disbursedAmount" type="text" title="Numbers only" pattern="^[0-9]*$"   class="form-control" placeholder="Amount in KES" required>
 														</div>
 													</div>
 													<div style="margin-bottom: 1rem" class="row">
@@ -102,17 +175,50 @@
 													</div>
 												</div>
 											</fieldset>	
-										</div>					
-										<input type="hidden" value="<?php echo $id; ?>" name="loanId" type="number" >
-										<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
+										</div>											
+										<div class="col-md-4">	
+											<fieldset style="width:100%">	
+												<legend>Collector Details</legend>												
+												<div class="col-md-12">
+													<div style="margin-bottom: 1rem" class="row">
+														<div class="col-md-6">
+															<label for="" class="control-label" style="color:#009900">Collector</label>
+														</div>
+														<div class="col-sm-6">
+															<select name="collector" id="collector"  class="form-control" required>
+																<option value="">Select an option</option>
+																<option value="1">Borrower</option>
+																<option value="2">Third Party</option>
+															</select>             
+														</div>
+													</div>
+													<div style="margin-bottom: 1rem" class="row">
+														<div class="col-md-6">
+															<label for="" class="control-label" style="color:#009900">Collector Name</label>
+														</div>
+														<div class="col-md-6">
+															<input value=""  name="cname" id="cname" type="text" class="form-control" >
+														</div>
+													</div>
+													<div style="margin-bottom: 1rem" class="row">
+														<div class="col-md-5">
+															<label for="" class="control-label" style="color:#009900">Collector ID Number</label>
+														</div>
+														<div class="col-md-7">
+															<input name="cid" id="cid" type="text" class="form-control" >
+														</div>	
+													</div>
+												</div>		
+											</fieldset>
+										</div> 					
+										<input type="hidden" value="" name="pageid" type="text" title="Numbers only" pattern="^[0-9]*$"   >
 									</div>		
 									<div class="box-footer">
 										<button type="button" class="btn btn-success btn-flat" onclick="history.back()"><i class="fa fa-arrow-circle-left"></i></button>
 										<button name="disburse" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Disburse</i></button>
 									</div>	  
 								</div>			 
-							</form>
-							<?php } ?> 						
+							</form>					
 						</div>
                 	</div>
 				</div>	

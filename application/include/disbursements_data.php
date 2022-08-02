@@ -57,18 +57,18 @@ $pcreate = $get_check['pcreate'];
 $pupdate = $get_check['pupdate'];
 ?>
 	<?php echo ($pdelete == '1') ? '<button type="submit" class="btn btn-flat btn-danger" name="delete"><i class="fa fa-times"></i>&nbsp;Multiple Delete</button>' : ''; ?>
-	<?php echo ($pcreate == '1') ? '<a href="newloans.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-success"><i class="fa fa-plus"></i>&nbsp;Add Loans</button></a>' : ''; ?>
+	
 <?php
 $get = mktime(0,0,0,date("m"),date("d"),date("Y"));
 $date = date("d/m/Y",$get);
 $select = mysqli_query($link, "SELECT * FROM loan_info WHERE pay_date >= '$date' AND pay_date < '$date'") or die (mysqli_error($link));
 $num = mysqli_num_rows($select);
 ?>
-	<button type="button" class="btn btn-flat btn-danger"><i class="fa fa-times"></i>&nbsp;Overdue:&nbsp;<?php echo number_format($num,0,'.',','); ?></button>
+	
 	
 	<a href="printloan.php" target="_blank" class="btn btn-info btn-flat"><i class="fa fa-print"></i>&nbsp;Print</a>
 	<a href="exportloan.php" target="_blank" class="btn btn-success btn-flat"><i class="fa fa-send"></i>&nbsp;Export Excel</a>
-	
+	<?php echo ($pcreate == '1') ? '<a href="disburse.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("405").'"><button type="button" class="btn btn-flat btn-success"><i class="fa fa-plus"></i>&nbsp;Add Disbursement</button></a>' : ''; ?>
 	<hr>		
 			  
 			 <table id="example1" class="table table-bordered table-striped">

@@ -41,7 +41,7 @@ if (isset($_SESSION['tid'])) {
 	{
 		
 		$borrowerId =  mysqli_real_escape_string($link, $_POST['borrowerId']);
-		// $calcuationMethod = mysqli_real_escape_string($link, $_POST['repaymentMethod']);
+		$calcuationMethod = mysqli_real_escape_string($link, $_POST['repaymentMethod']);
 		$loanPeriod = mysqli_real_escape_string($link, $_POST['loanPeriod']);
 		$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
 		$loanType = mysqli_real_escape_string($link, $_POST['loanType']);
@@ -51,7 +51,8 @@ if (isset($_SESSION['tid'])) {
 		$interestRate = mysqli_real_escape_string($link, $_POST['interestRate']);
 		$interest = 0;
 		$monthlyPayments = 0;
-		
+		// $applicationDate = new Date();
+		$applicationDate = date_create('now')->format('Y-m-d H:i:s');;
 		// switch($calcuationMethod){
 		// 	case 1:
 		// 		$monthlyPayments = 0;
@@ -76,9 +77,10 @@ if (isset($_SESSION['tid'])) {
 
 
 		$status = 0;
-
-		$query = "INSERT INTO loans VALUES(null,'$borrowerId','$loanType','$loanPeriod',1,'$loanAmount','$gName','$gAddress','$gContact','$status',0, 0, 0,$interestRate,0)";
-		//echo $query;
+		
+		
+		$query = "INSERT INTO loans VALUES (null, $borrowerId, $loanType, $interestRate, 1, $loanAmount, 0, $applicationDate, null, 0, $loanPeriod, 0, 0, 0, 0, 0, '".$gName."', '".$gAddress."', $gContact, $status);";
+		echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)
 		{
@@ -160,19 +162,24 @@ if (isset($_SESSION['tid'])) {
 		$paymentMethod = mysqli_real_escape_string($link, $_POST['paymentMethod']);
 		$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
 		$amountDisbursed = mysqli_real_escape_string($link, $_POST['amountDisbursed']);
+		$amountApproved = mysqli_real_escape_string($link, $_POST['amountApproved']);
 		$captureDate = mysqli_real_escape_string($link, $_POST['captureDate']);
+		$cname = mysqli_real_escape_string($link, $_POST['cname']);
+		$cid = mysqli_real_escape_string($link, $_POST['cid']);
 		$tid = $_SESSION['userid'];
-		$now = date_create('now')->format('Y-m-d H:i:s');
+		$dateOfDisbursement = date_create('now')->format('Y-m-d H:i:s');
 
 		$amountDisbursed = $amountDisbursed + $disbursedAmount;
 
 		$status = ($amountDisbursed == $loanAmount) ? 4 : 3;
 		
 		$loanQuery = "UPDATE loans set status = $status, amountDisbursed = $amountDisbursed where loanId = $loanId";
-		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Disbursed', '$disbursedAmount', '1', '$now', '$transactionReference','$captureDate')";
+		$transactionQuery = "INSERT INTO `loan`.`loans_disbursed` VALUES (null,$amountApproved,$disbursedAmount,$paymentMethod,$transactionReference,null,$cid,'$cname',1,'$dateOfDisbursement',$loanId);";
+
+		//$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Disbursed', '$disbursedAmount', '1', '$now', '$transactionReference','$captureDate')";
 		
-		// echo $loanQuery;
-		// echo $transactionQuery;
+		 //echo $loanId;
+		 //echo $transactionQuery;
 		$loanUpdate = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
 		$transactionInsert = mysqli_query($link, $transactionQuery) or die (mysqli_error($link));
 
