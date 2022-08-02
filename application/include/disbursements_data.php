@@ -76,22 +76,21 @@ $num = mysqli_num_rows($select);
                 <tr>
                   <!-- <th><input type="checkbox" id="select_all"/></th> -->
                   <th width="50">Disbursement ID</th>
-				  <th width="100">Borrower</th>
                   <th>Loan No</th>
-                  <th>Payment Mode</th>
-                  <th>Reference No.</th>
+				  <th width="100">Borrower</th>
                   <th>Amount Approved</th>
                   <th>Amount Disbursed</th>
-                  <th>Balance</th>
+                  <th>Payment Mode</th>
+                  <th>Name</th>
                   <th>Collector</th>
                   <th>ID Number</th>
-                  <th>User</th>
                   <th>Date Issued</th>
+                  <th>Reference</th>
                  </tr>
                 </thead>
                 <tbody> 
 <?php
-	$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, l.interest, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
+	$loanQuery = "SELECT ld.transactionNo, ld.amountApproved, ld.amountDisbursed, pm.methodName, ld.reference, ld.collector, ld.idNumber, ld.name, ld.user, ld.dateOfDisbursement, ld.loanNo, l.borrowerId, b.fname, b.lname FROM loans_disbursed as ld inner join payment_method as pm on pm.methodId = ld.paymentMode inner join loans as l on l.loanId = ld.loanNo inner join borrowers as b on b.id = l.borrowerId;";				
 
 $select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
 if(mysqli_num_rows($select)==0)
@@ -121,18 +120,17 @@ $upstatus = 1;//$row['upstatus'];
                 <tr>
 				<!-- <td><input id="optionsCheckbox" class="checkbox" name="selector[]" type="checkbox" value="<?php echo $row['id']; ?>"></td> -->
                 <!-- <td><?php echo "Flexible"; ?></td> -->
-				<td ><?php echo $loanId; ?></td>
-				<td><?php echo $row['id'],' - ',$row['lname'],', ',$row['fname']; ?></td>
-                <td></td>
-				<td></td>
-				<td></td>
-				<td></td>           
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
-				<td></td>
+				<td ><?php echo $row['transactionNo']; ?></td>
+				<td ><?php echo $row['loanNo']; ?></td>
+				<td><?php echo $row['borrowerId'],' - ',$row['lname'],', ',$row['fname']; ?></td>
+				<td ><?php echo $row['amountApproved']; ?></td>
+				<td ><?php echo $row['amountDisbursed']; ?></td>
+				<td ><?php echo $row['methodName']; ?></td>
+				<td ><?php echo $row['name']; ?></td>
+				<td ><?php echo $row['collector']; ?></td>
+				<td ><?php echo $row['idNumber']; ?></td>
+				<td ><?php echo $row['dateOfDisbursement']; ?></td>
+				<td ><?php echo $row['reference']; ?></td>
 
 
 <?php
