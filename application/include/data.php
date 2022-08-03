@@ -49,7 +49,7 @@ include "../config/session.php";
 		echo json_encode($loanType);
     }
     elseif(isset($_POST['loanId'])) {
-        $query = "SELECT * FROM loans WHERE loanId = " . $_POST['loanId'];
+        $query = "SELECT * FROM loans WHERE loanId = '" . $_POST['loanId'] ."'";
         $b = mysqli_query($link, $query) or die (mysqli_error($link));
         $loanData =array();
         while($row = mysqli_fetch_array($b))

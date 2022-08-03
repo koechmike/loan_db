@@ -76,7 +76,8 @@ while($row = mysqli_fetch_assoc($insert))
 $time = new DateTime('now');
 $newtime = $time->modify('-18 year')->format('Y-m-d');
 if(isset($_POST['save']))
-{
+{	
+$sid =  mysqli_real_escape_string($link, $_POST['sid']);
 $fname =  mysqli_real_escape_string($link, $_POST['fname']);
 $lname = mysqli_real_escape_string($link, $_POST['lname']);
 $dob = mysqli_real_escape_string($link, $_POST['dob']);
@@ -88,7 +89,7 @@ $county = mysqli_real_escape_string($link, $_POST['county']);
 $subcounty = mysqli_real_escape_string($link, $_POST['sub-county']);
 $ward = mysqli_real_escape_string($link, $_POST['ward']);
 $krapin = mysqli_real_escape_string($link, $_POST['krapin']);
-$profesion = mysqli_real_escape_string($link, $_POST['profession']);
+$pid =  mysqli_real_escape_string($link, $_POST['pid']);
 $idNumber = mysqli_real_escape_string($link, $_POST['idNumber']);
 $maritalStatus = mysqli_real_escape_string($link, $_POST['maritalStatus']);
 $powName = mysqli_real_escape_string($link, $_POST['powName']);
@@ -150,7 +151,7 @@ $check = true; //getimagesize($_FILES["image"]["tmp_name"]);
 // 	move_uploaded_file($sourcepath,$targetpath);
 	
 // 	$location = "img/".$_FILES['image']['name'];
-$query = "INSERT INTO `borrowers` (`id`,`fname`,`lname`,`email`,`phone`,`addrs1`,`addrs2`,`comment`,`account`,`balance`,`status`,`idNumber`,`maritalStatus`,`powName`,`position`,`powAddress`,`powTown`,`powContact`,`powEmail`,`nokName`,`nokEmail`,`nokContact`,`nokRelationship`,`nokResidence`,`nokIdNumber`,`iName`,`iDob`,`iContact`,`iResidence`,`iIdNumber`) VALUES (null,'$fname','$lname','$email','$phone','$address1','$address2','','','0','$status','$idNumber','$maritalStatus','$powName','$position','$powAddress','$powTown',$powContact,'$powEmail','$nokName','$nokEmail',$nokContact,'$nokRelationship','$nokResidence','$nokIdNumber','$iName','$iDob',$iContact,'$iResidence','$iIdNumber');";
+$query = "INSERT INTO `borrowers` (`id`,`fname`,`lname`,`email`,`phone`,`addrs1`,`addrs2`,`comment`,`account`,`balance`,`status`,`idNumber`,`maritalStatus`,`powName`,`position`,`powAddress`,`powTown`,`powContact`,`powEmail`,`nokName`,`nokEmail`,`nokContact`,`nokRelationship`,`nokResidence`,`nokIdNumber`,`iName`,`iDob`,`iContact`,`iResidence`,`iIdNumber`,`salutation`,`proffession`) VALUES (null,'$fname','$lname','$email','$phone','$address1','$address2','','','0','$status','$idNumber','$maritalStatus','$powName','$position','$powAddress','$powTown',$powContact,'$powEmail','$nokName','$nokEmail',$nokContact,'$nokRelationship','$nokResidence','$nokIdNumber','$iName','$iDob',$iContact,'$iResidence','$iIdNumber','$sid','$pid');";
 //echo $query;
 $insert = mysqli_query($link, $query) or die (mysqli_error($link));
 if(!$insert)
@@ -175,6 +176,23 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 					</div>
 					<div class="col-md-6">
 						<input value="<?php echo $newBorrowersId; ?>" name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly >
+					</div>
+				</div>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-8">
+							<label for="" class="control-label" style="color:#009900">Salutations</label>
+					</div>
+					<div class="col-sm-4">
+					<select name="sid" id="sid" class="form-control" required>
+										<option value="">Select a salutation&hellip;</option>
+                                        <?php
+                                        	$b = mysqli_query($link, "SELECT * FROM salutations") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $b_res['sid'] ?>"><?php echo $b_res['sinitials']   ?></option>
+                                        <?php } ?>
+                                    </select>                
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
@@ -292,14 +310,23 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
     <div class="col-md-4">
 		<fieldset style="width:270px">	
 			<legend>Other Information</legend> 
-			<div class="form-group" style="margin-bottom: 1rem" class="row">
-				<div class="col-md-3">
-					<label for="" class="control-label" style="color:#009900">Profession</label>
+				<div style="margin-bottom: 1rem" class="row">
+					<div class="col-md-5">
+							<label for="" class="control-label" style="color:#009900">Proffession</label>
+					</div>
+					<div class="col-sm-7">
+					<select name="pid" id="pid" class="form-control" required>
+										<option value="">Select a proffession&hellip;</option>
+                                        <?php
+                                        	$b = mysqli_query($link, "SELECT * FROM proffession") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        {         
+                                        ?>
+                                        <option value="<?php echo $b_res['pid'] ?>"><?php echo $b_res['pname']   ?></option>
+                                        <?php } ?>
+                                    </select>                
+					</div>
 				</div>
-				<div class="col-md-9">			
-					<input name="Profession" type="text" class="form-control" placeholder="Profession" >
-				</div>
-			</div>
 			<div style="margin-bottom: 1rem" class="row">
 				<div class="col-md-6">
 					<label for="" class=" control-label" style="color:#009900">KRA Pin</label>

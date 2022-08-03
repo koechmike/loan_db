@@ -1,21 +1,22 @@
 <script type="text/javascript">
 		$(document).ready(function()
         {
-			$("#loanType").change(function(){
+			$("#loanCode").change(function(){
 				// console.log("test");
-				var loanCode = $("#loanType").val();
+				var loanCode = $("#loanCode").val();
 				$.ajax({
 					url: 'include/data.php',
 					method: 'post',
 					data: 'loanCode=' + loanCode
-				}).done(function(loanCode){
-					console.log(loanCode);
-					loanType = JSON.parse(loanCode);
+				}).done(function(loanType){
+					console.log(loanType);
+					loanTypeData = JSON.parse(loanType);
 					// $('#subcountyId').empty();
-					loanType.forEach(function(loanType){
-						document.getElementById("interestRate").value = loanType.interestRate;
-						document.getElementById("repayMethodName").value = loanType.methodName;
-						document.getElementById("loanPeriod").value = loanType.repayPeriod;
+					loanTypeData.forEach(function(loanTypeData){
+						console.log(loanTypeData.interestRate);
+						document.getElementById("interestRate").value = loanTypeData.interestRate;
+						document.getElementById("repayMethodName").value = loanTypeData.methodName;
+						document.getElementById("loanPeriod").value = loanTypeData.repayPeriod;
 					})
 				})
 			})
@@ -72,7 +73,7 @@
 												$newLoanId = $b_res['loanId'] + 1;
 											}         
                                         ?>
-									<input value="<?php echo $newLoanId; ?>" name="loanId" type="text" class="form-control" placeholder="Loan ID" readonly >
+									<input name="loanId" type="text" class="form-control" placeholder="Loan ID"  >
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">
@@ -80,7 +81,7 @@
 									<label for="" class="control-label" style="color:#009900">Loan Type</label>
 								</div>
 								<div class="col-sm-6">
-									<select name="loanType" id="loanType"  class="form-control" required>
+									<select name="loanCode" id="loanCode"  class="form-control" required>
 										<option value="">Select a loan type&hellip;</option>
                                         <?php
                                         	$lt = mysqli_query($link, "SELECT * FROM loan_types") or die (mysqli_error($link));
@@ -107,7 +108,7 @@
 									<label for="" class="control-label" style="color:#009900">Repayment Method</label>
 								</div>
 								<div class="col-sm-6">
-									<input  name="repayMethod"  id="repayMethod" type="text" class="form-control" placeholder="Repayment Method" required readonly>    
+									<input  name="repayMethodName"  id="repayMethodName" type="text" class="form-control" placeholder="Repayment Method" required readonly>    
 								</div>
 							</div>
 							<div style="margin-bottom: 1rem" class="row">

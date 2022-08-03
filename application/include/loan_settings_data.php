@@ -35,7 +35,7 @@
                                                     ?>			
                                                     <tr>
                                                         <td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idme; ?>" checked></td>
-                                                        <td width="300"><input readonly name="loanCode[]" type="number" class="form-control" placeholder="Loan Code" value="<?php echo $have['loanCode']; ?>"></td>
+                                                        <td width="300"><input required name="loanCode[]" type="text" class="form-control" placeholder="Loan Code" value="<?php echo $have['loanCode']; ?>"></td>
                                                         <td width="800"><input required name="loanName[]" type="text" class="form-control" placeholder="Loan Name" value="<?php echo $have['loanName']; ?>"></td>
                                                         <td width="300">
                                                             <?php

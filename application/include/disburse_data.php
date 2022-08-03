@@ -34,6 +34,7 @@
 					loanDataParsed = JSON.parse(loanData);
 					// $('#loanId').empty();
 					loanDataParsed.forEach(function(loanDataParsed){
+						console.log(loanDataParsed.amountApproved - loanDataParsed.amountDisbursed);
 						document.getElementById("disbursedAmount").value = loanDataParsed.amountApproved - loanDataParsed.amountDisbursed;
 						document.getElementById("amountDisbursed").value = loanDataParsed.amountDisbursed;
 						document.getElementById("amountApproved").value = loanDataParsed.amountApproved;
