@@ -175,7 +175,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 					</div>
 					<div class="col-md-6">
-						<input value="<?php echo $newBorrowersId; ?>" name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly >
+						<input value="<?php echo $newBorrowersId; ?>" name="borrorwerId" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Borrower ID" readonly >
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
@@ -226,7 +226,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">ID Number</label>
 					</div>
 					<div class="col-md-6">
-						<input name="idNumber" type="number" class="form-control" placeholder="ID Number" required>
+						<input name="idNumber" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="ID Number" required>
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
@@ -310,23 +310,23 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
     <div class="col-md-4">
 		<fieldset style="width:270px">	
 			<legend>Other Information</legend> 
-				<div style="margin-bottom: 1rem" class="row">
-					<div class="col-md-5">
-							<label for="" class="control-label" style="color:#009900">Proffession</label>
-					</div>
-					<div class="col-sm-7">
-					<select name="pid" id="pid" class="form-control" required>
-										<option value="">Select a proffession&hellip;</option>
-                                        <?php
-                                        	$b = mysqli_query($link, "SELECT * FROM proffession") or die (mysqli_error($link));
-                                            while($b_res = mysqli_fetch_array($b))
-                                        {         
-                                        ?>
-                                        <option value="<?php echo $b_res['pid'] ?>"><?php echo $b_res['pname']   ?></option>
-                                        <?php } ?>
-                                    </select>                
-					</div>
+			<div style="margin-bottom: 1rem" class="row">
+				<div class="col-md-5">
+						<label for="" class="control-label" style="color:#009900">Proffession</label>
 				</div>
+				<div class="col-sm-7">
+				<select name="pid" id="pid" class="form-control" required>
+									<option value="">Select a proffession&hellip;</option>
+                                    <?php
+                                    	$b = mysqli_query($link, "SELECT * FROM proffession") or die (mysqli_error($link));
+                                        while($b_res = mysqli_fetch_array($b))
+                                    {         
+                                ?>
+                                <option value="<?php echo $b_res['pid'] ?>"><?php echo $b_res['pname']   ?></option>
+                                    <?php } ?>
+                    </select>                
+				</div>
+			</div>
 			<div style="margin-bottom: 1rem" class="row">
 				<div class="col-md-6">
 					<label for="" class=" control-label" style="color:#009900">KRA Pin</label>
@@ -401,7 +401,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Contact</label>
 					</div>
 					<div class="col-md-6">
-						<input name="powContact" type="number" class="form-control" placeholder="Phone Number" required>
+						<input name="powContact" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Phone Number" required>
 					</div>
 				</div>
 				<div class="form-group" style="margin-bottom: 1rem" class="row">
@@ -430,7 +430,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">ID Number</label>
 					</div>
 					<div class="col-md-6">
-						<input name="nokIdNumber" type="number" class="form-control" placeholder="ID Number" required>
+						<input name="nokIdNumber" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="ID Number" required>
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
@@ -446,7 +446,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Contact</label>
 					</div>
 					<div class="col-md-6">
-						<input name="nokContact" type="number" class="form-control" placeholder="Phone Number" required>
+						<input name="nokContact" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Phone Number" required>
 					</div>
 				</div>
 				<div class="form-group" style="margin-bottom: 1rem" class="row">
@@ -491,7 +491,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">ID Number</label>
 					</div>
 					<div class="col-md-6">
-						<input name="iIdNumber" type="number" class="form-control" placeholder="ID Number" required>
+						<input name="iIdNumber" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="ID Number" required>
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
@@ -507,7 +507,7 @@ echo "<div class='alert alert-success'>Borrower Information Created Successfully
 						<label for="" class="control-label" style="color:#009900">Contact</label>
 					</div>
 					<div class="col-md-6">
-						<input name="iContact" type="number" class="form-control" placeholder="Phone Number" required>
+						<input name="iContact" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Phone Number" required>
 					</div>
 				</div>
 				<div style="margin-bottom: 1rem" class="row">
