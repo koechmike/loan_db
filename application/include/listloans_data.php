@@ -1,4 +1,6 @@
-
+<?php 
+$pageid = $_GET['pageid'];
+?>
 <div class="row">       
 		    <section class="content">  
 	        <div class="box box-success">
@@ -13,8 +15,21 @@
 					<div class="modal-header">        
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-						</button>											
-						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to transfer the record?</h3>
+						</button>	
+						<?php 
+						switch($pageid){
+							case 1:
+								$modalText = "appraise";
+								brea;
+							case 2:
+								$modalText = "approve"; 
+								break;
+							default:
+								$modalText = "transfer";
+								break;
+						}
+						?>						
+						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to <?php echo $modalText ?> the loan?</h3>
 					</div>
 					<!-- <div class="modal-body">
 					</div> -->
