@@ -144,7 +144,7 @@ if (isset($_SESSION['tid'])) {
 		}
 		
 		$query = "UPDATE loans set status = $status where loanId = '$loanId'";
-		//echo $query;
+		echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)
 		{

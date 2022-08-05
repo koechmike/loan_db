@@ -17,17 +17,17 @@ $pageid = $_GET['pageid'];
 						<span aria-hidden="true">&times;</span>
 						</button>	
 						<?php 
-						switch($pageid){
-							case 1:
-								$modalText = "appraise";
-								brea;
-							case 2:
-								$modalText = "approve"; 
-								break;
-							default:
-								$modalText = "transfer";
-								break;
-						}
+							switch($pageid){
+								case 1:
+									$modalText = "appraise";
+									brea;
+								case 2:
+									$modalText = "approve"; 
+									break;
+								default:
+									$modalText = "transfer";
+									break;
+							}
 						?>						
 						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to <?php echo $modalText ?> the loan?</h3>
 					</div>
