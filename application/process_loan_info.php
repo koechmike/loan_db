@@ -124,37 +124,42 @@ if (isset($_SESSION['tid'])) {
 			echo '<br>';
 			echo'<span class="itext" style="color: black">Updating loan information...</span>';
 		}
-	}elseif(isset($_POST['transfer'])){
+	}elseif(isset($_POST['yes'] || isset($_POST['no'])){
 
 		$pageid = mysqli_real_escape_string($link, $_POST['pageid']);
 		$loanId = mysqli_real_escape_string($link, $_POST['id']);
 
-		switch($pageid){
-			case 1:
-				$status = 1;
-				break;
-			case 2: 
-				$status = 2;
-				break;
-			case 3: 
-				$status = 3;
-				break;
-			case 4:
-				break;
-		}
-		
-		$query = "UPDATE loans set status = $status where loanId = '$loanId'";
-		echo $query;
-		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
-		if(!$insert)
-		{
-			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
-			echo '<br>';
-			echo'<span class="itext" style="color: #FF0000">Unable to update loan Information. Please try again later.</span>';
+		if(isset($_POST['no'] && $pageid == 1){
+
 		}else{
-			echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';
-			echo '<br>';
-			echo'<span class="itext" style="color: black">Transfering loan for approval...</span>';
+
+			switch($pageid){
+				case 1:
+					$status = 1;
+					break;
+				case 2: 
+					$status = 2;
+					break;
+				case 3: 
+					$status = 3;
+					break;
+				case 4:
+					break;
+			}
+			
+			$query = "UPDATE loans set status = $status where loanId = '$loanId'";
+			echo $query;
+			$insert = mysqli_query($link, $query) or die (mysqli_error($link));
+			if(!$insert)
+			{
+				echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
+				echo '<br>';
+				echo'<span class="itext" style="color: #FF0000">Unable to update loan Information. Please try again later.</span>';
+			}else{
+				echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';
+				echo '<br>';
+				echo'<span class="itext" style="color: black">Transfering loan for approval...</span>';
+			}
 		}
 	}elseif(isset($_POST['disburse'])){
 

@@ -20,14 +20,18 @@ $pageid = $_GET['pageid'];
 							switch($pageid){
 								case 1:
 									$modalText = "appraise";
+									$buttonA = "YES";
+									$buttonD = "NO";
 									brea;
 								case 2:
 									$modalText = "approve"; 
+									$buttonA = "Approve"; 
+									$buttonD = "Deny"; 
 									break;
 								default:
 									$modalText = "transfer";
 									break;
-							}
+							} 
 						?>						
 						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to <?php echo $modalText ?> the loan?</h3>
 					</div>
@@ -38,7 +42,8 @@ $pageid = $_GET['pageid'];
 						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
 						<div class="modal-footer">
 							<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
-							<button name="transfer" type="submit" class="btn btn-success">Yes</button>
+							<button name="yes" type="submit" class="btn btn-success"><?php echo $buttonA ?> </button>
+							<button name="no" type="submit" class="btn btn-success"><?php echo $buttonD ?> </button>
 						</div>
 					</form>
 					</div>
