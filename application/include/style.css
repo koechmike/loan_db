@@ -1,0 +1,12 @@
+.search_select_box{
+max-width: 200px;
+margin: 40px auto;
+}
+.search_select_box select{
+    width: 100%;
+}
+.search_select_box button{
+    background-color: #080 !important;
+    padding: 15px 25px;
+    color: #fff !important;
+}  

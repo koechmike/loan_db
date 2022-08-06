@@ -54,17 +54,19 @@
 				})
 			})
 		})
-</script>  
-<?php
-if(isset($_GET['updated']))
-{
-	if($_GET['updated'] == 'false' ){
-		echo "<div class='alert alert-error'>Unable to save loan application: ".$_GET['error']."</div>";
-	}else{
-		echo "<div class='alert alert-success'>Loan application created successfully!</div>";
-	}
-}
-?>
+</script>
+<script>
+    $(document).ready(function(){
+        $('#borrowerId select').selectpicker();
+    })
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" type="text/css" href="include/style.css">
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.3/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <div class="box">
         
 	       <div class="box-body">
@@ -87,22 +89,24 @@ if(isset($_GET['updated']))
 						<legend>Loan Details</legend> 
 						<div class="col-md-6">			
 							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
+								<div class="col-md-4">
 									<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 								</div>
-								<div class="col-md-6">									
-									<select name="borrowerId" id="borrowerId"  class="form-control" required>
-										<option value="">Select a borrower&hellip;</option>
+								<div class="col-md-8">
+									<select data-live-search="true" name="borrowerId" id="borrowerId"   class="form-control selectpicker" required>
+										<option value="">Search a borrower&hellip;</option>
                                         <?php
                                         	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
                                             while($b_res = mysqli_fetch_array($b))
                                         {         
                                         ?>
-                                        <option value="<?php echo $b_res['id'] ?>"><?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']   ?></option>
-                                        <?php } ?>
-                                    </select>   
-									<!-- <input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly > -->
-								</div>
+                                        <option value="<?php echo $b_res['id'] ?>">
+										<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']?>
+										</option>
+                                        <?php 
+										} ?>
+                                    </select>
+								</div>								
 							</div>	
 							<div style="margin-bottom: 1rem" class="row">
 								<div class="col-md-6">
