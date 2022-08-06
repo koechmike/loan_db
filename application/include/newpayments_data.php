@@ -19,6 +19,10 @@
 			})
 		})
 </script>
+<?php
+						$date = "y-m-d";
+                    	$changeDate = date("d-m-Y", strtotime($currDate));
+						?>
 <div class="box">
 	      <div class="box-body">
 			<div class="panel panel-success">
@@ -48,10 +52,13 @@
 										<option value="">Select a borrower&hellip;</option>
                                         <?php
                                         	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
-                                            while($b_res = mysqli_fetch_array($b))
+                                    
+											while($b_res = mysqli_fetch_array($b))
                                         {         
                                         ?>
-                                        <option value="<?php echo $b_res['id'] ?>"><?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']   ?></option>
+                                        <option value="<?php echo $b_res['id'] ?>">
+										<?php echo $b_res['id'],' - ',$b_res['lname'],', ',$b_res['fname']   ?>
+										</option>
                                         <?php } ?>
                                     </select> 
 					</div>
@@ -116,6 +123,7 @@
 						<label for="" class="control-label" style="color:#009900">Repayment Date</label>
 					</div>
 					<div class="col-md-7">
+						
 						<input name="repaymentDate" type="date" class="form-control" required>
 					</div>
 				</div>
