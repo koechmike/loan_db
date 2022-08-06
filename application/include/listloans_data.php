@@ -22,7 +22,7 @@ $pageid = $_GET['pageid'];
 									$modalText = "appraise";
 									$buttonA = "YES";
 									$buttonD = "NO";
-									brea;
+									break;
 								case 2:
 									$modalText = "approve"; 
 									$buttonA = "Approve"; 
@@ -41,9 +41,13 @@ $pageid = $_GET['pageid'];
 						<input value="" name="id"  type="hidden" type="number" > 
 						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
 						<div class="modal-footer">
-							<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
-							<button name="yes" type="submit" class="btn btn-success"><?php echo $buttonA ?> </button>
-							<button name="no" type="submit" class="btn btn-success"><?php echo $buttonD ?> </button>
+							<?php if($pageid == 1){ ?>
+								<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+								<button name="yes" type="submit" class="btn btn-success"><?php echo $buttonA ?> </button>
+							<?php }else{ ?>
+								<button name="yes" type="submit" class="btn btn-success"><?php echo $buttonA ?> </button>
+								<button name="no" type="submit" class="btn btn-success"><?php echo $buttonD ?> </button>
+							<?php } ?>
 						</div>
 					</form>
 					</div>

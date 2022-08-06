@@ -2,8 +2,9 @@
 		$(document).ready(function()
         {
 			$("#loanCode").change(function(){
-				// console.log("test");
+				console.log("test");
 				var loanCode = $("#loanCode").val();
+				var borrowerId = $("#borrowerId").val();
 				$.ajax({
 					url: 'include/data.php',
 					method: 'post',
@@ -17,6 +18,36 @@
 						document.getElementById("interestRate").value = loanTypeData.interestRate;
 						document.getElementById("repayMethodName").value = loanTypeData.methodName;
 						document.getElementById("loanPeriod").value = loanTypeData.repayPeriod;
+					})
+				})
+
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: {
+							borrower: borrowerId,
+							loanTypeCode : loanCode 
+						}
+				}).done(function(res){
+					console.log("res: "+res);
+					result = JSON.parse(res);
+					result.forEach(function(result){				
+						let text = result.loanId;
+						// let loanCodePA = text.substr(0, 7);
+						// let loanNO = text.substr(7, 9);	
+
+						//let text = "DEV0001001";
+						let loanCodePA = text.substr(0, 7);
+						let loanNo = parseInt(text.substr(7, 9)) + 1;
+
+						function addLeadingZeros(num, totalLength) {
+							return String(num).padStart(totalLength, '0');
+						}
+						loanId = loanCodePA + addLeadingZeros(loanNo, 2).toString(); // 👉️ "003"
+						console.log("loam"+loanId);
+						// console.log("im here" ;+ result.loanId);
+						console.log(result.loanTypeCode);
+						document.getElementById("loanId").value = loanId;
 					})
 				})
 			})
@@ -48,7 +79,7 @@
 									<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 								</div>
 								<div class="col-md-6">									
-									<select name="borrowerId"  class="form-control" required>
+									<select name="borrowerId" id="borrowerId"  class="form-control" required>
 										<option value="">Select a borrower&hellip;</option>
                                         <?php
                                         	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
@@ -61,21 +92,6 @@
 									<!-- <input name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly > -->
 								</div>
 							</div>	
-							<div style="margin-bottom: 1rem" class="row">
-								<div class="col-md-6">
-									<label for="" class="control-label" style="color:#009900">Loan No.</label>
-								</div>
-								<div class="col-md-6">
-										<?php
-                                        	$b = mysqli_query($link, "SELECT max(loanId) as `loanId` FROM loans") or die (mysqli_error($link));
-                                            while($b_res = mysqli_fetch_array($b))
-                                        	{
-												$newLoanId = $b_res['loanId'] + 1;
-											}         
-                                        ?>
-									<input name="loanId" type="text" class="form-control" placeholder="Loan ID"  >
-								</div>
-							</div>
 							<div style="margin-bottom: 1rem" class="row">
 								<div class="col-md-6">
 									<label for="" class="control-label" style="color:#009900">Loan Type</label>
@@ -93,6 +109,21 @@
                                     </select>              
 								</div>
 							</div>	
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-6">
+									<label for="" class="control-label" style="color:#009900">Loan No.</label>
+								</div>
+								<div class="col-md-6">
+										<?php
+                                        	$b = mysqli_query($link, "SELECT max(loanId) as `loanId` FROM loans") or die (mysqli_error($link));
+                                            while($b_res = mysqli_fetch_array($b))
+                                        	{
+												$newLoanId = $b_res['loanId'] + 1;
+											}         
+                                        ?>
+									<input style="text-transform:uppercase" name="loanId" id="loanId" type="text" class="form-control" placeholder="Loan ID" readonly>
+								</div>
+							</div>
 							<div style="margin-bottom: 1rem" class="row">
 								<div class="col-md-6">
 									<label for="" class="control-label" style="color:#009900">Interest Rate</label>
