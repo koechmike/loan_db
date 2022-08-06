@@ -18,21 +18,21 @@
 			 <table id="example1" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th><input type="checkbox" id="select_all"/></th>
                   <th>ID</th>
-                  <th>Customer</th>
-				  <th>Loan</th>
-                  <th>Balance</th>
-				  <th>Amount to Pay</th>
+                  <!-- <th>Borrower</th> -->
+				  <th>Loan ID</th>
+                  <th>Interst Paid</th>
+                  <th>Principle Paid</th>
+				  <th>Total</th>
                   <th>Date</th>
-				  <th>Teller</th>
-                  <th>Actions</th>
+				  <!-- <th>Teller</th>
+                  <th>Actions</th> -->
                  </tr>
                 </thead>
                 <tbody>
 <?php
 $tid = $_SESSION['tid'];
-$select = mysqli_query($link, "SELECT * FROM payments WHERE tid = '$tid'") or die (mysqli_error($link));
+$select = mysqli_query($link, "SELECT * FROM transactions") or die (mysqli_error($link));
 if(mysqli_num_rows($select)==0)
 {
 echo "<div class='alert alert-info'>No data found yet!.....Check back later!!</div>";
@@ -40,33 +40,27 @@ echo "<div class='alert alert-info'>No data found yet!.....Check back later!!</d
 else{
 while($row = mysqli_fetch_array($select))
 {
+
 $id = $row['id'];
-$customer = $row['customer'];
+$customer = $row['loanId'];
 $getin = mysqli_query($link, "SELECT fname, lname, account FROM borrowers WHERE id = '$customer'") or die (mysqli_error($link));
 $have = mysqli_fetch_array($getin);
 $nameit = $have['fname'].'&nbsp;'.$have['lname'];
-//$accte = $have['account'];
 $loan = $row['loan'];
 $amount_to_pay = $row['amount_to_pay'];
 $pay_date = $row['pay_date'];
-$select1 = mysqli_query($link, "SELECT * FROM systemset") or die (mysqli_error($link));
-while($row1 = mysqli_fetch_array($select1))
-{
-$balance = $loan - $amount_to_pay;
-$currency = $row1['currency']; 
+
 ?>    
                 <tr>
-                <td><input id="optionsCheckbox" class="checkbox" name="selector[]" type="checkbox" value="<?php echo $id; ?>"></td>
-                <td><?php echo $id; ?></td>
-				<td><?php echo $nameit; ?></td>
-				<td><?php echo 'Flexible('.$currency.number_format($loan,2,".",",").')'; ?></td>
-                <td><?php echo $currency.number_format($balance,2,".",","); ?></td>
-				<td><?php echo $currency.number_format($amount_to_pay,2,".",","); ?></td>
-				<td><?php echo $pay_date; ?></td>
-				<td><?php echo $name; ?></td>
-                <td><a href="view_pmt.php?id=<?php echo $id;?>"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i>&nbsp;View</button></a></td>		    
+					<td><?php echo $row['transactionId']; ?></td>
+					<td><?php echo $row['loanId']; ?></td>
+					<td><?php echo $row['interestAmount']; ?></td>
+					<td><?php echo $row['principleAmount']; ?></td>
+					<td><?php echo $row['total']; ?></td>
+					<td><?php echo $row['transactionTime']; ?></td>
+					<!-- <td><a href="view_pmt.php?id=<?php echo $id;?>"><button type="button" class="btn btn-flat btn-info"><i class="fa fa-eye"></i>&nbsp;View</button></a></td>		     -->
 			    </tr>
-<?php } } } ?>
+<?php } } ?>
              </tbody>
                 </table>  
 			
@@ -98,19 +92,6 @@ $currency = $row1['currency'];
 			
 </div>	
 			
-			<div class="box box-info">
-            <div class="box-body">
-            <div class="alert alert-info" align="center" class="style2" style="color: #FFFFFF">NUMBER OF LOAN APPLICANTS:&nbsp;
-			<?php 
-			$call3 = mysqli_query($link, "SELECT * FROM payments ");
-			$num3 = mysqli_num_rows($call3);
-			?>
-			<?php echo $num3; ?> 
-			
-			</div>
-			
-			 <div id="chartdiv1"></div>								
-			</div>
-			</div>		
+	
        
 </div>

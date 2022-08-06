@@ -77,13 +77,12 @@ $num = mysqli_num_rows($select);
                   <!-- <th><input type="checkbox" id="select_all"/></th> -->
                   <th width="50">Disbursement ID</th>
                   <th>Loan No</th>
-				  <th width="100">Borrower</th>
+				  <!-- <th width="100">Borrower</th> -->
                   <th>Amount Approved</th>
                   <th>Amount Disbursed</th>
                   <th>Payment Mode</th>
-                  <th>Name</th>
-                  <th>Collector</th>
-                  <th>ID Number</th>
+                  <!-- <th>Name</th>
+                  <th>ID Number</th> -->
                   <th>Date Issued</th>
                   <th>Reference</th>
                  </tr>
@@ -122,13 +121,12 @@ $upstatus = 1;//$row['upstatus'];
                 <!-- <td><?php echo "Flexible"; ?></td> -->
 				<td ><?php echo $row['transactionNo']; ?></td>
 				<td ><?php echo $row['loanNo']; ?></td>
-				<td><?php echo $row['borrowerId'],' - ',$row['lname'],', ',$row['fname']; ?></td>
+				<!-- <td><?php echo $row['borrowerId'],' - ',$row['lname'],', ',$row['fname']; ?></td> -->
 				<td ><?php echo $row['amountApproved']; ?></td>
 				<td ><?php echo $row['amountDisbursed']; ?></td>
 				<td ><?php echo $row['methodName']; ?></td>
-				<td ><?php echo $row['name']; ?></td>
-				<td ><?php echo $row['collector']; ?></td>
-				<td ><?php echo $row['idNumber']; ?></td>
+				<!-- <td ><?php echo $row['name']; ?></td>
+				<td ><?php echo $row['idNumber']; ?></td> -->
 				<td ><?php echo $row['dateOfDisbursement']; ?></td>
 				<td ><?php echo $row['reference']; ?></td>
 

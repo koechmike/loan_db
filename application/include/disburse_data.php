@@ -97,7 +97,7 @@
 															<select name="borrowerId" id="borrowerId" class="form-control" required>
 																<option value="">Select a borrower&hellip;</option>
 																<?php
-																	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
+																	$b = mysqli_query($link, "SELECT b.fname, b.lname, b.id FROM loan.borrowers as b inner join loans as l on l.borrowerId = b.id where l.status = 2;") or die (mysqli_error($link));
 																	while($b_res = mysqli_fetch_array($b))
 																{         
 																?>

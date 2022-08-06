@@ -5,7 +5,17 @@
 include "../config/session.php";
 
 	if(isset($_POST['borrowerId'])) {
-        $query = "SELECT * FROM loans WHERE borrowerId = " . $_POST['borrowerId'];
+        $query = "SELECT * FROM loans WHERE status = 2 and borrowerId = " . $_POST['borrowerId'];
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
+        $loans =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $loans[] = $row;
+        }
+		echo json_encode($loans);
+	}
+    elseif(isset($_POST['borrowerId_'])) {
+        $query = "SELECT * FROM loans WHERE status > 2 and borrowerId = " . $_POST['borrowerId_'];
         $b = mysqli_query($link, $query) or die (mysqli_error($link));
         $loans =array();
         while($row = mysqli_fetch_array($b))
@@ -76,7 +86,7 @@ include "../config/session.php";
 
         //echo $query;
         $b = mysqli_query($link, $query) or die (mysqli_error($link));
-        $loanData =array();
+        $loanData = array();
         while($row = mysqli_fetch_array($b))
         {
             $loanData[] = $row;

@@ -18,6 +18,7 @@
 						document.getElementById("interestRate").value = loanTypeData.interestRate;
 						document.getElementById("repayMethodName").value = loanTypeData.methodName;
 						document.getElementById("loanPeriod").value = loanTypeData.repayPeriod;
+						document.getElementById("maxPeriod").value = loanTypeData.repayPeriod;
 					})
 				})
 
@@ -28,31 +29,42 @@
 							borrower: borrowerId,
 							loanTypeCode : loanCode 
 						}
-				}).done(function(res){
-					console.log("res: "+res);
-					result = JSON.parse(res);
-					result.forEach(function(result){				
-						let text = result.loanId;
-						// let loanCodePA = text.substr(0, 7);
-						// let loanNO = text.substr(7, 9);	
+				}).done(function(res){	
 
-						//let text = "DEV0001001";
-						let loanCodePA = text.substr(0, 7);
-						let loanNo = parseInt(text.substr(7, 9)) + 1;
+					function addLeadingZeros(num, totalLength) {
+						return String(num).padStart(totalLength, '0');
+					}
 
-						function addLeadingZeros(num, totalLength) {
-							return String(num).padStart(totalLength, '0');
-						}
-						loanId = loanCodePA + addLeadingZeros(loanNo, 2).toString(); // 👉️ "003"
-						console.log("loam"+loanId);
-						// console.log("im here" ;+ result.loanId);
-						console.log(result.loanTypeCode);
-						document.getElementById("loanId").value = loanId;
-					})
+					if(res.length == 4){
+						newLoanCode = loanCode + addLeadingZeros(borrowerId, 3) + '001';
+						console.log(newLoanCode);
+						document.getElementById("loanId").value = newLoanCode;
+					}else{
+						result = JSON.parse(res);
+						result.forEach(function(result){
+							let text = result.loanId;
+							let loanCodePA = text.substr(0, 7);
+							let loanNo = parseInt(text.substr(7, 9)) + 1;
+
+							loanId = loanCodePA + addLeadingZeros(loanNo, 2).toString(); 
+							console.log(result.loanTypeCode);
+							document.getElementById("loanId").value = loanId;
+						})
+					}
 				})
 			})
 		})
 </script>  
+<?php
+if(isset($_GET['updated']))
+{
+	if($_GET['updated'] == 'false' ){
+		echo "<div class='alert alert-error'>Unable to save loan application: ".$_GET['error']."</div>";
+	}else{
+		echo "<div class='alert alert-success'>Loan application created successfully!</div>";
+	}
+}
+?>
 <div class="box">
         
 	       <div class="box-body">
@@ -189,6 +201,15 @@
 									<input name="gContact" type="text" class="form-control" placeholder="Contact" >
 								</div>
 							</div>
+							<div style="margin-bottom: 1rem" class="row">
+								<div class="col-md-5">
+									<label for="" class="control-label" style="color:#009900">ID Number</label>
+								</div>
+								<div class="col-md-7">
+									<input name="gIdNumber" type="text" class="form-control" placeholder="ID Number" >
+								</div>
+							</div>
+							<input hidden name="maxPeriod" id="maxPeriod" type="number">
 						</div>
 					</fieldset>
 				</div>

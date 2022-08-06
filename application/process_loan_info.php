@@ -44,11 +44,13 @@ if (isset($_SESSION['tid'])) {
 		$borrowerId =  mysqli_real_escape_string($link, $_POST['borrowerId']);
 		$calcuationMethod = mysqli_real_escape_string($link, $_POST['repaymentMethod']);
 		$loanPeriod = mysqli_real_escape_string($link, $_POST['loanPeriod']);
+		$maxPeriod = mysqli_real_escape_string($link, $_POST['maxPeriod']);
 		$loanAmount = mysqli_real_escape_string($link, $_POST['loanAmount']);
 		$loanType = mysqli_real_escape_string($link, $_POST['loanCode']);
 		$gName = mysqli_real_escape_string($link, $_POST['gName']);
-		$gContact = (mysqli_real_escape_string($link, $_POST['gContact']) == null) ? null : mysqli_real_escape_string($link, $_POST['gContact']);
+		$gContact = mysqli_real_escape_string($link, $_POST['gContact']);
 		$gAddress = mysqli_real_escape_string($link, $_POST['gAddress']);
+		$gIdNumber = mysqli_real_escape_string($link, $_POST['gIdNumber']);
 		$interestRate = mysqli_real_escape_string($link, $_POST['interestRate']);
 		$interest = 0;
 		$monthlyPayments = 0;
@@ -82,18 +84,23 @@ if (isset($_SESSION['tid'])) {
 		$status = 0;
 		//INSERT INTO loans VALUES 			(null, 36, , 18, 1, 100000, 0, 2022-08-03 19:45:51, null, 0, 10, 0, 0, 0, 0, 0, '', '', , 0)
 		
-		$query = "INSERT INTO loans VALUES ('$loanId', $borrowerId, $loanType, $interestRate, 1, $loanAmount, 0, '$applicationDate', null, 0, $loanPeriod, 0, 0, 0, 0, 0, '".$gName."', '".$gAddress."', '$gContact', $status);";
+		$query = "INSERT INTO loans VALUES ('$loanId', $borrowerId, '$loanType', $interestRate, 1, $loanAmount, 0, '$applicationDate', null, 0, $loanPeriod, 0, 0, 0, 0, 0, '".$gName."', '".$gAddress."', '".$gIdNumber."', '".$gContact."', $status);";
 		echo $query;
-		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
+		
+		if($loanPeriod <= $maxPeriod){
+			$insert = mysqli_query($link, $query) or die (mysqli_error($link));
+		}else{		
+			$error = "Loan period entered exceeds max allowed for selected loan type";
+		}
 		if(!$insert)
 		{
-			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
-			echo '<br>';
-			echo'<span class="itext" style="color: #FF0000">Unable to Save Loan Information. Please try again later!</span>';
+			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'&&updated=false&&error='.$error.'">';
+			//echo '<br>';
+			//echo'<span class="itext" style="color: #FF0000">Unable to Save Loan Information. Please try again later!</span>';
 		}else{
-			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
-			echo '<br>';
-			echo'<span class="itext" style="color: green">Loan application saved, awaiting appraisal.</span>';
+			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'&&updated=true">';
+			//echo '<br>';
+			//echo'<span class="itext" style="color: green">Loan application saved, awaiting appraisal.</span>';
 		}
 	}elseif(isset($_POST['update_loan'])){
 		$pageid = mysqli_real_escape_string($link, $_POST['pageid']);
@@ -110,8 +117,21 @@ if (isset($_SESSION['tid'])) {
 		$amountApproved = mysqli_real_escape_string($link, $_POST['amountApproved']);
 
 
-		$status = 0;
-		$query = "UPDATE loans set amountApproved = $amountApproved, borrowerId = '$borrowerId', loanType = '$loanType', loanPeriod = '$loanPeriod', calculationMethod = '$calcuationMethod', loanAmount = '$loanAmount', gName = '$gName', gAddress = '$gAddress', gContact = '$gContact', status = '$status', interestRate = $interestRate where loanId = $loanId";
+		switch($pageid){
+			case 1:
+				$status = 0;
+				break;
+			case 2: 
+				$status = 1;
+				break;
+			case 3: 
+				$status = 2;
+				break;
+			case 4:
+				break;
+		}
+
+		$query = "UPDATE loans set amountApproved = $amountApproved, loanBalance = $amountApproved, borrowerId = '$borrowerId', loanType = '$loanType', loanPeriod = '$loanPeriod', calculationMethod = '$calcuationMethod', loanAmount = '$loanAmount', gName = '$gName', gAddress = '$gAddress', gContact = '$gContact', status = '$status', interestRate = $interestRate where loanId = '$loanId'";
 		//echo $query;
 		$insert = mysqli_query($link, $query) or die (mysqli_error($link));
 		if(!$insert)
@@ -176,7 +196,7 @@ if (isset($_SESSION['tid'])) {
 
 		$amountDisbursed = $amountDisbursed + $disbursedAmount;
 
-		$status = ($amountDisbursed == $loanAmount) ? 4 : 3;
+		$status = ($amountDisbursed == $amountApproved) ? 4 : 3;
 		
 		$loanQuery = "UPDATE loans set status = $status, amountDisbursed = $amountDisbursed where loanId = '$loanId'";
 		$transactionQuery = "INSERT INTO `loan`.`loans_disbursed` VALUES (null,$amountApproved,$disbursedAmount,$paymentMethod,$transactionReference,null,$cid,'$cname',1,'$dateOfDisbursement','$loanId');";
@@ -190,11 +210,11 @@ if (isset($_SESSION['tid'])) {
 
 		if(!$loanUpdate && !transactionInsert)
 		{
-			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
+			echo '<meta http-equiv="refresh" content="2;url=disbursements.php?tid='.$_SESSION['tid'].'">';
 			echo '<br>';
 			echo'<span class="itext" style="color: #FF0000">Unable to update loan Information. Please try again later.</span>';
 		}else{
-			echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';
+			echo '<meta http-equiv="refresh" content="2;url=disbursements.php?tid='.$_SESSION['tid'].'">';
 			echo '<br>';
 			echo'<span class="itext" style="color: black">Disbursing funds...</span>';
 		}
@@ -210,30 +230,69 @@ if (isset($_SESSION['tid'])) {
 		$captureDate = mysqli_real_escape_string($link, $_POST['captureDate']);
 		$tid = $_SESSION['userid'];
 		$now = date_create('now')->format('Y-m-d H:i:s');
-		
 
-		$b = mysqli_query($link, "SELECT * FROM loans where loanId=".$loanId) or die (mysqli_error($link));
-		while($b_res = mysqli_fetch_array($b)){
-			$interest = $b_res['interest'];
+		// $lquery = "SELECT * FROM loans where loanId = '".$loanId."'";
+		// echo $lquery;
+		// $b = mysqli_query($link, $lquery) or die (mysqli_error($link));
+		// while($b_res = mysqli_fetch_array($b)){
+		// 	$status = $b_res['status'];
+		// }
+
+		$amountPaid = $repaymentAmount;
+
+		// $status = ($amountPaid == ($loanAmount + $interest)) ? 6 : 5;
+
+		$query = "SELECT * FROM loans WHERE loanId = '".$loanId."'";
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
+        $loans =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $calculationMethod = $row['calculationMethod'];
+			$balance = $row['loanBalance'];
+			$interest = $row['interestBalance'];
+			$totalInterestPaid = $row['totalInterestPaid'];
+			$totalPrincipalPaid = $row['totalPrincipalPaid'];
+			$status = $row['status']; 
+        }
+
+		switch($calculationMethod){
+			case 1: 
+				if($interest > $amountPaid){
+					$interestPaid = $amountPaid;
+					$principlePaid = 0;
+					$newInterest = $interest - $amountPaid;
+					$newInterestPaid = $amountPaid + $totalInterestPaid;
+					$newTotalPrincipalPaid = $totalPrincipalPaid;
+					$newBalance = $balance;
+				}else{				
+					$interestPaid = $interest;
+					$amountPaidRemainder = $amountPaid - $interest;
+					$principlePaid = $amountPaidRemainder;
+					$newInterest = 0;
+					$newBalance = $balance - $amountPaidRemainder;
+					
+					$newInterestPaid = $interest + $totalInterestPaid;
+					$newTotalPrincipalPaid = $totalPrincipalPaid + $amountPaidRemainder;
+				}
+				break;
+			case 2:
+				break;
+				//subtract interest
 		}
-
-		$amountPaid = $amountPaid + $repaymentAmount;
-
-		$status = ($amountPaid == ($loanAmount + $interest)) ? 6 : 5;
 		
-		$loanQuery = "UPDATE loans set status = $status, amountPaid = $amountPaid where loanId = $loanId";
-		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Repayment', '$amountPaid	', '1', '$now', '$transactionReference','$captureDate')";
+		$loanQuery = "UPDATE loans set status = $status, interestBalance = $newInterest, loanBalance = $newBalance, totalInterestPaid = $newInterestPaid, totalPrincipalPaid = $newTotalPrincipalPaid  where loanId = '$loanId'";
+		$transactionQuery = "INSERT INTO transactions VALUES(null, '$loanId', 'Repayment', '$amountPaid', '1', '$now', '$transactionReference', '$captureDate', $paymentMethod, '$transactionReference', $principlePaid, $interestPaid, $repaymentAmount, '1')";
 		
-		// echo $loanQuery;
+		 //echo $loanQuery;
 		// echo $transactionQuery;
 		$loanUpdate = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
 		$transactionInsert = mysqli_query($link, $transactionQuery) or die (mysqli_error($link));
 
 		if(!$loanUpdate && !transactionInsert)
 		{
-			echo '<meta http-equiv="refresh" content="2;url=newloans.php?tid='.$_SESSION['tid'].'">';
+			echo '<meta http-equiv="refresh" content="2;url=newpayments.php?tid='.$_SESSION['tid'].'">';
 			echo '<br>';
-			echo'<span class="itext" style="color: #FF0000">Unable to update loan Information. Please try again later.</span>';
+			echo'<span class="itext" style="color: #FF0000">Unable to update paymen Information. Please try again later.</span>';
 		}else{
 			//echo '<meta http-equiv="refresh" content="2;url=listloans.php?tid='.$_SESSION['tid'].'&&pageid='.$pageid.'">';			
 			echo '<meta http-equiv="refresh" content="2;url=newpayments.php?tid='.$_SESSION['tid'].'">';

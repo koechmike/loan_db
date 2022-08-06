@@ -7,7 +7,7 @@
 				$.ajax({
 					url: 'include/data.php',
 					method: 'post',
-					data: 'borrowerId=' + borrowerId
+					data: 'borrowerId_=' + borrowerId
 				}).done(function(loans){
 					console.log(loans);
 					loans = JSON.parse(loans);
@@ -47,7 +47,7 @@
 					<select name="borrowerId" id="borrowerId" class="form-control" required>
 										<option value="">Select a borrower&hellip;</option>
                                         <?php
-                                        	$b = mysqli_query($link, "SELECT * FROM borrowers") or die (mysqli_error($link));
+                                        	$b = mysqli_query($link, "SELECT b.fname, b.lname, b.id FROM loan.borrowers as b inner join loans as l on l.borrowerId = b.id where l.status > 2;") or die (mysqli_error($link));
                                             while($b_res = mysqli_fetch_array($b))
                                         {         
                                         ?>
@@ -80,12 +80,16 @@
 						<label for="" class="control-label" style="color:#009900">Payment Method</label>
 					</div>
 					<div class="col-sm-6">
-						<select name="loanType" class="form-control" required>
-							<option value="">Select an option&hellip;</option>
-							<option value="1">Paybill</option>
-							<option value="2">Cheque</option>
-							<option value="3">Cash</option>
-						</select>                 
+						<select name="paymentMethod"  class="form-control" required>
+							<option value="">Select a payment method&hellip;</option>
+							<?php
+							$lt = mysqli_query($link, "SELECT * FROM payment_method") or die (mysqli_error($link));
+							while($lt_res = mysqli_fetch_array($lt))
+							{         
+							?>
+							<option  value="<?php echo $lt_res['methodId'] ?>"><?php echo $lt_res['methodName']  ?></option>
+							<?php } ?>
+						</select>             
 					</div>
 				</div>				
 				<div style="margin-bottom: 1rem" class="row">
@@ -101,7 +105,7 @@
 						<label for="" class="control-label" style="color:#009900">Amount Repaid</label>
 					</div>
 					<div class="col-md-6">
-						<input  name="repaymentAmount" type="number" min="1" class="form-control" placeholder="Amount in KES" >
+						<input  name="repaymentAmount"type="text" title="Numbers only" pattern="^[0-9]*$" min="1" class="form-control" placeholder="Amount in KES" >
 					</div>
 				</div>	
 			</div>
@@ -212,7 +216,7 @@
 		<div class="form-group">
                   <label for="" class="col-sm-2 control-label" style="color:#009900">Amount to Pay</label>
                   <div class="col-sm-10">
-                  <input name="amount_to_pay" type="number" class="form-control" placeholder="Amount to Pay" required>
+                  <input name="amount_to_pay"type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Amount to Pay" required>
                   </div>
                   </div>
 				  

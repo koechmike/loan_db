@@ -126,16 +126,16 @@ $num = mysqli_num_rows($select);
 <?php
 switch($pageid){
 	case 1:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
+		$loanQuery = "select l.borrowerId, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 0;";				
 		break;
 	case 2:
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
+		$loanQuery = "select l.borrowerId, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 1;";				
 		break;
 	case 3:
-		$loanQuery = "select l.amountDisbursed, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName,  l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2 or l.status = 3;";				
+		$loanQuery = "select l.borrowerId, l.amountDisbursed, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName,  l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status where l.status = 2 or l.status = 3;";				
 		break;
 	case 4: 
-		$loanQuery = "select l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
+		$loanQuery = "select l.borrowerId, l.loanId, l.loanPeriod, l.loanAmount, ls.statusName, l.interestRate, lt.loanName, c.methodName, b.fname, b.lname, b.id from loans as l inner join loan_types as lt on lt.loanCode = l.loanType inner join calculation_method as c on c.methodId = l.calculationMethod inner join borrowers as b on b.id = l.borrowerId inner join loan_status as ls on ls.statusId = l.status;";				
 		break;
 }
 $select = mysqli_query($link, $loanQuery) or die (mysqli_error($link));
@@ -148,6 +148,7 @@ while($row = mysqli_fetch_array($select))
 {
 $id = $row['id'];
 $loanId = $row['loanId'];
+$borrowerId = $row['borrowerId'];
 $loanPeriod = $row['loanPeriod'];
 $loanAmount = $row['loanAmount'];
 // $upstatus = $row['upstatus'];
@@ -208,7 +209,8 @@ $upstatus = 1;//$row['upstatus'];
 			<!-- <td align="center" class="alert alert-danger"><br><?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'">Click here to complete Registration!</a>' : ''; ?></td> -->
 			<td>
 			<?php echo ($pupdate == '1') ? '<a href="updateloans.php?id='.$loanId.'&&mid='.base64_encode("405").'&&pageid='.$pageid.'"> <button type="button" class="btn btn-primary btn-flat" data-target="#myModal'.$id.'" data-toggle="modal"><i class="fa fa-eye"></i></button></a>' : ''; ?>
-
+			<?php echo ($pupdate == '1') ? '<a href="updateborrowers.php?id='.$borrowerId.'&&mid='.base64_encode("403").'"> <button type="button" class="btn btn-primary btn-flat"><i class="fa fa-user"></i></button></a>' : ''; ?>
+			
 			<?php $icon = ($pageid == 3) ? "money" : "check" ?>
 			<?php if ($pageid == 4) { 			 	
 			}elseif($pageid != 3){
