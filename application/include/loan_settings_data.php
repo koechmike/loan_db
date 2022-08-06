@@ -35,7 +35,7 @@
                                                     ?>			
                                                     <tr>
                                                         <td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idme; ?>" checked></td>
-                                                        <td width="300"><input required name="loanCode[]" type="text" class="form-control" placeholder="Loan Code" value="<?php echo $have['loanCode']; ?>"></td>
+                                                        <td width="300"><input style="text-transform:uppercase" required name="loanCode[]" type="text" title="Code should be exactly three letters" pattern="^\w{3}$" class="form-control" placeholder="Loan Code" value="<?php echo $have['loanCode']; ?>"></td>
                                                         <td width="800"><input required name="loanName[]" type="text" class="form-control" placeholder="Loan Name" value="<?php echo $have['loanName']; ?>"></td>
                                                         <td width="300">
                                                             <?php
@@ -47,9 +47,9 @@
                                                             ?>
                                                             <select name="repayMethod[]"  class="form-control" value="<?php echo $methodName_res['methodName']; ?>" required>
                                                                 <option value="">Select a method&hellip;</option>
-                                                                <option value="1">Straight Line</option>
-                                                                <option value="2">Reducing Balance</option>
-                                                                <option value="3">Armotized</option>
+                                                                <option <?php if($have['repayMethod'] == 1) echo 'selected="selected"'; ?> value="1">Straight Line</option>
+                                                                <option <?php if($have['repayMethod'] == 2) echo 'selected="selected"'; ?>  value="2">Reducing Balance</option>
+                                                                <option <?php if($have['repayMethod'] == 3) echo 'selected="selected"'; ?>  value="3">Armotized</option>
                                                                 <!-- <?php
                                                                     $pm = mysqli_query($link, "SELECT * FROM payment_method") or die (mysqli_error($link));
                                                                     while($ph_res = mysqli_fetch_array($pm))

@@ -1,4 +1,6 @@
-
+<?php 
+$pageid = $_GET['pageid'];
+?>
 <div class="row">       
 		    <section class="content">  
 	        <div class="box box-success">
@@ -13,8 +15,25 @@
 					<div class="modal-header">        
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
-						</button>											
-						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to transfer the record?</h3>
+						</button>	
+						<?php 
+							switch($pageid){
+								case 1:
+									$modalText = "appraise";
+									$buttonA = "YES";
+									$buttonD = "NO";
+									break;
+								case 2:
+									$modalText = "approve"; 
+									$buttonA = "Approve"; 
+									$buttonD = "Deny"; 
+									break;
+								default:
+									$modalText = "transfer";
+									break;
+							} 
+						?>						
+						<h3 class="modal-title" id="exampleModalLabel">Are you sure you want to <?php echo $modalText ?> the loan?</h3>
 					</div>
 					<!-- <div class="modal-body">
 					</div> -->
@@ -22,8 +41,13 @@
 						<input value="" name="id"  type="hidden" type="number" > 
 						<input type="hidden" value="<?php echo $pageid; ?>" name="pageid" type="number" >
 						<div class="modal-footer">
-							<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
-							<button name="transfer" type="submit" class="btn btn-success">Yes</button>
+							<?php if($pageid == 1){ ?>
+								<button type="button" class="btn btn-warning" data-dismiss="modal">No</button>
+								<button name="yes" type="submit" class="btn btn-success"><?php echo $buttonA ?> </button>
+							<?php }else{ ?>
+								<button name="yes" type="submit" class="btn btn-success"><?php echo $buttonA ?> </button>
+								<button name="no" type="submit" class="btn btn-success"><?php echo $buttonD ?> </button>
+							<?php } ?>
 						</div>
 					</form>
 					</div>

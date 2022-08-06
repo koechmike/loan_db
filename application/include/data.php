@@ -37,7 +37,7 @@ include "../config/session.php";
 		echo json_encode($wardId);
     }
     elseif(isset($_POST['loanCode'])) {
-        $query = "SELECT lt.interestRate, lt.repayPeriod, lt.requireGuarantor, c.methodName FROM loan_types as lt inner join calculation_method as c on c.methodId = lt.repayMethod WHERE loanCode =" . $_POST['loanCode'];
+        $query = "SELECT lt.interestRate, lt.repayPeriod, lt.requireGuarantor, c.methodName FROM loan_types as lt inner join calculation_method as c on c.methodId = lt.repayMethod WHERE loanCode ='".$_POST['loanCode']."';";
         //echo $query;
         $b = mysqli_query($link, $query) or die (mysqli_error($link));
 
@@ -67,5 +67,20 @@ include "../config/session.php";
             $borrowerData[] = $row;
         }
 		echo json_encode($borrowerData);
-	}
+	}else{
+        // $data = json_decode($_POST['parameter'], true);
+        $loanCode = $_POST['loanTypeCode'];
+        $borrowerId = $_POST['borrower'];
+        $query = "select loanId from loans where loanId like '".$loanCode."%' and borrowerId = ".$borrowerId." order by applicationDate desc limit 1";
+        //$query = "SELECT loanId from loans where loanId like 'dev%' and borrowerId = 33 order by applicationDate desc limit 1";
+
+        //echo $query;
+        $b = mysqli_query($link, $query) or die (mysqli_error($link));
+        $loanData =array();
+        while($row = mysqli_fetch_array($b))
+        {
+            $loanData[] = $row;
+        }
+		echo json_encode($loanData);
+    }
  ?>

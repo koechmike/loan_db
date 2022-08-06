@@ -1,3 +1,44 @@
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#countyId").change(function(){
+				// console.log("test");
+				var countyId = $("#countyId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'countyId=' + countyId
+				}).done(function(subcountyId){
+					console.log(subcountyId);
+					subcountyId = JSON.parse(subcountyId);
+					$('#subcountyId').empty();
+					subcountyId.forEach(function(subcountyId){
+						$('#subcountyId').append('<option value="'+subcountyId.subcountyId+'">' + subcountyId.subcounty + '</option>')
+					})
+				})
+			})
+		})
+</script>
+<script type="text/javascript">
+		$(document).ready(function()
+        {
+			$("#subcountyId").change(function(){
+				var subcountyId = $("#subcountyId").val();
+				$.ajax({
+					url: 'include/data.php',
+					method: 'post',
+					data: 'subcountyId=' + subcountyId
+				}).done(function(wardId){
+					console.log(wardId);
+					wardId = JSON.parse(wardId);
+					$('#wardId').empty();
+					wardId.forEach(function(wardId){
+						$('#wardId').append('<option value="'+wardId.wardId+'">' + wardId.ward + '</option>')
+					})
+				})
+			})
+		})
+</script>
 <div class="row">       	
 	<section class="content">     
 		<?php echo '<div class="alert alert-warning fade in" >
@@ -19,7 +60,7 @@
              						<div class="tab-pane" id="tab_1">
 										<?php
 										$id = $_GET['id'];
-										$select = mysqli_query($link, "SELECT * FROM borrowers WHERE id = '$id'") or die (mysqli_error($link));
+										$select = mysqli_query($link, "SELECT * FROM loan.borrowers as b inner join subcounty as s on b.subcounty = s.subcountyId inner join ward as w on b.ward = w.wardId WHERE id = '$id'") or die (mysqli_error($link));
 										while($row = mysqli_fetch_array($select))
 										{   
 										?>              
@@ -35,7 +76,24 @@
 																		<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 																	</div>
 																	<div class="col-md-6">
-																		<input value="<?php echo $row['id'];?>" name="borrorwerId" type="number" class="form-control" placeholder="Borrower ID" readonly >
+																		<input value="<?php echo $row['id'];?>" name="borrorwerId" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Borrower ID" readonly >
+																	</div>
+																</div>
+																<div style="margin-bottom: 1rem" class="row">
+																	<div class="col-md-8">
+																			<label for="" class="control-label" style="color:#009900">Salutations</label>
+																	</div>
+																	<div class="col-sm-4">
+																	<select name="sid" id="sid" class="form-control" required>
+																						<option value="">Select a salutation&hellip;</option>
+																						<?php
+																							$b = mysqli_query($link, "SELECT * FROM salutations") or die (mysqli_error($link));
+																							while($b_res = mysqli_fetch_array($b))
+																						{         
+																						?>
+																						<option <?php echo $b_res['sid'] == $row['salutation'] ? "selected" : null; ?> value="<?php echo $b_res['sid'] ?>"><?php echo $b_res['sinitials']   ?></option>
+																						<?php } ?>
+																					</select>                
 																	</div>
 																</div>
 																<div style="margin-bottom: 1rem" class="row">
@@ -69,7 +127,7 @@
 																		<label for="" class="control-label" style="color:#009900">ID Number</label>
 																	</div>
 																	<div class="col-md-6">
-																		<input name="idNumber" value="<?php echo $row['idNumber'];?>" type="number" class="form-control" placeholder="ID Number" required>
+																		<input name="idNumber" value="<?php echo $row['idNumber'];?>" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="ID Number" required>
 																	</div>
 																</div>
 																<div style="margin-bottom: 1rem" class="row">
@@ -79,9 +137,9 @@
 																	<div class="col-sm-6">
 																		<select name="maritalStatus" value="<?php echo $row['maritalStatus'];?>"  class="form-control" required>
 																			<option value="">Select an option&hellip;</option>
-																			<option value="1">Single</option>
-																			<option value="2">Married</option>
-																			<option value="3">Divorced</option>
+																			<option <?php echo 1 == $row['maritalStatus'] ? "selected" : null; ?> value="1">Single</option>
+																			<option <?php echo 2 == $row['maritalStatus'] ? "selected" : null; ?> value="2">Married</option>
+																			<option <?php echo 3 == $row['maritalStatus'] ? "selected" : null; ?> value="3">Divorced</option>
 																		</select>                 
 																	</div>
 																</div>
@@ -110,28 +168,29 @@
 																</div>
 																<div style="margin-bottom: 1rem" class="row">
 																	<div class="col-md-4">
-																		<label for="" vclass="control-label" style="color:#009900">County</label>
+																			<label for="" class="control-label" style="color:#009900">County</label>
 																	</div>
 																	<div class="col-sm-8">
-																		<select name="County" value="<?php echo $row['fnaCountyme'];?>"  class="form-control" required>
-																			<option value="">Select a country&hellip;</option>
-																			<option value="AF">Baringo</option>
-																			<option value="AL">Bomet</option>
-																			<option value="DZ">Bungoma</option>
-																			<option value="AD">Busia</option>
-																			<option value="AO">Elgeyo Marakwet</option>
-																			<option value="AI">Embu</option>
-																			<option value="AQ">Garissa</option>
-																			<option value="AG">Homa Bay</option>
-																		</select>                 
+																	<select name="countyId" id="countyId" class="form-control" required>
+																			<option value="">Select a county&hellip;</option>
+																			<?php
+																				$b = mysqli_query($link, "SELECT * FROM counties") or die (mysqli_error($link));
+																				while($b_res = mysqli_fetch_array($b))
+																			{         
+																			?>
+																			<option <?php echo $b_res['id'] == $row['countyId'] ? "selected" : null; ?> value="<?php echo $b_res['id'] ?>"><?php echo $b_res['county_name']   ?></option>
+																			<?php } ?>
+																		</select>                
 																	</div>
 																</div>
 																<div style="margin-bottom: 1rem" class="row">
-																	<div class="col-md-4">
-																		<label for="" class="control-label" style="color:#009900">SubCounty</label>
+																<div class="col-md-5">
+																		<label for="" class="control-label" style="color:#009900">Sub-county</label>
 																	</div>
-																	<div class="col-sm-8">
-																		<input name="Sub-County" value="<?php echo $row['Sub-County'];?>" type="text" class="form-control" placeholder="Sub County" required>
+																	<div class="col-md-7">
+																		<select name="subcountyId" id="subcountyId" class="form-control" required>
+																			<option selected value="<?php echo $row['subcountyId'] ?>"><?php echo $row['subcounty']   ?></option>
+																		</select> 
 																	</div>
 																</div>
 																<div style="margin-bottom: 1rem" class="row">
@@ -139,7 +198,9 @@
 																		<label for="" class="control-label" style="color:#009900">Ward</label>
 																	</div>
 																	<div class="col-sm-8">
-																		<input name="Ward" value="<?php echo $row['Ward'];?>" type="text" class="form-control" placeholder="Ward"required width="10px">
+																		<select name="wardId" id="wardId" class="form-control" required>
+																			<option selected value="<?php echo $row['wardId'] ?>"><?php echo $row['ward']   ?></option>
+																		</select>
 																	</div>
 																</div>
 															</div>
@@ -151,12 +212,21 @@
 													<div class="col-md-4">
 														<fieldset style="width:270px">	
 															<legend>Other Information</legend> 
-															<div class="form-group" style="margin-bottom: 1rem" class="row">
-																<div class="col-md-3">
-																	<label for="" class="control-label" style="color:#009900">Profession</label>
+															<div style="margin-bottom: 1rem" class="row">
+																<div class="col-md-5">
+																		<label for="" class="control-label" style="color:#009900">Proffession</label>
 																</div>
-																<div class="col-md-9">			
-																	<input name="Profession" value="<?php echo $row['fname'];?>" type="text" class="form-control" placeholder="Profession" >
+																<div class="col-sm-7">
+																<select name="pid" id="pid" class="form-control" required>
+																					<option value="">Select a proffession&hellip;</option>
+																					<?php
+																						$b = mysqli_query($link, "SELECT * FROM proffession") or die (mysqli_error($link));
+																						while($b_res = mysqli_fetch_array($b))
+																					{         
+																					?>
+																					<option <?php echo $b_res['pid'] == $row['proffession'] ? "selected" : null; ?> value="<?php echo $b_res['pid'] ?>"><?php echo $b_res['pname']   ?></option>
+																					<?php } ?>
+																				</select>                
 																</div>
 															</div>
 															<div style="margin-bottom: 1rem" class="row">
@@ -233,7 +303,7 @@
 																	<label for="" class="control-label" style="color:#009900">Contact</label>
 																</div>
 																<div class="col-md-6">
-																	<input name="powContact" value="<?php echo $row['powContact'];?>" type="number" class="form-control" placeholder="Phone Number" required>
+																	<input name="powContact" value="<?php echo $row['powContact'];?>" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Phone Number" required>
 																</div>
 															</div>
 															<div class="form-group" style="margin-bottom: 1rem" class="row">
@@ -262,7 +332,7 @@
 																	<label for="" class="control-label" style="color:#009900">ID Number</label>
 																</div>
 																<div class="col-md-6">
-																	<input name="nokIdNumber" value="<?php echo $row['nokIdNumber'];?>" type="number" class="form-control" placeholder="ID Number" required>
+																	<input name="nokIdNumber" value="<?php echo $row['nokIdNumber'];?>" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="ID Number" required>
 																</div>
 															</div>
 															<div style="margin-bottom: 1rem" class="row">
@@ -278,23 +348,24 @@
 																	<label for="" class="control-label" style="color:#009900">Contact</label>
 																</div>
 																<div class="col-md-6">
-																	<input name="nokContact" value="<?php echo $row['nokContact'];?>" type="number" class="form-control" placeholder="Phone Number" required>
+																	<input name="nokContact" value="<?php echo $row['nokContact'];?>" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Phone Number" required>
 																</div>
 															</div>
-															<div class="form-group" style="margin-bottom: 1rem" class="row">
+															<div style="margin-bottom: 1rem" class="row">
 																<div class="col-md-4">
-																	<label for="" class="control-label" style="color:#009900">Relationship</label>
+																		<label for="" class="control-label" style="color:#009900">Proffession</label>
 																</div>
-																<div class="col-md-8">			
-																	<select name="nokRelationship" value="<?php echo $row['nokRelationship'];?>" class="form-control" required>
-																		<option value="">Select an option&hellip;</option>
-																		<option value="1">Brother</option>
-																		<option value="2">Sister</option>
-																		<option value="3">Father</option>
-																		<option value="4">Mother</option>
-																		<option value="5">Son</option>
-																		<option value="6">Daughter</option>
-																	</select>           
+																<div class="col-sm-8">
+																	<select name="nokRelationship" id="nokRelationship" class="form-control" required>
+																		<option value="">Select a relationship&hellip;</option>
+																			<?php
+																				$b = mysqli_query($link, "SELECT * FROM relationship") or die (mysqli_error($link));
+																					while($b_res = mysqli_fetch_array($b))
+																				{         
+																			?>
+																		<option <?php echo $b_res['rid'] == $row['nokRelationship'] ? "selected" : null; ?> value="<?php echo $b_res['rid'] ?>"><?php echo $b_res['rname']   ?></option>
+																		<?php } ?>
+																	</select>                
 																</div>
 															</div>
 															<div class="form-group" style="margin-bottom: 1rem" class="row">
@@ -323,7 +394,7 @@
 																	<label for="" class="control-label" style="color:#009900">ID Number</label>
 																</div>
 																<div class="col-md-6">
-																	<input name="iIdNumber"  value="<?php echo $row['iIdNumber'];?>" type="number" class="form-control" placeholder="ID Number" required>
+																	<input name="iIdNumber"  value="<?php echo $row['iIdNumber'];?>" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="ID Number" required>
 																</div>
 															</div>
 															<div style="margin-bottom: 1rem" class="row">
@@ -339,7 +410,7 @@
 																	<label for="" class="control-label" style="color:#009900">Contact</label>
 																</div>
 																<div class="col-md-6">
-																	<input name="iContact" value="<?php echo $row['iContact'];?>" type="number" class="form-control" placeholder="Phone Number" required>
+																	<input name="iContact" value="<?php echo $row['iContact'];?>" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Phone Number" required>
 																</div>
 															</div>
 															<div style="margin-bottom: 1rem" class="row">
@@ -381,7 +452,7 @@
 												<tr>
 													<td width="30"><input id="optionsCheckbox" class="uniform_on" name="selector[]" type="checkbox" value="<?php echo $idme; ?>" checked></td>
 													<td width="800"><input name="occupation[]" type="text" class="form-control" placeholder="Occupation" value="<?php echo $have['occupation']; ?>"></td>
-													<td width="300"><input name="mincome[]" type="number" class="form-control" placeholder="Amount" value="<?php echo $have['mincome']; ?>"></td>
+													<td width="300"><input name="mincome[]" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Amount" value="<?php echo $have['mincome']; ?>"></td>
 												</tr>
 												<?php } ?>
 											</tbody>
@@ -503,7 +574,7 @@
 														// echo "It's done! The file has been saved as: ".$newname;		   
 
 														$insert = mysqli_query($link, "INSERT INTO battachment(id,get_id,tid,attached_file,date_time) VALUES('','$id','$tid','$newname',NOW())") or die (mysqli_error($link));
-														$insert = mysqli_query($link, "UPDATE borrowers SET status = 'Completed' WHERE id = '$id'") or die (mysqli_error($link));
+														$insert = mysqli_query($link, "UPDATE borowers SET status = 'Completed' WHERE id = '$id'") or die (mysqli_error($link));
 														if(!$insert)
 														{
 															echo "<script>alert('Record not inserted.....Please try again later!'); </script>";

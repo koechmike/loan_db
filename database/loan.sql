@@ -171,7 +171,7 @@ CREATE TABLE IF NOT EXISTS `calculation_method` (
   `methodId` int NOT NULL,
   `methodName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`methodId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.calculation_method: ~2 rows (approximately)
 DELETE FROM `calculation_method`;
@@ -702,7 +702,7 @@ CREATE TABLE IF NOT EXISTS `loans` (
   CONSTRAINT `loans_calculationMethod` FOREIGN KEY (`calculationMethod`) REFERENCES `calculation_method` (`methodId`),
   CONSTRAINT `loans_loanType` FOREIGN KEY (`loanType`) REFERENCES `loan_types` (`loanCode`),
   CONSTRAINT `loans_status` FOREIGN KEY (`status`) REFERENCES `loan_status` (`statusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.loans: ~1 rows (approximately)
 DELETE FROM `loans`;
@@ -723,7 +723,7 @@ CREATE TABLE IF NOT EXISTS `loans_disbursed` (
   `dateOfDisbursement` varchar(45) DEFAULT NULL,
   `loanNo` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`transactionNo`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='		';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4  COMMENT='		';
 
 -- Dumping data for table loan.loans_disbursed: ~1 rows (approximately)
 DELETE FROM `loans_disbursed`;
@@ -765,7 +765,7 @@ CREATE TABLE IF NOT EXISTS `loan_status` (
   `statusId` int NOT NULL,
   `statusName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`statusId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.loan_status: ~8 rows (approximately)
 DELETE FROM `loan_status`;
@@ -792,7 +792,7 @@ CREATE TABLE IF NOT EXISTS `loan_type` (
   `calculationMethod` int DEFAULT NULL,
   `guarantor` int DEFAULT NULL,
   PRIMARY KEY (`typeId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.loan_type: ~0 rows (approximately)
 DELETE FROM `loan_type`;
@@ -806,7 +806,7 @@ CREATE TABLE IF NOT EXISTS `loan_types` (
   `interestRate` int DEFAULT NULL,
   `requireGuarantor` int DEFAULT NULL,
   PRIMARY KEY (`loanCode`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.loan_types: ~3 rows (approximately)
 DELETE FROM `loan_types`;
@@ -886,7 +886,7 @@ CREATE TABLE IF NOT EXISTS `payment_method` (
   `methodId` int NOT NULL AUTO_INCREMENT,
   `methodName` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`methodId`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='	';
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4  COMMENT='	';
 
 -- Dumping data for table loan.payment_method: ~1 rows (approximately)
 DELETE FROM `payment_method`;
@@ -935,7 +935,7 @@ CREATE TABLE IF NOT EXISTS `proffession` (
   `pid` int NOT NULL,
   `pname` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.proffession: ~2 rows (approximately)
 DELETE FROM `proffession`;
@@ -950,7 +950,7 @@ CREATE TABLE IF NOT EXISTS `salutations` (
   `sinitials` varchar(45) DEFAULT NULL,
   `sdescription` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.salutations: ~2 rows (approximately)
 DELETE FROM `salutations`;
@@ -1310,7 +1310,7 @@ CREATE TABLE IF NOT EXISTS `test` (
   `idtest` int NOT NULL AUTO_INCREMENT,
   `testcol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idtest`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8mb4 ;
 
 -- Dumping data for table loan.test: ~76 rows (approximately)
 DELETE FROM `test`;

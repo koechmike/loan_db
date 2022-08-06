@@ -38,7 +38,7 @@
 										<th>Last Name</th>
 										<th>Email</th>
 										<th>Mobile Number</th>
-										<!-- <th>Status</th> -->
+										<th>Status</th>
 										<th>Actions</th>
 									</tr>
 								</thead>
@@ -74,7 +74,7 @@
 										<td><?php echo $fname; ?></td>
 										<td><?php echo $email; ?></td>
 										<td><?php echo $phone; ?></td>
-										<!-- <?php
+										<?php
 										if($status == "Pending")
 										{
 										?>
@@ -84,7 +84,7 @@
 										else{
 										?>
 														<td align="center" class="alert alert-success"><?php echo $status; ?></td> 
-										<?php } ?> -->
+										<?php } ?> 
 										<td align="center"><?php echo ($pupdate == '1') ? '<a href="updateborrowers.php?id='.$id.'&&mid='.base64_encode("403").'" class="btn btn-success btn-flat">Edit</a>' : '<i class="fa fa-lock"></i>'; ?>
 										<?php
 										$se = mysqli_query($link, "SELECT * FROM battachment WHERE get_id = '$id'") or die (mysqli_error($link));
