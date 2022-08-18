@@ -256,7 +256,9 @@ if (isset($_SESSION['tid'])) {
         }
 
 		switch($calculationMethod){
-			case 1: 
+			case 1:
+			case 2:
+			case 3: 
 				if($interest > $amountPaid){
 					$interestPaid = $amountPaid;
 					$principlePaid = 0;
@@ -274,8 +276,6 @@ if (isset($_SESSION['tid'])) {
 					$newInterestPaid = $interest + $totalInterestPaid;
 					$newTotalPrincipalPaid = $totalPrincipalPaid + $amountPaidRemainder;
 				}
-				break;
-			case 2:
 				break;
 				//subtract interest
 		}
