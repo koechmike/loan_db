@@ -13,7 +13,7 @@ $reportType = mysqli_real_escape_string($link, $_POST['reportType']);
 $from = mysqli_real_escape_string($link, $_POST['from']);
 $to = mysqli_real_escape_string($link, $_POST['to']);
 
-$companyHeader = mysqli_query($link, "SELECT * FROM loan.systemset;");
+$companyHeader = mysqli_query($link, "SELECT * FROM systemset;");
 
 class PDF extends FPDF
 {

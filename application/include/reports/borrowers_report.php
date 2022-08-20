@@ -8,22 +8,22 @@ error_reporting(E_ALL);
 include_once('fpdf184/fpdf.php');
 include_once('../../../config/connect.php');
 
-$companyHeader = mysqli_query($link, "SELECT * FROM loan.systemset;");
+$companyHeader = mysqli_query($link, "SELECT * FROM systemset;");
 
 if(isset($_POST['borrowersReport'])){
     $borrowerType = mysqli_real_escape_string($link, $_POST['borrowerType']);
     if($borrowerType == 0){
         $title = "Active Borrowers";
-        $result = mysqli_query($link, "SELECT id as 'Borrower ID', fname as 'First Name', lname as 'Last Name', phone as 'Phone', email as'Email', date_time as 'Date of Reg.' FROM loan.borrowers;") or die("database error:". mysqli_error($link));
+        $result = mysqli_query($link, "SELECT id as 'Borrower ID', fname as 'First Name', lname as 'Last Name', phone as 'Phone', email as'Email', date_time as 'Date of Reg.' FROM borrowers;") or die("database error:". mysqli_error($link));
     }else{
         $title = "Borrowers With Active Loans";
-        $result = mysqli_query($link, "SELECT id as 'Borrower ID', fname as 'First Name', lname as 'Last Name', phone as 'Phone', email as'Email', date_time as 'Date of Reg.' FROM loan.borrowers inner join loans on id = borrowerId where loans.status != 6 or loans.status < 2;") or die("database error:". mysqli_error($link));
+        $result = mysqli_query($link, "SELECT id as 'Borrower ID', fname as 'First Name', lname as 'Last Name', phone as 'Phone', email as'Email', date_time as 'Date of Reg.' FROM borrowers inner join loans on id = borrowerId where loans.status != 6 or loans.status < 2;") or die("database error:". mysqli_error($link));
     }
 }elseif(isset($_POST['newBorrower'])){
     $from = mysqli_real_escape_string($link, $_POST['from']);
     $to = mysqli_real_escape_string($link, $_POST['to']);
     $title = "New Borrowers from ".$from." to ".$to.".";
-    $result = mysqli_query($link, "SELECT id as 'Borrower ID', fname as 'First Name', lname as 'Last Name', phone as 'Phone', email as'Email', date_time as 'Date of Reg.' FROM loan.borrowers where date_time between '".$from."' and '".$to."';") or die("database error:". mysqli_error($link));
+    $result = mysqli_query($link, "SELECT id as 'Borrower ID', fname as 'First Name', lname as 'Last Name', phone as 'Phone', email as'Email', date_time as 'Date of Reg.' FROM borrowers where date_time between '".$from."' and '".$to."';") or die("database error:". mysqli_error($link));
 }
 
 class PDF extends FPDF
