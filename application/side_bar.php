@@ -149,12 +149,13 @@
           </ul>
         </li>
 		
-		<li>
+        <li><a href="reports.php?id=<?php echo $_SESSION['tid']; ?>"><i class="fa fa-dashboard"></i> <span>Reports</span></a></li>
+        <li>
           <a href="../logout.php">
             <i class="fa fa-sign-out"></i> <span>Logout</span>
           </a>
         </li>
-		
+        
 
     </section>
     <!-- /.sidebar -->

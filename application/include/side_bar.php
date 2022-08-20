@@ -164,7 +164,35 @@ $pread = $get_check['pread'];
 		<!-- <?php echo ($pcreate == 1) ? '<li><a href="sms.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("411").'"><i class="fa fa-circle-o"></i>SMS Gateway Settings</a></li>' : ''; ?>
 		<?php echo ($pread == 1) ? '<li><a href="backupdatabase.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("411").'"><i class="fa fa-circle-o"></i>Backup Database</a></li>' : ''; ?> -->
         <?php echo ($pcreate == 1) ? '</ul></li>' : ''; ?>
-<?php } ?>
+<?php } 
+?>
+
+	
+<?php
+if(isset($_GET['mid']) && (trim($_GET['mid']) == base64_encode("412")))
+{
+$check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Reports'") or die ("Error" . mysqli_error($link));
+$get_check = mysqli_fetch_array($check);
+$pcreate = $get_check['pcreate'];
+$pread = $get_check['pread'];
+?>		
+		
+		<?php echo ($pread == 1) ? '<li><a href="reports.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("412").'"><i class="fa fa-circle-o"></i>Reports</a></li>' : ''; ?>
+     
+<?php
+}
+else{
+$check = mysqli_query($link, "SELECT * FROM emp_permission WHERE tid = '".$_SESSION['tid']."' AND module_name = 'Reports'") or die ("Error" . mysqli_error($link));
+$get_check = mysqli_fetch_array($check);
+$pcreate = $get_check['pcreate'];
+$pread = $get_check['pread'];
+?>		
+		<?php echo ($pread == 1) ? '<li><a href="reports.php?id='.$_SESSION['tid'].'&&mid='.base64_encode("412").'"><i class="fa fa-circle-o"></i>Reports</a></li>' : ''; ?>
+       
+<?php } 
+?>
+
+
 		
 
 		
