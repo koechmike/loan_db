@@ -1,11 +1,28 @@
 <?php 
-$apr = 12;
-$term = 24;
-$loan = 100000;
-$emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
+
+if(isset($_POST['calcuationMethod'])){
+	$calcuationMethod = mysqli_real_escape_string($link, $_POST['calcuationMethod']);
+
+	switch($calculationMethod){
+		case 1:
+			break;
+		case 2:
+			break;
+		case 3:
+			$apr = mysqli_real_escape_string($link, $_POST['rate']);
+			$term = mysqli_real_escape_string($link, $_POST['term']);
+			$loan = mysqli_real_escape_string($link, $_POST['loanAmount']);
+			$emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
+			break;
+		default:
+			break;
+	}
+
+}
+
+
 
 // echo (int)$emi;
-
 
 ?>
 
@@ -29,17 +46,34 @@ $emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
 												<div class="col-md-8">
 													<select data-live-search="true" name="borrowerId" id="borrowerId"   class="form-control selectpicker" required>
 														<option value="">Select a method&hellip;</option>
-                                                        <option <?php if($have['repayMethod'] == 1) echo 'selected="selected"'; ?> value="1">Straight Line</option>
-                                                        <option <?php if($have['repayMethod'] == 2) echo 'selected="selected"'; ?>  value="2">Reducing Balance</option>
-                                                                <option <?php if($have['repayMethod'] == 3) echo 'selected="selected"'; ?>  value="3">Armotized</option>
-                                                                <!-- <?php
-                                                                    $pm = mysqli_query($link, "SELECT * FROM payment_method") or die (mysqli_error($link));
-                                                                    while($ph_res = mysqli_fetch_array($pm))
-                                                                    {         
-                                                                ?>
-                                                                <option <?php if($methodName_res['methodName'] == $ph_res['methodName']) echo 'selected="selected"'; ?> value="<?php echo $ph_res['methodId'] ?>"><?php echo $ph_res['methodName'] ?></option>
-                                                                <?php } ?> -->
+                                                        <option value="1">Straight Line</option>
+                                                        <option value="2">Reducing Balance</option>
+                                                        <option value="3">Armotized</option>
 													</select>
+												</div>								
+											</div>			
+											<div style="margin-bottom: 1rem" class="row">
+												<div class="col-md-4">
+													<label for="" class="control-label" style="color:#009900">Loan Amount</label>
+												</div>
+												<div class="col-md-8">
+													<input name="loanAmount" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Amount" required>
+												</div>								
+											</div>			
+											<div style="margin-bottom: 1rem" class="row">
+												<div class="col-md-4">
+													<label for="" class="control-label" style="color:#009900">Interest Rate</label>
+												</div>
+												<div class="col-md-8">
+													<input name="rate" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Rate" required>
+												</div>								
+											</div>			
+											<div style="margin-bottom: 1rem" class="row">
+												<div class="col-md-4">
+													<label for="" class="control-label" style="color:#009900">Period</label>
+												</div>
+												<div class="col-md-8">
+													<input name="period" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Period" required>
 												</div>								
 											</div>	
 										</div>						
@@ -68,7 +102,7 @@ $emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
 	                  	<tbody>
 						<?php
 						  	for($i = 1; $i <= $term ; $i++){
-								echo "Month: ".$i."<br/>";
+								// echo "Month: ".$i."<br/>";
 								$interest = $loan * (($apr/12)/100);
 								$principle = $emi - $interest;
 								$loan = $loan - $principle;
