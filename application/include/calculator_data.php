@@ -32,7 +32,7 @@ if(isset($_POST['calcuationMethod'])){
       	<div class="box-body">
         	<div class="table-responsive">
             	<div class="box-body">
-					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="process_loan_info.php">
+					<form class="form-horizontal" method="post" enctype="multipart/form-data" action="">
 						<div class="box-body">			
 							<div class="row">	
 								<div class="col-md-8">	
