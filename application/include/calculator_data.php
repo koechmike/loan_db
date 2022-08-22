@@ -47,7 +47,7 @@ if(isset($_POST['calcuationMethod'])){
 													<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 												</div>
 												<div class="col-md-8">
-													<select data-live-search="true" name="borrowerId" id="borrowerId"   class="form-control selectpicker" required>
+													<select data-live-search="true" name="calcuationMethod" id="calcuationMethod"   class="form-control selectpicker" required>
 														<option value="">Select a method&hellip;</option>
                                                         <option value="1">Straight Line</option>
                                                         <option value="2">Reducing Balance</option>
@@ -87,7 +87,7 @@ if(isset($_POST['calcuationMethod'])){
 			  			<div align="right">
               				<div class="box-footer">
                 				<button type="reset" class="btn btn-primary btn-flat"><i class="fa fa-times">&nbsp;Reset</i></button>
-                				<button name="save_loan" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
+                				<button name="calcuationMethod" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
               				</div>
 			  			</div>
 			  		</form>
