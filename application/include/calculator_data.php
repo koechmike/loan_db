@@ -1,3 +1,14 @@
+<?php 
+$apr = 12;
+$term = 24;
+$loan = 100000;
+$emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
+
+// echo (int)$emi;
+
+
+?>
+
 <div class="row">
    	<section class="content">
    	<div class="box box-success">
@@ -55,13 +66,26 @@
             	         	</tr>
                 	  	</thead>
 	                  	<tbody>
+						<?php
+						  	for($i = 1; $i <= $term ; $i++){
+								echo "Month: ".$i."<br/>";
+								$interest = $loan * (($apr/12)/100);
+								$principle = $emi - $interest;
+								$loan = $loan - $principle;
+								// echo "EMI: ".ROUND($emi)."<br/>";
+								// echo "Principle: ".ROUND($principle)."<br/>";
+								// echo "Interest: ".ROUND($interest)."<br/>";
+								// echo "Balance: ".ROUND($loan)."<br/>";
+								// echo "<br/>";							
+						?>
     	                 	<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td><?php echo $i ?></td>
+								<td><?php echo ROUND($emi) ?></td>
+								<td><?php echo ROUND($principle) ?></td>
+								<td><?php echo ROUND($interest) ?></td>
+								<td><?php echo ROUND($loan) ?></td>
 	                     	</tr>
+						<?php } ?>	
     	              	</tbody>
         	       	</table>			
             	</div>
