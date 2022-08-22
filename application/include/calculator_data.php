@@ -10,6 +10,24 @@ if(isset($_POST['calculationMethod'])){
 			$term = $_POST['term'];
 			$loan = $_POST['loanAmount'];
 			$emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
+
+			$periodRes = array();
+			$emiRes = array();
+			$principleRes = array();
+			$interestRes = array();
+			$loanRes = array();
+
+			for($i = 1; $i <= $term ; $i++){
+				$interest = $loan * (($apr/12)/100);
+				$principle = $emi - $interest;
+				$loan = $loan - $principle;
+
+				array_push($periodRes, $i);
+				array_push($emiRes, $emi);
+				array_push($principleRes, $principle);
+				array_push($interestRes, $interest);
+				array_push($loanRes, $loan);
+			}
 			break;
 		case 3:
 			break;
@@ -100,23 +118,14 @@ if(isset($_POST['calculationMethod'])){
                 	  	</thead>
 	                  	<tbody>
 						<?php
-						  	for($i = 1; $i <= $term ; $i++){
-								// echo "Month: ".$i."<br/>";
-								$interest = $loan * (($apr/12)/100);
-								$principle = $emi - $interest;
-								$loan = $loan - $principle;
-								// echo "EMI: ".ROUND($emi)."<br/>";
-								// echo "Principle: ".ROUND($principle)."<br/>";
-								// echo "Interest: ".ROUND($interest)."<br/>";
-								// echo "Balance: ".ROUND($loan)."<br/>";
-								// echo "<br/>";							
-						?>
+							foreach($periodRes as $i){
+						?>		
     	                 	<tr>
-								<td><?php echo $i ?></td>
-								<td><?php echo ROUND($emi) ?></td>
-								<td><?php echo ROUND($principle) ?></td>
-								<td><?php echo ROUND($interest) ?></td>
-								<td><?php echo ROUND($loan) ?></td>
+								<td><?php echo $periodRes[$i-1] ?></td>
+								<td><?php echo ROUND($emiRes[$i-1]) ?></td>
+								<td><?php echo ROUND($principleRes[$i-1]) ?></td>
+								<td><?php echo ROUND($interestRes[$i-1]) ?></td>
+								<td><?php echo ROUND($loanRes[$i-1]) ?></td>
 	                     	</tr>
 						<?php } ?>	
     	              	</tbody>
