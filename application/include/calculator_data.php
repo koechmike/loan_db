@@ -1,5 +1,5 @@
 <?php 
-
+echo "calcMethod: ";
 if(isset($_POST['calcuationMethod'])){
 	$calculationMethod = mysqli_real_escape_string($link, $_POST['calcuationMethod']);
 	echo "calcMethod: ".$calculationMethod;
