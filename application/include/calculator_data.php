@@ -1,8 +1,8 @@
 <?php 
 
 if(isset($_POST['calcuationMethod'])){
-	$calcuationMethod = mysqli_real_escape_string($link, $_POST['calcuationMethod']);
-
+	$calculationMethod = mysqli_real_escape_string($link, $_POST['calcuationMethod']);
+	echo "calcMethod: ".$calculationMethod;
 	switch($calculationMethod){
 		case 1:
 			break;
@@ -12,6 +12,9 @@ if(isset($_POST['calcuationMethod'])){
 			$apr = mysqli_real_escape_string($link, $_POST['rate']);
 			$term = mysqli_real_escape_string($link, $_POST['term']);
 			$loan = mysqli_real_escape_string($link, $_POST['loanAmount']);
+			echo "apr: ".$$apr;
+			echo "term: ".$$term;
+			echo "loan: ".$loan;
 			$emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
 			break;
 		default:
