@@ -1,11 +1,8 @@
 <?php 
-	$calculationMethod = 3;//$_POST['calculationMethod'];
-	echo "calcMethod: ".$calculationMethod;
 if(isset($_POST['calculationMethod'])){
-	$calculationMethod =  3;//$_POST['calculationMethod'];
-	echo "calcMethod: ".$calculationMethod;
 	switch($calculationMethod){
 		case 1:
+
 			break;
 		case 2:
 			break;
@@ -88,7 +85,7 @@ if(isset($_POST['calculationMethod'])){
 			  			<div align="right">
               				<div class="box-footer">
                 				<button type="reset" class="btn btn-primary btn-flat"><i class="fa fa-times">&nbsp;Reset</i></button>
-                				<button name="calculationMethod" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
+                				<button name="calculationMethod" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Calculate</i></button>
               				</div>
 			  			</div>
 			  		</form>
