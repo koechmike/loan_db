@@ -1,7 +1,6 @@
 <?php 
 	$calculationMethod = $_POST['calculationMethod'];
 	echo "calcMethod: ".$calculationMethod;
-	echo "calcMethod: ".$_POST['rate'];
 if(isset($_POST['calculationMethod'])){
 	$calculationMethod =  $_POST['calculationMethod'];
 	echo "calcMethod: ".$calculationMethod;
@@ -51,9 +50,9 @@ if(isset($_POST['calculationMethod'])){
 												<div class="col-md-8">
 													<select data-live-search="true" name="calculationMethod" id="calculationMethod"   class="form-control selectpicker" required>
 														<option value="">Select a method&hellip;</option>
-                                                        <option value="1">Straight Line</option>
-                                                        <option value="2">Reducing Balance</option>
-                                                        <option value="3">Armotized</option>
+                                                        <option value=1>Straight Line</option>
+                                                        <option value=2>Reducing Balance</option>
+                                                        <option value=3>Armotized</option>
 													</select>
 												</div>								
 											</div>			
