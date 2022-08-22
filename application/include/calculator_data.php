@@ -3,7 +3,44 @@ if(isset($_POST['calculationMethod'])){
 	$calculationMethod = mysqli_real_escape_string($link, $_POST['calculationMethod']);	
 	switch($calculationMethod){
 		case 1:
+			$apr = $_POST['rate'];
+			$term = $_POST['term'];
+			$loan = $_POST['loanAmount'];
+			$loanBalance = $loan;
+			
+			$interest = ($loan * ($apr/100) * ($term/12));
+			$emi = ($loan + $interest) / $term;
 
+			$periodRes = array();
+			$emiRes = array();
+			$principleRes = array();
+			$interestRes = array();
+			$loanRes = array();
+			$principleTotal = 0;
+			$interestTotal = 0;
+			$balanceTotal = 0;
+
+
+			// array_push($periodRes, 0);
+			// array_push($emiRes, 0);
+			// array_push($principleRes, 0);
+			// array_push($interestRes, 0);
+			// array_push($loanRes, $loanBalance);
+
+			for($i = 1; $i <= $term ; $i++){
+				$principle = $emi - ($interest/$term);
+				$loanBalance = $loanBalance - $principle;
+
+				array_push($periodRes, $i);
+				array_push($emiRes, $emi);
+				array_push($principleRes, $principle);
+				array_push($interestRes, ($interest/$term));
+				array_push($loanRes, $loanBalance);
+
+				$principleTotal = $principleTotal + $principle;
+				$interestTotal = $interest;
+				$balanceTotal = $balanceTotal + $loan;
+			}
 			break;
 		case 2:
 			$apr = $_POST['rate'];
@@ -16,6 +53,9 @@ if(isset($_POST['calculationMethod'])){
 			$principleRes = array();
 			$interestRes = array();
 			$loanRes = array();
+			$principleTotal = 0;
+			$interestTotal = 0;
+			$balanceTotal = 0;
 
 			for($i = 1; $i <= $term ; $i++){
 				$interest = $loan * (($apr/12)/100);
@@ -27,6 +67,10 @@ if(isset($_POST['calculationMethod'])){
 				array_push($principleRes, $principle);
 				array_push($interestRes, $interest);
 				array_push($loanRes, $loan);
+
+				$principleTotal = $principleTotal + $principle;
+				$interestTotal = $interestTotal + $interest;
+				$balanceTotal = $balanceTotal + $loan;
 			}
 			break;
 		case 3:
@@ -113,7 +157,7 @@ if(isset($_POST['calculationMethod'])){
                     	    	<th>EMI</th>
 	                        	<th>Principle</th>
     	                  	 	<th>Interest</th>
-        	            	    <th>Balance</th>
+        	            	    <th>Loan Balance</th>
             	         	</tr>
                 	  	</thead>
 	                  	<tbody>
@@ -129,6 +173,15 @@ if(isset($_POST['calculationMethod'])){
 	                     	</tr>
 						<?php } ?>	
     	              	</tbody>
+						<tfooter>
+            	        	<tr>
+                	        	<td width="50"></td>
+                    	    	<td></td>
+	                        	<th><?php echo ROUND($principleTotal);?></th>
+    	                  	 	<th><?php echo ROUND($interestTotal);?></th>
+        	            	    <th></th>
+            	         	</tr>
+                	  	</tfooter>
         	       	</table>			
             	</div>
          	</div>
