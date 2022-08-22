@@ -13,8 +13,8 @@ if(isset($_POST['calculationMethod'])){
 			$apr = $_POST['rate'];
 			$term = $_POST['term'];
 			$loan = $_POST['loanAmount'];
-			echo "apr: ".$$apr;
-			echo "term: ".$$term;
+			echo "apr: ".$apr;
+			echo "term: ".$term;
 			echo "loan: ".$loan;
 			$emi = (($loan*($apr/(100*12)))/(1-((1+($apr/(100*12)))**(0-$term))));
 			break;
