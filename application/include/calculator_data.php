@@ -77,7 +77,7 @@ if(isset($_POST['calculationMethod'])){
 													<label for="" class="control-label" style="color:#009900">Period</label>
 												</div>
 												<div class="col-md-8">
-													<input name="period" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Period" required>
+													<input name="term" type="text" title="Numbers only" pattern="^[0-9]*$" class="form-control" placeholder="Period" required>
 												</div>								
 											</div>	
 										</div>						
