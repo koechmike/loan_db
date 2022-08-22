@@ -1,7 +1,8 @@
 <?php 
 	$calculationMethod = $_POST['calculationMethod'];
 	echo "calcMethod: ".$calculationMethod;
-if(isset($_POST['calcuationMethod'])){
+	echo "calcMethod: ".$_POST['rate'];
+if(isset($_POST['calculationMethod'])){
 	$calculationMethod =  $_POST['calculationMethod'];
 	echo "calcMethod: ".$calculationMethod;
 	switch($calculationMethod){
