@@ -1,8 +1,8 @@
 <?php 
-	$calculationMethod = mysqli_real_escape_string($link, $_POST['calculationMethod']);
+	$calculationMethod = $_POST['calculationMethod'];
 	echo "calcMethod: ".$calculationMethod;
 if(isset($_POST['calcuationMethod'])){
-	$calculationMethod = mysqli_real_escape_string($link, $_POST['calculationMethod']);
+	$calculationMethod =  $_POST['calculationMethod'];
 	echo "calcMethod: ".$calculationMethod;
 	switch($calculationMethod){
 		case 1:
@@ -10,9 +10,9 @@ if(isset($_POST['calcuationMethod'])){
 		case 2:
 			break;
 		case 3:
-			$apr = mysqli_real_escape_string($link, $_POST['rate']);
-			$term = mysqli_real_escape_string($link, $_POST['term']);
-			$loan = mysqli_real_escape_string($link, $_POST['loanAmount']);
+			$apr = $_POST['rate'];
+			$term = $_POST['term'];
+			$loan = $_POST['loanAmount'];
 			echo "apr: ".$$apr;
 			echo "term: ".$$term;
 			echo "loan: ".$loan;
@@ -48,7 +48,7 @@ if(isset($_POST['calcuationMethod'])){
 													<label for="" class="control-label" style="color:#009900">Borrower ID</label>
 												</div>
 												<div class="col-md-8">
-													<select data-live-search="true" name="calcuationMethod" id="calcuationMethod"   class="form-control selectpicker" required>
+													<select data-live-search="true" name="calculationMethod" id="calculationMethod"   class="form-control selectpicker" required>
 														<option value="">Select a method&hellip;</option>
                                                         <option value="1">Straight Line</option>
                                                         <option value="2">Reducing Balance</option>
@@ -88,7 +88,7 @@ if(isset($_POST['calcuationMethod'])){
 			  			<div align="right">
               				<div class="box-footer">
                 				<button type="reset" class="btn btn-primary btn-flat"><i class="fa fa-times">&nbsp;Reset</i></button>
-                				<button name="calcuationMethod" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
+                				<button name="calculationMethod" type="submit" class="btn btn-success btn-flat"><i class="fa fa-save">&nbsp;Save</i></button>
               				</div>
 			  			</div>
 			  		</form>
