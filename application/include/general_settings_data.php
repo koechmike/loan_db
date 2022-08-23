@@ -227,7 +227,7 @@
 											<table>
 												<th></th>
 												<!-- <th align="center" width="400">ID</th> -->
-												<th align="center" width="300">Relationships</th>
+												<th align="center" width="300">Marital Status</th>
 												<tbody> 
 													<?php
 													$id = $_GET['id'];
@@ -367,7 +367,7 @@
 												else{
 												for($i=0; $i < $N; $i++)
 												{
-													$result = mysqli_query($link,"DELETE FROM marital_status WHERE msid ='$id[$i]'");
+													$result = mysqli_query($link,"DELETE FROM proffession WHERE pid ='$id[$i]'");
 													echo "<script>window.location='general_settings.php?id=".$idm."&&mid=".base64_encode("403")."'; </script>";
 												}
 												}
